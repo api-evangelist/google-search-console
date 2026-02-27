@@ -1,0 +1,61 @@
+name: Google Search Console API
+description: The Google Search Console API provides programmatic access to Search Console data, allowing you to monitor and maintain your site's presence in Google Search results.
+image: https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png
+created: '2024'
+modified: '2024'
+specificationVersion: '0.18'
+url: https://search.google.com/search-console/about
+tags:
+- SEO
+- Search
+- Analytics
+- Webmaster Tools
+- Google
+apis:
+- name: Google Search Console API
+  description: Provides access to Search Console data including search analytics, sitemaps, URL inspection, and index coverage reports.
+  image: https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png
+  humanURL: https://developers.google.com/webmaster-tools
+  baseURL: https://searchconsole.googleapis.com
+  tags:
+  - SEO
+  - Search Analytics
+  - Indexing
+  - Sitemaps
+  properties:
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/v1/api_reference_index
+  - type: OpenAPI
+    url: https://searchconsole.googleapis.com/$discovery/rest?version=v1
+  - type: Authentication
+    url: https://developers.google.com/webmaster-tools/v1/how-tos/authorizing
+  - type: Getting Started
+    url: https://developers.google.com/webmaster-tools/v1/quickstart
+  - type: API Console
+    url: https://console.cloud.google.com/apis/library/searchconsole.googleapis.com
+  - type: Pricing
+    url: https://developers.google.com/webmaster-tools/v1/limits
+  - type: Terms of Service
+    url: https://developers.google.com/terms
+  - type: Code Examples
+    url: https://developers.google.com/webmaster-tools/v1/samples
+  - type: Change Log
+    url: https://developers.google.com/webmaster-tools/v1/release-notes
+  - type: Support
+    url: https://support.google.com/webmasters/
+maintainers:
+- FN: Google
+  email: support@google.com
+  url: https://www.google.com
+common:
+- type: Developer Portal
+  url: https://developers.google.com/
+- type: Status Page
+  url: https://status.cloud.google.com/
+- type: Blog
+  url: https://developers.googleblog.com/
+- type: Privacy Policy
+  url: https://policies.google.com/privacy
+- type: Terms of Service
+  url: https://policies.google.com/terms
+include: []
