@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/google-search-console/refs/heads/main/json-schema/google-search-console-query-schema.json",
+  "title": "Google Search Console Search Analytics Query",
+  "description": "Schema for a Google Search Console Search Analytics query request and response. The Search Analytics API returns search traffic data including clicks, impressions, click-through rate, and average position for a site in Google Search results, grouped by dimensions such as query, page, country, device, and date.",
+  "type": "object",
+  "$defs": {
+    "SearchAnalyticsQueryRequest": {
+      "type": "object",
+      "title": "Search Analytics Query Request",
+      "description": "The request body for querying search analytics data from the Google Search Console API. Defines the date range, dimensions, filters, aggregation type, and pagination for the query.",
+      "required": ["startDate", "endDate"],
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Start date of the requested date range in YYYY-MM-DD format. Must be less than or equal to the end date. Data is available starting from the date the site was added to Search Console."
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date",
+          "description": "End date of the requested date range in YYYY-MM-DD format. Must be greater than or equal to the start date. There is a processing delay of approximately 2-3 days before data becomes available."
+        },
+        "dimensions": {
+          "type": "array",
+          "description": "Zero or more dimensions to group results by. Results are grouped in the order that dimensions are specified. Valid dimensions are date, query, page, country, device, and searchAppearance.",
+          "items": {
+            "type": "string",
+            "enum": ["date", "query", "page", "country", "device", "searchAppearance"]
+          },
+          "uniqueItems": true
+        },
+        "type": {
+          "type": "string",
+          "description": "Filter results to the specified search type. Defaults to web if not specified.",
+          "enum": ["web", "image", "video", "news", "discover", "googleNews"],
+          "default": "web"
+        },
+        "dimensionFilterGroups": {
+          "type": "array",
+          "description": "Zero or more groups of dimension filters. All filter groups are ANDed together. Within a group, filters are combined using the group type (AND by default).",
+          "items": {
+            "$ref": "#/$defs/DimensionFilterGroup"
+          }
+        },
+        "aggregationType": {
+          "type": "string",
+          "description": "How data is aggregated. If auto (default), data is aggregated according to the property type. If byPage, all data is aggregated by page. If byProperty, all data is aggregated by property.",
+          "enum": ["auto", "byPage", "byProperty"],
+          "default": "auto"
+        },
+        "rowLimit": {
+          "type": "integer",
+          "description": "Maximum number of rows to return. Valid range is 1 to 25000. Default is 1000.",
+          "minimum": 1,
+          "maximum": 25000,
+          "default": 1000
+        },
+        "startRow": {
+          "type": "integer",
+          "description": "Zero-based index of the first row in the response. Used for pagination. Default is 0.",
+          "minimum": 0,
+          "default": 0
+        },
+        "dataState": {
+          "type": "string",
+          "description": "The data state to filter on. If final, only finalized data is returned. If all, both finalized and fresh (preliminary) data are included.",
+          "enum": ["final", "all"],
+          "default": "final"
+        }
+      },
+      "additionalProperties": false
+    },
+    "DimensionFilterGroup": {
+      "type": "object",
+      "title": "Dimension Filter Group",
+      "description": "A group of dimension filters. Within a group, filters are combined using the groupType operator.",
+      "properties": {
+        "groupType": {
+          "type": "string",
+          "description": "How filters within this group are combined. Currently only AND is supported.",
+          "enum": ["and"],
+          "default": "and"
+        },
+        "filters": {
+          "type": "array",
+          "description": "The filters within this group.",
+          "items": {
+            "$ref": "#/$defs/DimensionFilter"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "DimensionFilter": {
+      "type": "object",
+      "title": "Dimension Filter",
+      "description": "A filter on a specific dimension. Restricts the query results to rows matching the filter expression.",
+      "required": ["dimension", "expression"],
+      "properties": {
+        "dimension": {
+          "type": "string",
+          "description": "The dimension to filter on.",
+          "enum": ["query", "page", "country", "device", "searchAppearance"]
+        },
+        "operator": {
+          "type": "string",
+          "description": "The filter operator. The contains operator performs case-insensitive substring matching. The equals operator performs case-sensitive exact matching. The includingRegex and excludingRegex operators use RE2 syntax.",
+          "enum": ["contains", "equals", "notContains", "notEquals", "includingRegex", "excludingRegex"],
+          "default": "equals"
+        },
+        "expression": {
+          "type": "string",
+          "description": "The value to filter on. For country, use a 3-letter ISO 3166-1 alpha-3 code. For device, use DESKTOP, MOBILE, or TABLET."
+        }
+      },
+      "additionalProperties": false
+    },
+    "SearchAnalyticsQueryResponse": {
+      "type": "object",
+      "title": "Search Analytics Query Response",
+      "description": "The response from a search analytics query. Contains rows of data grouped by the requested dimensions.",
+      "properties": {
+        "rows": {
+          "type": "array",
+          "description": "A list of rows of search analytics data. Each row contains dimension keys and associated metric values. Rows are ordered by click count descending. If no data is available, this field is omitted.",
+          "items": {
+            "$ref": "#/$defs/SearchAnalyticsRow"
+          }
+        },
+        "responseAggregationType": {
+          "type": "string",
+          "description": "How the results were aggregated.",
+          "enum": ["auto", "byPage", "byProperty"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "SearchAnalyticsRow": {
+      "type": "object",
+      "title": "Search Analytics Row",
+      "description": "A single row of search analytics data containing dimension keys and metric values. Metrics represent search performance for the combination of dimension values in the keys array.",
+      "properties": {
+        "keys": {
+          "type": "array",
+          "description": "Dimension values for this row, in the same order as the dimensions specified in the request. For country, the value is a 3-letter ISO 3166-1 alpha-3 code. For device, the value is DESKTOP, MOBILE, or TABLET.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "clicks": {
+          "type": "number",
+          "description": "The number of clicks from Google Search results that landed on the property.",
+          "minimum": 0
+        },
+        "impressions": {
+          "type": "number",
+          "description": "The number of times a link to the property appeared in search results and was seen by a user.",
+          "minimum": 0
+        },
+        "ctr": {
+          "type": "number",
+          "description": "Click-through rate: the ratio of clicks to impressions, expressed as a decimal between 0 and 1.",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "position": {
+          "type": "number",
+          "description": "The average position of the property in search results, where 1 is the topmost position.",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "oneOf": [
+    { "$ref": "#/$defs/SearchAnalyticsQueryRequest" },
+    { "$ref": "#/$defs/SearchAnalyticsQueryResponse" }
+  ]
+}

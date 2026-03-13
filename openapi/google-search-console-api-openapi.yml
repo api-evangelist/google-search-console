@@ -1,0 +1,1028 @@
+openapi: 3.1.0
+info:
+  title: Google Search Console API
+  description: >-
+    The Google Search Console API provides programmatic access to Search Console
+    data. Query search analytics to understand how your site appears in Google
+    Search results, manage sitemaps for efficient crawling, inspect individual
+    URLs to check indexing status and crawl details, and manage site-level
+    verification and permissions.
+  version: v1
+  contact:
+    name: Google Search Console API Support
+    url: https://support.google.com/webmasters/
+  termsOfService: https://developers.google.com/terms
+  license:
+    name: Creative Commons Attribution 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+
+externalDocs:
+  description: Google Search Console API Documentation
+  url: https://developers.google.com/webmaster-tools/v1/api_reference_index
+
+servers:
+  - url: https://searchconsole.googleapis.com
+    description: Google Search Console API Production Server
+
+tags:
+  - name: Search Analytics
+    description: >-
+      Query search traffic data for your site. Retrieve impressions, clicks,
+      click-through rate, and average position grouped by dimensions such as
+      query, page, country, device, search type, and date.
+  - name: Sitemaps
+    description: >-
+      Submit and manage sitemaps and sitemap indexes for your site. List
+      submitted sitemaps, check their processing status, submit new sitemaps,
+      and delete previously submitted sitemaps.
+  - name: Sites
+    description: >-
+      Manage site-level access and verification. List verified sites, get
+      details about a specific site, add new sites, and remove sites from
+      your Search Console account.
+  - name: URL Inspection
+    description: >-
+      Inspect individual URLs to retrieve detailed indexing, crawling, and
+      serving information. Check whether a URL is indexed, view crawl details,
+      mobile usability status, and rich results eligibility.
+
+security:
+  - OAuth2:
+      - https://www.googleapis.com/auth/webmasters
+
+paths:
+  /webmasters/v3/sites:
+    get:
+      operationId: listSites
+      summary: List sites
+      description: >-
+        Lists the user's Search Console sites. Returns all sites that the
+        authenticated user has been verified for or has been granted access to
+        through delegation.
+      tags:
+        - Sites
+      security:
+        - OAuth2:
+            - https://www.googleapis.com/auth/webmasters.readonly
+      responses:
+        '200':
+          description: List of Search Console sites.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SitesListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /webmasters/v3/sites/{siteUrl}:
+    get:
+      operationId: getSite
+      summary: Get site details
+      description: >-
+        Retrieves information about a specific site, including its permission
+        level for the authenticated user.
+      tags:
+        - Sites
+      security:
+        - OAuth2:
+            - https://www.googleapis.com/auth/webmasters.readonly
+      parameters:
+        - $ref: '#/components/parameters/SiteUrl'
+      responses:
+        '200':
+          description: Site details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WmxSite'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      operationId: addSite
+      summary: Add a site
+      description: >-
+        Adds a site to the set of the user's Search Console sites. The site
+        URL must be a valid property URL. After adding, the site must still
+        be verified before full data access is granted.
+      tags:
+        - Sites
+      parameters:
+        - $ref: '#/components/parameters/SiteUrl'
+      responses:
+        '204':
+          description: Site added successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+    delete:
+      operationId: deleteSite
+      summary: Remove a site
+      description: >-
+        Removes a site from the set of the user's Search Console sites.
+        This does not delete any data associated with the site.
+      tags:
+        - Sites
+      parameters:
+        - $ref: '#/components/parameters/SiteUrl'
+      responses:
+        '204':
+          description: Site removed successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /webmasters/v3/sites/{siteUrl}/searchAnalytics/query:
+    post:
+      operationId: querySearchAnalytics
+      summary: Query search analytics
+      description: >-
+        Query your search traffic data with filters and parameters that you
+        define. Returns zero or more rows grouped by the row keys (dimensions)
+        that you define. You must define a date range of one or more days.
+        When date is one of the dimensions, any days without data are omitted
+        from the result list. Data is available starting from the date the
+        site was added to Search Console, and there is a processing delay of
+        approximately 2-3 days.
+      tags:
+        - Search Analytics
+      parameters:
+        - $ref: '#/components/parameters/SiteUrl'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchAnalyticsQueryRequest'
+            example:
+              startDate: '2025-01-01'
+              endDate: '2025-01-31'
+              dimensions:
+                - query
+                - page
+              type: web
+              rowLimit: 10
+              startRow: 0
+      responses:
+        '200':
+          description: Search analytics query results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchAnalyticsQueryResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /webmasters/v3/sites/{siteUrl}/sitemaps:
+    get:
+      operationId: listSitemaps
+      summary: List sitemaps
+      description: >-
+        Lists the sitemaps submitted for the specified site. Returns both
+        manually submitted sitemaps and sitemaps discovered via robots.txt.
+        Includes processing status, error counts, and content details for
+        each sitemap.
+      tags:
+        - Sitemaps
+      security:
+        - OAuth2:
+            - https://www.googleapis.com/auth/webmasters.readonly
+      parameters:
+        - $ref: '#/components/parameters/SiteUrl'
+        - name: sitemapIndex
+          in: query
+          required: false
+          description: >-
+            A URL of a sitemap index. If specified, only sitemaps that are
+            listed in this sitemap index are returned.
+          schema:
+            type: string
+            format: uri
+      responses:
+        '200':
+          description: List of sitemaps.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SitemapsListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}:
+    get:
+      operationId: getSitemap
+      summary: Get sitemap details
+      description: >-
+        Retrieves information about a specific sitemap, including its type,
+        last submission time, processing status, warnings, errors, and the
+        number of URLs it contains.
+      tags:
+        - Sitemaps
+      security:
+        - OAuth2:
+            - https://www.googleapis.com/auth/webmasters.readonly
+      parameters:
+        - $ref: '#/components/parameters/SiteUrl'
+        - $ref: '#/components/parameters/Feedpath'
+      responses:
+        '200':
+          description: Sitemap details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WmxSitemap'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      operationId: submitSitemap
+      summary: Submit a sitemap
+      description: >-
+        Submits a sitemap for a site. If the sitemap has already been submitted,
+        it will be resubmitted and re-processed. The sitemap URL must be
+        accessible to Googlebot. Submitting a sitemap index will submit all
+        sitemaps listed in the index.
+      tags:
+        - Sitemaps
+      parameters:
+        - $ref: '#/components/parameters/SiteUrl'
+        - $ref: '#/components/parameters/Feedpath'
+      responses:
+        '204':
+          description: Sitemap submitted successfully.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+    delete:
+      operationId: deleteSitemap
+      summary: Delete a sitemap
+      description: >-
+        Deletes a previously submitted sitemap from Search Console. This
+        does not prevent Google from crawling the URLs in the sitemap; it
+        only removes the sitemap from the list of submitted sitemaps in
+        Search Console.
+      tags:
+        - Sitemaps
+      parameters:
+        - $ref: '#/components/parameters/SiteUrl'
+        - $ref: '#/components/parameters/Feedpath'
+      responses:
+        '204':
+          description: Sitemap deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /v1/urlInspection/index:inspect:
+    post:
+      operationId: inspectUrl
+      summary: Inspect a URL
+      description: >-
+        Inspects a URL to retrieve detailed index status, crawl information,
+        mobile usability findings, and rich results status. Returns the most
+        recent indexing data Google has for the specified URL. The URL must
+        belong to a property that the authenticated user has access to. This
+        endpoint uses the v1 URL path, separate from the webmasters/v3 paths
+        used by other Search Console endpoints.
+      tags:
+        - URL Inspection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InspectUrlIndexRequest'
+            example:
+              inspectionUrl: https://example.com/page
+              siteUrl: https://example.com/
+              languageCode: en-US
+      responses:
+        '200':
+          description: URL inspection results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InspectUrlIndexResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: >-
+        OAuth 2.0 authentication for accessing Google Search Console data.
+        Requires the webmasters or webmasters.readonly scope depending on
+        the operation.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/webmasters: View and manage Search Console data for your verified sites
+            https://www.googleapis.com/auth/webmasters.readonly: View Search Console data for your verified sites
+
+  parameters:
+    SiteUrl:
+      name: siteUrl
+      in: path
+      required: true
+      description: >-
+        The site's URL, including protocol. For domain properties, use the
+        format sc-domain:example.com. For URL-prefix properties, use the
+        full URL (e.g., https://example.com/). The URL must be encoded.
+      schema:
+        type: string
+      example: https://example.com/
+
+    Feedpath:
+      name: feedpath
+      in: path
+      required: true
+      description: >-
+        The URL of the sitemap. Must be the full URL, including the protocol
+        (e.g., https://example.com/sitemap.xml). The URL must be encoded.
+      schema:
+        type: string
+        format: uri
+      example: https://example.com/sitemap.xml
+
+  responses:
+    BadRequest:
+      description: The request was invalid or cannot be served.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required or invalid credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Insufficient permissions for the requested operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded. Retry after the specified delay.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    SearchAnalyticsQueryRequest:
+      type: object
+      description: >-
+        Request body for querying search analytics data. Defines the date
+        range, dimensions, filters, and aggregation type for the query.
+      required:
+        - startDate
+        - endDate
+      properties:
+        startDate:
+          type: string
+          format: date
+          description: >-
+            Start date of the requested date range, in YYYY-MM-DD format.
+            Must be less than or equal to the end date. Data is available
+            starting from the date the site was added to Search Console.
+        endDate:
+          type: string
+          format: date
+          description: >-
+            End date of the requested date range, in YYYY-MM-DD format.
+            Must be greater than or equal to the start date. There is a
+            processing delay of approximately 2-3 days.
+        dimensions:
+          type: array
+          description: >-
+            Zero or more dimensions to group results by. Results are grouped
+            in the order that dimensions are specified. Valid dimensions are
+            date, query, page, country, device, and searchAppearance.
+          items:
+            type: string
+            enum:
+              - date
+              - query
+              - page
+              - country
+              - device
+              - searchAppearance
+        type:
+          type: string
+          description: >-
+            Filter results to the specified search type. Defaults to web.
+          enum:
+            - web
+            - image
+            - video
+            - news
+            - discover
+            - googleNews
+          default: web
+        dimensionFilterGroups:
+          type: array
+          description: >-
+            Zero or more groups of dimension filters. All filter groups are
+            ANDed together. Within a group, filters are combined using the
+            group type (AND by default).
+          items:
+            $ref: '#/components/schemas/DimensionFilterGroup'
+        aggregationType:
+          type: string
+          description: >-
+            How data is aggregated. If auto, data is aggregated by property
+            type. If byPage, all data is aggregated by page. If byProperty,
+            all data is aggregated by property.
+          enum:
+            - auto
+            - byPage
+            - byProperty
+          default: auto
+        rowLimit:
+          type: integer
+          description: >-
+            Maximum number of rows to return. Valid range is 1 to 25000.
+            Default is 1000.
+          minimum: 1
+          maximum: 25000
+          default: 1000
+        startRow:
+          type: integer
+          description: >-
+            Zero-based index of the first row in the response. Must be a
+            non-negative number. Default is 0.
+          minimum: 0
+          default: 0
+        dataState:
+          type: string
+          description: >-
+            The data state to filter on. If set to final, only finalized
+            data is returned. If set to all, both finalized and fresh data
+            are included.
+          enum:
+            - final
+            - all
+          default: final
+
+    DimensionFilterGroup:
+      type: object
+      description: A group of dimension filters applied to the query.
+      properties:
+        groupType:
+          type: string
+          description: How filters within this group are combined.
+          enum:
+            - and
+          default: and
+        filters:
+          type: array
+          description: Filters within this group.
+          items:
+            $ref: '#/components/schemas/DimensionFilter'
+
+    DimensionFilter:
+      type: object
+      description: A filter on a specific dimension.
+      required:
+        - dimension
+        - expression
+      properties:
+        dimension:
+          type: string
+          description: The dimension to filter on.
+          enum:
+            - query
+            - page
+            - country
+            - device
+            - searchAppearance
+        operator:
+          type: string
+          description: >-
+            How to filter. The contains operator performs a case-insensitive
+            substring match. The equals operator performs a case-sensitive
+            exact match. The notContains and notEquals operators are the
+            negations of contains and equals respectively. The
+            includingRegex and excludingRegex operators use RE2 syntax.
+          enum:
+            - contains
+            - equals
+            - notContains
+            - notEquals
+            - includingRegex
+            - excludingRegex
+          default: equals
+        expression:
+          type: string
+          description: >-
+            The value to filter on. For country, use the 3-letter country
+            code (ISO 3166-1 alpha-3). For device, use DESKTOP, MOBILE,
+            or TABLET.
+
+    SearchAnalyticsQueryResponse:
+      type: object
+      description: Response for a search analytics query.
+      properties:
+        rows:
+          type: array
+          description: >-
+            A list of rows grouped by the requested dimensions. Rows are
+            ordered by click count descending. If no data is available for
+            the specified date range and filters, this field is omitted.
+          items:
+            $ref: '#/components/schemas/SearchAnalyticsRow'
+        responseAggregationType:
+          type: string
+          description: How the results were aggregated.
+          enum:
+            - auto
+            - byPage
+            - byProperty
+
+    SearchAnalyticsRow:
+      type: object
+      description: >-
+        A single row of search analytics data. Contains dimension keys and
+        their associated metric values.
+      properties:
+        keys:
+          type: array
+          description: >-
+            A list of dimension values for this row, in the same order as
+            the dimensions specified in the request. For country, the value
+            is a 3-letter country code. For device, the value is DESKTOP,
+            MOBILE, or TABLET.
+          items:
+            type: string
+        clicks:
+          type: number
+          description: >-
+            The number of clicks from Google Search results that landed on
+            the property.
+        impressions:
+          type: number
+          description: >-
+            The number of times a link to the property appeared in search
+            results and was seen by a user (not necessarily scrolled into
+            view).
+        ctr:
+          type: number
+          format: double
+          description: >-
+            Click-through rate: the ratio of clicks to impressions, expressed
+            as a decimal between 0 and 1.
+        position:
+          type: number
+          format: double
+          description: >-
+            The average position of the property in search results, where
+            1 is the topmost position. The value is averaged across all
+            queries and pages.
+
+    SitesListResponse:
+      type: object
+      description: Response for listing Search Console sites.
+      properties:
+        siteEntry:
+          type: array
+          description: List of verified sites.
+          items:
+            $ref: '#/components/schemas/WmxSite'
+
+    WmxSite:
+      type: object
+      description: >-
+        A Search Console site resource representing a verified property.
+        Properties can be URL-prefix properties or domain properties.
+      properties:
+        siteUrl:
+          type: string
+          description: >-
+            The URL of the site. For URL-prefix properties, this is the
+            full URL including protocol. For domain properties, this uses
+            the sc-domain: prefix (e.g., sc-domain:example.com).
+        permissionLevel:
+          type: string
+          description: >-
+            The user's permission level for this site in Search Console.
+          enum:
+            - siteOwner
+            - siteFullUser
+            - siteRestrictedUser
+            - siteUnverifiedUser
+
+    SitemapsListResponse:
+      type: object
+      description: Response for listing sitemaps.
+      properties:
+        sitemap:
+          type: array
+          description: List of sitemaps for the site.
+          items:
+            $ref: '#/components/schemas/WmxSitemap'
+
+    WmxSitemap:
+      type: object
+      description: >-
+        Information about a sitemap submitted to Search Console. Includes
+        processing status, error counts, and content details.
+      properties:
+        path:
+          type: string
+          format: uri
+          description: The URL of the sitemap.
+        lastSubmitted:
+          type: string
+          format: date-time
+          description: >-
+            Date and time when the sitemap was last submitted to Search Console.
+        isPending:
+          type: boolean
+          description: Whether the sitemap is still being processed.
+        isSitemapsIndex:
+          type: boolean
+          description: Whether this is a sitemap index file.
+        type:
+          type: string
+          description: The type of content in the sitemap.
+          enum:
+            - atomFeed
+            - rssFeed
+            - sitemap
+            - urlList
+            - patternSitemap
+            - notSitemap
+        lastDownloaded:
+          type: string
+          format: date-time
+          description: >-
+            Date and time when the sitemap was last downloaded by Google.
+        warnings:
+          type: integer
+          description: Number of warnings for the sitemap.
+        errors:
+          type: integer
+          description: Number of errors for the sitemap.
+        contents:
+          type: array
+          description: >-
+            Content details for this sitemap, broken down by content type.
+          items:
+            $ref: '#/components/schemas/WmxSitemapContent'
+
+    WmxSitemapContent:
+      type: object
+      description: Content type information within a sitemap.
+      properties:
+        type:
+          type: string
+          description: The type of content in this sitemap segment.
+          enum:
+            - web
+            - image
+            - video
+            - news
+            - mobile
+            - androidApp
+            - pattern
+            - iosApp
+            - dataFeedElement
+        submitted:
+          type: integer
+          format: int64
+          description: The number of URLs of this type submitted in the sitemap.
+        indexed:
+          type: integer
+          format: int64
+          description: >-
+            The number of URLs of this type that have been indexed by Google.
+
+    InspectUrlIndexRequest:
+      type: object
+      description: Request body for the URL Inspection API.
+      required:
+        - inspectionUrl
+        - siteUrl
+      properties:
+        inspectionUrl:
+          type: string
+          format: uri
+          description: >-
+            The fully qualified URL to inspect. Must be under the specified
+            site property.
+        siteUrl:
+          type: string
+          description: >-
+            The URL of the site property in Search Console. Can be a
+            URL-prefix property (e.g., https://example.com/) or a domain
+            property (e.g., sc-domain:example.com).
+        languageCode:
+          type: string
+          description: >-
+            Optional BCP-47 language code for the response. If not specified,
+            the response will be in English.
+          example: en-US
+
+    InspectUrlIndexResponse:
+      type: object
+      description: Response from the URL Inspection API.
+      properties:
+        inspectionResult:
+          $ref: '#/components/schemas/UrlInspectionResult'
+
+    UrlInspectionResult:
+      type: object
+      description: >-
+        The aggregated inspection result for a URL, including index status,
+        crawl information, mobile usability, and rich results.
+      properties:
+        inspectionResultLink:
+          type: string
+          format: uri
+          description: >-
+            Link to the URL inspection result in the Search Console UI.
+        indexStatusResult:
+          $ref: '#/components/schemas/IndexStatusInspectionResult'
+        mobileUsabilityResult:
+          $ref: '#/components/schemas/MobileUsabilityInspectionResult'
+        richResultsResult:
+          $ref: '#/components/schemas/RichResultsInspectionResult'
+
+    IndexStatusInspectionResult:
+      type: object
+      description: Index status inspection results for a URL.
+      properties:
+        verdict:
+          type: string
+          description: >-
+            The overall verdict for the index status of the URL.
+          enum:
+            - VERDICT_UNSPECIFIED
+            - PASS
+            - PARTIAL
+            - FAIL
+            - NEUTRAL
+        coverageState:
+          type: string
+          description: >-
+            The coverage state of the URL, indicating whether and how it
+            appears in the index. Common values include Submitted and
+            indexed, Crawled - currently not indexed, Discovered -
+            currently not indexed, and URL is unknown to Google.
+        robotsTxtState:
+          type: string
+          description: >-
+            Whether the page is blocked by robots.txt.
+          enum:
+            - ROBOTS_TXT_STATE_UNSPECIFIED
+            - ALLOWED
+            - DISALLOWED
+        indexingState:
+          type: string
+          description: >-
+            Whether the page is blocked from indexing via noindex directives.
+          enum:
+            - INDEXING_STATE_UNSPECIFIED
+            - INDEXING_ALLOWED
+            - BLOCKED_BY_META_TAG
+            - BLOCKED_BY_HTTP_HEADER
+            - BLOCKED_BY_ROBOTS_TXT
+        lastCrawlTime:
+          type: string
+          format: date-time
+          description: >-
+            The last time this URL was crawled by Google, in RFC 3339 format.
+        pageFetchState:
+          type: string
+          description: >-
+            The result of the page fetch during the last crawl.
+          enum:
+            - PAGE_FETCH_STATE_UNSPECIFIED
+            - SUCCESSFUL
+            - SOFT_404
+            - BLOCKED_ROBOTS_TXT
+            - NOT_FOUND
+            - ACCESS_DENIED
+            - SERVER_ERROR
+            - REDIRECT_ERROR
+            - ACCESS_FORBIDDEN
+            - BLOCKED_4XX
+            - INTERNAL_CRAWL_ERROR
+            - INVALID_URL
+        googleCanonical:
+          type: string
+          format: uri
+          description: >-
+            The URL that Google selected as canonical for this page.
+        userCanonical:
+          type: string
+          format: uri
+          description: >-
+            The canonical URL declared by the page via rel=canonical or
+            the Canonical HTTP header.
+        sitemap:
+          type: array
+          description: >-
+            Any sitemaps that include this URL.
+          items:
+            type: string
+            format: uri
+        referringUrls:
+          type: array
+          description: >-
+            URLs that refer to this URL, as discovered during crawling.
+          items:
+            type: string
+            format: uri
+        crawledAs:
+          type: string
+          description: >-
+            The user agent type used to crawl the URL.
+          enum:
+            - CRAWLING_USER_AGENT_UNSPECIFIED
+            - DESKTOP
+            - MOBILE
+
+    MobileUsabilityInspectionResult:
+      type: object
+      description: Mobile usability inspection results for a URL.
+      properties:
+        verdict:
+          type: string
+          description: The overall mobile usability verdict.
+          enum:
+            - VERDICT_UNSPECIFIED
+            - PASS
+            - PARTIAL
+            - FAIL
+            - NEUTRAL
+        issues:
+          type: array
+          description: A list of mobile usability issues found.
+          items:
+            $ref: '#/components/schemas/MobileUsabilityIssue'
+
+    MobileUsabilityIssue:
+      type: object
+      description: A specific mobile usability issue.
+      properties:
+        issueType:
+          type: string
+          description: The type of mobile usability issue.
+          enum:
+            - MOBILE_USABILITY_ISSUE_TYPE_UNSPECIFIED
+            - USES_INCOMPATIBLE_PLUGINS
+            - CONFIGURE_VIEWPORT
+            - FIXED_WIDTH_VIEWPORT
+            - SIZE_CONTENT_TO_VIEWPORT
+            - USE_LEGIBLE_FONT_SIZES
+            - TAP_TARGETS_TOO_CLOSE
+        severity:
+          type: string
+          description: The severity of the issue.
+          enum:
+            - SEVERITY_UNSPECIFIED
+            - WARNING
+            - ERROR
+        message:
+          type: string
+          description: A human-readable description of the issue.
+
+    RichResultsInspectionResult:
+      type: object
+      description: Rich results inspection results for a URL.
+      properties:
+        verdict:
+          type: string
+          description: The overall rich results verdict.
+          enum:
+            - VERDICT_UNSPECIFIED
+            - PASS
+            - PARTIAL
+            - FAIL
+            - NEUTRAL
+        detectedItems:
+          type: array
+          description: >-
+            A list of detected rich result item types and their status.
+          items:
+            $ref: '#/components/schemas/DetectedItems'
+
+    DetectedItems:
+      type: object
+      description: A group of detected rich result items of a single type.
+      properties:
+        richResultType:
+          type: string
+          description: >-
+            The rich result type detected (e.g., Product, Recipe, FAQ,
+            BreadcrumbList, Article).
+        items:
+          type: array
+          description: The individual detected items of this type.
+          items:
+            $ref: '#/components/schemas/Item'
+
+    Item:
+      type: object
+      description: A single detected rich result item.
+      properties:
+        name:
+          type: string
+          description: The name or identifier of the rich result item.
+        issues:
+          type: array
+          description: Issues found with this rich result item.
+          items:
+            $ref: '#/components/schemas/RichResultsIssue'
+
+    RichResultsIssue:
+      type: object
+      description: A specific issue with a rich result item.
+      properties:
+        issueType:
+          type: string
+          description: The type identifier for this issue.
+        severity:
+          type: string
+          description: The severity of the issue.
+          enum:
+            - SEVERITY_UNSPECIFIED
+            - WARNING
+            - ERROR
+        issueMessage:
+          type: string
+          description: A human-readable description of the issue.
+
+    Error:
+      type: object
+      description: Standard Google API error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: HTTP status code.
+            message:
+              type: string
+              description: A human-readable error message.
+            status:
+              type: string
+              description: The status code string (e.g., INVALID_ARGUMENT).
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  domain:
+                    type: string
+                  reason:
+                    type: string
