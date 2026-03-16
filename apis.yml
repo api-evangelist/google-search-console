@@ -1,5 +1,5 @@
 aid: google-search-console
-name: Google Search Console API
+name: Google Search Console
 description: The Google Search Console API provides programmatic access to Search Console data, allowing you to monitor and maintain your site's presence in Google Search results.
 image: https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png
 url: https://search.google.com/search-console/about
