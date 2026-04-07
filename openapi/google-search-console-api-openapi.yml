@@ -54,7 +54,7 @@ paths:
   /webmasters/v3/sites:
     get:
       operationId: listSites
-      summary: List sites
+      summary: Google Search Console List sites
       description: >-
         Lists the user's Search Console sites. Returns all sites that the
         authenticated user has been verified for or has been granted access to
@@ -79,7 +79,7 @@ paths:
   /webmasters/v3/sites/{siteUrl}:
     get:
       operationId: getSite
-      summary: Get site details
+      summary: Google Search Console Get site details
       description: >-
         Retrieves information about a specific site, including its permission
         level for the authenticated user.
@@ -106,7 +106,7 @@ paths:
 
     put:
       operationId: addSite
-      summary: Add a site
+      summary: Google Search Console Add a site
       description: >-
         Adds a site to the set of the user's Search Console sites. The site
         URL must be a valid property URL. After adding, the site must still
@@ -125,7 +125,7 @@ paths:
 
     delete:
       operationId: deleteSite
-      summary: Remove a site
+      summary: Google Search Console Remove a site
       description: >-
         Removes a site from the set of the user's Search Console sites.
         This does not delete any data associated with the site.
@@ -146,7 +146,7 @@ paths:
   /webmasters/v3/sites/{siteUrl}/searchAnalytics/query:
     post:
       operationId: querySearchAnalytics
-      summary: Query search analytics
+      summary: Google Search Console Query search analytics
       description: >-
         Query your search traffic data with filters and parameters that you
         define. Returns zero or more rows grouped by the row keys (dimensions)
@@ -191,7 +191,7 @@ paths:
   /webmasters/v3/sites/{siteUrl}/sitemaps:
     get:
       operationId: listSitemaps
-      summary: List sitemaps
+      summary: Google Search Console List sitemaps
       description: >-
         Lists the sitemaps submitted for the specified site. Returns both
         manually submitted sitemaps and sitemaps discovered via robots.txt.
@@ -228,7 +228,7 @@ paths:
   /webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}:
     get:
       operationId: getSitemap
-      summary: Get sitemap details
+      summary: Google Search Console Get sitemap details
       description: >-
         Retrieves information about a specific sitemap, including its type,
         last submission time, processing status, warnings, errors, and the
@@ -257,7 +257,7 @@ paths:
 
     put:
       operationId: submitSitemap
-      summary: Submit a sitemap
+      summary: Google Search Console Submit a sitemap
       description: >-
         Submits a sitemap for a site. If the sitemap has already been submitted,
         it will be resubmitted and re-processed. The sitemap URL must be
@@ -280,7 +280,7 @@ paths:
 
     delete:
       operationId: deleteSitemap
-      summary: Delete a sitemap
+      summary: Google Search Console Delete a sitemap
       description: >-
         Deletes a previously submitted sitemap from Search Console. This
         does not prevent Google from crawling the URLs in the sitemap; it
@@ -304,7 +304,7 @@ paths:
   /v1/urlInspection/index:inspect:
     post:
       operationId: inspectUrl
-      summary: Inspect a URL
+      summary: Google Search Console Inspect a URL
       description: >-
         Inspects a URL to retrieve detailed index status, crawl information,
         mobile usability findings, and rich results status. Returns the most
