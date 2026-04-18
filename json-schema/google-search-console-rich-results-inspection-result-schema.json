@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RichResultsInspectionResult",
+  "type": "object",
+  "description": "Rich results inspection results for a URL.",
+  "properties": {
+    "verdict": {
+      "type": "string",
+      "description": "The overall rich results verdict."
+    },
+    "detectedItems": {
+      "type": "array",
+      "description": "A list of detected rich result item types and their status."
+    }
+  }
+}

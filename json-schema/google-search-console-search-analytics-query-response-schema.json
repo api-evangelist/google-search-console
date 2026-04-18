@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SearchAnalyticsQueryResponse",
+  "type": "object",
+  "description": "Response for a search analytics query.",
+  "properties": {
+    "rows": {
+      "type": "array",
+      "description": "A list of rows grouped by the requested dimensions. Rows are ordered by click count descending. If no data is available for the specified date range and filters, this field is omitted."
+    },
+    "responseAggregationType": {
+      "type": "string",
+      "description": "How the results were aggregated."
+    }
+  }
+}

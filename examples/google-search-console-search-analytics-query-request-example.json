@@ -1,0 +1,11 @@
+{
+  "startDate": "example_value",
+  "endDate": "example_value",
+  "dimensions": [],
+  "type": "example_value",
+  "dimensionFilterGroups": [],
+  "aggregationType": "example_value",
+  "rowLimit": 10,
+  "startRow": 10,
+  "dataState": "example_value"
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InspectUrlIndexRequest",
+  "type": "object",
+  "description": "Request body for the URL Inspection API.",
+  "properties": {
+    "inspectionUrl": {
+      "type": "string",
+      "description": "The fully qualified URL to inspect. Must be under the specified site property."
+    },
+    "siteUrl": {
+      "type": "string",
+      "description": "The URL of the site property in Search Console. Can be a URL-prefix property (e.g., https://example.com/) or a domain property (e.g., sc-domain:example.com)."
+    },
+    "languageCode": {
+      "type": "string",
+      "description": "Optional BCP-47 language code for the response. If not specified, the response will be in English."
+    }
+  }
+}

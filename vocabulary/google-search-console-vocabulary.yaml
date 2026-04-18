@@ -1,0 +1,11 @@
+name: google-search-console API Vocabulary
+provider: google-search-console
+created: '2026-04-18'
+modified: '2026-04-18'
+operations: 10
+schemas: 21
+tags:
+- Search Analytics
+- Sitemaps
+- Sites
+- URL Inspection

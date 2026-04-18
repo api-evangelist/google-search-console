@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DimensionFilter",
+  "type": "object",
+  "description": "A filter on a specific dimension.",
+  "properties": {
+    "dimension": {
+      "type": "string",
+      "description": "The dimension to filter on."
+    },
+    "operator": {
+      "type": "string",
+      "description": "How to filter. The contains operator performs a case-insensitive substring match. The equals operator performs a case-sensitive exact match. The notContains and notEquals operators are the negations of contains and equals respectively. The includingRegex and excludingRegex operators use RE2 syntax."
+    },
+    "expression": {
+      "type": "string",
+      "description": "The value to filter on. For country, use the 3-letter country code (ISO 3166-1 alpha-3). For device, use DESKTOP, MOBILE, or TABLET."
+    }
+  }
+}

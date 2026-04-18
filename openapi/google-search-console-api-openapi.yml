@@ -21,49 +21,49 @@ externalDocs:
   url: https://developers.google.com/webmaster-tools/v1/api_reference_index
 
 servers:
-  - url: https://searchconsole.googleapis.com
-    description: Google Search Console API Production Server
+- url: https://searchconsole.googleapis.com
+  description: Google Search Console API Production Server
 
 tags:
-  - name: Search Analytics
-    description: >-
-      Query search traffic data for your site. Retrieve impressions, clicks,
-      click-through rate, and average position grouped by dimensions such as
-      query, page, country, device, search type, and date.
-  - name: Sitemaps
-    description: >-
-      Submit and manage sitemaps and sitemap indexes for your site. List
-      submitted sitemaps, check their processing status, submit new sitemaps,
-      and delete previously submitted sitemaps.
-  - name: Sites
-    description: >-
-      Manage site-level access and verification. List verified sites, get
-      details about a specific site, add new sites, and remove sites from
-      your Search Console account.
-  - name: URL Inspection
-    description: >-
-      Inspect individual URLs to retrieve detailed indexing, crawling, and
-      serving information. Check whether a URL is indexed, view crawl details,
-      mobile usability status, and rich results eligibility.
+- name: Search Analytics
+  description: >-
+    Query search traffic data for your site. Retrieve impressions, clicks,
+    click-through rate, and average position grouped by dimensions such as
+    query, page, country, device, search type, and date.
+- name: Sitemaps
+  description: >-
+    Submit and manage sitemaps and sitemap indexes for your site. List
+    submitted sitemaps, check their processing status, submit new sitemaps,
+    and delete previously submitted sitemaps.
+- name: Sites
+  description: >-
+    Manage site-level access and verification. List verified sites, get
+    details about a specific site, add new sites, and remove sites from
+    your Search Console account.
+- name: URL Inspection
+  description: >-
+    Inspect individual URLs to retrieve detailed indexing, crawling, and
+    serving information. Check whether a URL is indexed, view crawl details,
+    mobile usability status, and rich results eligibility.
 
 security:
-  - OAuth2:
-      - https://www.googleapis.com/auth/webmasters
+- OAuth2:
+  - https://www.googleapis.com/auth/webmasters
 
 paths:
   /webmasters/v3/sites:
     get:
       operationId: listSites
-      summary: Google Search Console List sites
+      summary: Google Search Console List Sites
       description: >-
         Lists the user's Search Console sites. Returns all sites that the
         authenticated user has been verified for or has been granted access to
         through delegation.
       tags:
-        - Sites
+      - Sites
       security:
-        - OAuth2:
-            - https://www.googleapis.com/auth/webmasters.readonly
+      - OAuth2:
+        - https://www.googleapis.com/auth/webmasters.readonly
       responses:
         '200':
           description: List of Search Console sites.
@@ -71,25 +71,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SitesListResponse'
+              examples:
+                Listsites200Example:
+                  summary: Default listSites 200 response
+                  x-microcks-default: true
+                  value:
+                    siteEntry:
+                    - siteUrl: https://www.example.com
+                      permissionLevel: siteOwner
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /webmasters/v3/sites/{siteUrl}:
     get:
       operationId: getSite
-      summary: Google Search Console Get site details
+      summary: Google Search Console Get Site Details
       description: >-
         Retrieves information about a specific site, including its permission
         level for the authenticated user.
       tags:
-        - Sites
+      - Sites
       security:
-        - OAuth2:
-            - https://www.googleapis.com/auth/webmasters.readonly
+      - OAuth2:
+        - https://www.googleapis.com/auth/webmasters.readonly
       parameters:
-        - $ref: '#/components/parameters/SiteUrl'
+      - $ref: '#/components/parameters/SiteUrl'
       responses:
         '200':
           description: Site details.
@@ -97,6 +108,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WmxSite'
+              examples:
+                Getsite200Example:
+                  summary: Default getSite 200 response
+                  x-microcks-default: true
+                  value:
+                    siteUrl: https://www.example.com
+                    permissionLevel: siteOwner
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -104,17 +122,20 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: addSite
-      summary: Google Search Console Add a site
+      summary: Google Search Console Add a Site
       description: >-
         Adds a site to the set of the user's Search Console sites. The site
         URL must be a valid property URL. After adding, the site must still
         be verified before full data access is granted.
       tags:
-        - Sites
+      - Sites
       parameters:
-        - $ref: '#/components/parameters/SiteUrl'
+      - $ref: '#/components/parameters/SiteUrl'
       responses:
         '204':
           description: Site added successfully.
@@ -123,16 +144,19 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteSite
-      summary: Google Search Console Remove a site
+      summary: Google Search Console Remove a Site
       description: >-
         Removes a site from the set of the user's Search Console sites.
         This does not delete any data associated with the site.
       tags:
-        - Sites
+      - Sites
       parameters:
-        - $ref: '#/components/parameters/SiteUrl'
+      - $ref: '#/components/parameters/SiteUrl'
       responses:
         '204':
           description: Site removed successfully.
@@ -143,10 +167,13 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /webmasters/v3/sites/{siteUrl}/searchAnalytics/query:
     post:
       operationId: querySearchAnalytics
-      summary: Google Search Console Query search analytics
+      summary: Google Search Console Query Search Analytics
       description: >-
         Query your search traffic data with filters and parameters that you
         define. Returns zero or more rows grouped by the row keys (dimensions)
@@ -156,9 +183,9 @@ paths:
         site was added to Search Console, and there is a processing delay of
         approximately 2-3 days.
       tags:
-        - Search Analytics
+      - Search Analytics
       parameters:
-        - $ref: '#/components/parameters/SiteUrl'
+      - $ref: '#/components/parameters/SiteUrl'
       requestBody:
         required: true
         content:
@@ -169,8 +196,8 @@ paths:
               startDate: '2025-01-01'
               endDate: '2025-01-31'
               dimensions:
-                - query
-                - page
+              - query
+              - page
               type: web
               rowLimit: 10
               startRow: 0
@@ -181,6 +208,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SearchAnalyticsQueryResponse'
+              examples:
+                Querysearchanalytics200Example:
+                  summary: Default querySearchAnalytics 200 response
+                  x-microcks-default: true
+                  value:
+                    rows:
+                    - keys: {}
+                      clicks: 42.5
+                      impressions: 42.5
+                      ctr: 42.5
+                      position: 42.5
+                    responseAggregationType: auto
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -188,31 +227,35 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /webmasters/v3/sites/{siteUrl}/sitemaps:
     get:
       operationId: listSitemaps
-      summary: Google Search Console List sitemaps
+      summary: Google Search Console List Sitemaps
       description: >-
         Lists the sitemaps submitted for the specified site. Returns both
         manually submitted sitemaps and sitemaps discovered via robots.txt.
         Includes processing status, error counts, and content details for
         each sitemap.
       tags:
-        - Sitemaps
+      - Sitemaps
       security:
-        - OAuth2:
-            - https://www.googleapis.com/auth/webmasters.readonly
+      - OAuth2:
+        - https://www.googleapis.com/auth/webmasters.readonly
       parameters:
-        - $ref: '#/components/parameters/SiteUrl'
-        - name: sitemapIndex
-          in: query
-          required: false
-          description: >-
-            A URL of a sitemap index. If specified, only sitemaps that are
-            listed in this sitemap index are returned.
-          schema:
-            type: string
-            format: uri
+      - $ref: '#/components/parameters/SiteUrl'
+      - name: sitemapIndex
+        in: query
+        required: false
+        description: >-
+          A URL of a sitemap index. If specified, only sitemaps that are
+          listed in this sitemap index are returned.
+        schema:
+          type: string
+          format: uri
+        example: https://www.example.com
       responses:
         '200':
           description: List of sitemaps.
@@ -220,27 +263,45 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SitemapsListResponse'
+              examples:
+                Listsitemaps200Example:
+                  summary: Default listSitemaps 200 response
+                  x-microcks-default: true
+                  value:
+                    sitemap:
+                    - path: https://www.example.com
+                      lastSubmitted: '2026-01-15T10:30:00Z'
+                      isPending: true
+                      isSitemapsIndex: true
+                      type: atomFeed
+                      lastDownloaded: '2026-01-15T10:30:00Z'
+                      warnings: 10
+                      errors: 10
+                      contents: {}
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}:
     get:
       operationId: getSitemap
-      summary: Google Search Console Get sitemap details
+      summary: Google Search Console Get Sitemap Details
       description: >-
         Retrieves information about a specific sitemap, including its type,
         last submission time, processing status, warnings, errors, and the
         number of URLs it contains.
       tags:
-        - Sitemaps
+      - Sitemaps
       security:
-        - OAuth2:
-            - https://www.googleapis.com/auth/webmasters.readonly
+      - OAuth2:
+        - https://www.googleapis.com/auth/webmasters.readonly
       parameters:
-        - $ref: '#/components/parameters/SiteUrl'
-        - $ref: '#/components/parameters/Feedpath'
+      - $ref: '#/components/parameters/SiteUrl'
+      - $ref: '#/components/parameters/Feedpath'
       responses:
         '200':
           description: Sitemap details.
@@ -248,6 +309,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WmxSitemap'
+              examples:
+                Getsitemap200Example:
+                  summary: Default getSitemap 200 response
+                  x-microcks-default: true
+                  value:
+                    path: https://www.example.com
+                    lastSubmitted: '2026-01-15T10:30:00Z'
+                    isPending: true
+                    isSitemapsIndex: true
+                    type: atomFeed
+                    lastDownloaded: '2026-01-15T10:30:00Z'
+                    warnings: 10
+                    errors: 10
+                    contents:
+                    - type: web
+                      submitted: 10
+                      indexed: 10
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -255,19 +333,22 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: submitSitemap
-      summary: Google Search Console Submit a sitemap
+      summary: Google Search Console Submit a Sitemap
       description: >-
         Submits a sitemap for a site. If the sitemap has already been submitted,
         it will be resubmitted and re-processed. The sitemap URL must be
         accessible to Googlebot. Submitting a sitemap index will submit all
         sitemaps listed in the index.
       tags:
-        - Sitemaps
+      - Sitemaps
       parameters:
-        - $ref: '#/components/parameters/SiteUrl'
-        - $ref: '#/components/parameters/Feedpath'
+      - $ref: '#/components/parameters/SiteUrl'
+      - $ref: '#/components/parameters/Feedpath'
       responses:
         '204':
           description: Sitemap submitted successfully.
@@ -278,19 +359,22 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteSitemap
-      summary: Google Search Console Delete a sitemap
+      summary: Google Search Console Delete a Sitemap
       description: >-
         Deletes a previously submitted sitemap from Search Console. This
         does not prevent Google from crawling the URLs in the sitemap; it
         only removes the sitemap from the list of submitted sitemaps in
         Search Console.
       tags:
-        - Sitemaps
+      - Sitemaps
       parameters:
-        - $ref: '#/components/parameters/SiteUrl'
-        - $ref: '#/components/parameters/Feedpath'
+      - $ref: '#/components/parameters/SiteUrl'
+      - $ref: '#/components/parameters/Feedpath'
       responses:
         '204':
           description: Sitemap deleted successfully.
@@ -301,10 +385,13 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /v1/urlInspection/index:inspect:
     post:
       operationId: inspectUrl
-      summary: Google Search Console Inspect a URL
+      summary: Google Search Console Inspect a Url
       description: >-
         Inspects a URL to retrieve detailed index status, crawl information,
         mobile usability findings, and rich results status. Returns the most
@@ -313,7 +400,7 @@ paths:
         endpoint uses the v1 URL path, separate from the webmasters/v3 paths
         used by other Search Console endpoints.
       tags:
-        - URL Inspection
+      - URL Inspection
       requestBody:
         required: true
         content:
@@ -331,6 +418,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InspectUrlIndexResponse'
+              examples:
+                Inspecturl200Example:
+                  summary: Default inspectUrl 200 response
+                  x-microcks-default: true
+                  value:
+                    inspectionResult:
+                      inspectionResultLink: https://www.example.com
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -340,6 +434,9 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
 components:
   securitySchemes:
     OAuth2:
@@ -420,8 +517,8 @@ components:
         Request body for querying search analytics data. Defines the date
         range, dimensions, filters, and aggregation type for the query.
       required:
-        - startDate
-        - endDate
+      - startDate
+      - endDate
       properties:
         startDate:
           type: string
@@ -430,6 +527,7 @@ components:
             Start date of the requested date range, in YYYY-MM-DD format.
             Must be less than or equal to the end date. Data is available
             starting from the date the site was added to Search Console.
+          example: '2026-01-15'
         endDate:
           type: string
           format: date
@@ -437,6 +535,7 @@ components:
             End date of the requested date range, in YYYY-MM-DD format.
             Must be greater than or equal to the start date. There is a
             processing delay of approximately 2-3 days.
+          example: '2026-01-15'
         dimensions:
           type: array
           description: >-
@@ -446,24 +545,26 @@ components:
           items:
             type: string
             enum:
-              - date
-              - query
-              - page
-              - country
-              - device
-              - searchAppearance
+            - date
+            - query
+            - page
+            - country
+            - device
+            - searchAppearance
+          example: []
         type:
           type: string
           description: >-
             Filter results to the specified search type. Defaults to web.
           enum:
-            - web
-            - image
-            - video
-            - news
-            - discover
-            - googleNews
+          - web
+          - image
+          - video
+          - news
+          - discover
+          - googleNews
           default: web
+          example: web
         dimensionFilterGroups:
           type: array
           description: >-
@@ -472,6 +573,7 @@ components:
             group type (AND by default).
           items:
             $ref: '#/components/schemas/DimensionFilterGroup'
+          example: []
         aggregationType:
           type: string
           description: >-
@@ -479,10 +581,11 @@ components:
             type. If byPage, all data is aggregated by page. If byProperty,
             all data is aggregated by property.
           enum:
-            - auto
-            - byPage
-            - byProperty
+          - auto
+          - byPage
+          - byProperty
           default: auto
+          example: auto
         rowLimit:
           type: integer
           description: >-
@@ -491,6 +594,7 @@ components:
           minimum: 1
           maximum: 25000
           default: 1000
+          example: 10
         startRow:
           type: integer
           description: >-
@@ -498,6 +602,7 @@ components:
             non-negative number. Default is 0.
           minimum: 0
           default: 0
+          example: 10
         dataState:
           type: string
           description: >-
@@ -505,10 +610,11 @@ components:
             data is returned. If set to all, both finalized and fresh data
             are included.
           enum:
-            - final
-            - all
+          - final
+          - all
           default: final
 
+          example: final
     DimensionFilterGroup:
       type: object
       description: A group of dimension filters applied to the query.
@@ -517,30 +623,33 @@ components:
           type: string
           description: How filters within this group are combined.
           enum:
-            - and
+          - and
           default: and
+          example: and
         filters:
           type: array
           description: Filters within this group.
           items:
             $ref: '#/components/schemas/DimensionFilter'
 
+          example: []
     DimensionFilter:
       type: object
       description: A filter on a specific dimension.
       required:
-        - dimension
-        - expression
+      - dimension
+      - expression
       properties:
         dimension:
           type: string
           description: The dimension to filter on.
           enum:
-            - query
-            - page
-            - country
-            - device
-            - searchAppearance
+          - query
+          - page
+          - country
+          - device
+          - searchAppearance
+          example: query
         operator:
           type: string
           description: >-
@@ -550,13 +659,14 @@ components:
             negations of contains and equals respectively. The
             includingRegex and excludingRegex operators use RE2 syntax.
           enum:
-            - contains
-            - equals
-            - notContains
-            - notEquals
-            - includingRegex
-            - excludingRegex
+          - contains
+          - equals
+          - notContains
+          - notEquals
+          - includingRegex
+          - excludingRegex
           default: equals
+          example: contains
         expression:
           type: string
           description: >-
@@ -564,6 +674,7 @@ components:
             code (ISO 3166-1 alpha-3). For device, use DESKTOP, MOBILE,
             or TABLET.
 
+          example: example_value
     SearchAnalyticsQueryResponse:
       type: object
       description: Response for a search analytics query.
@@ -576,14 +687,16 @@ components:
             the specified date range and filters, this field is omitted.
           items:
             $ref: '#/components/schemas/SearchAnalyticsRow'
+          example: []
         responseAggregationType:
           type: string
           description: How the results were aggregated.
           enum:
-            - auto
-            - byPage
-            - byProperty
+          - auto
+          - byPage
+          - byProperty
 
+          example: auto
     SearchAnalyticsRow:
       type: object
       description: >-
@@ -599,23 +712,27 @@ components:
             MOBILE, or TABLET.
           items:
             type: string
+          example: []
         clicks:
           type: number
           description: >-
             The number of clicks from Google Search results that landed on
             the property.
+          example: 42.5
         impressions:
           type: number
           description: >-
             The number of times a link to the property appeared in search
             results and was seen by a user (not necessarily scrolled into
             view).
+          example: 42.5
         ctr:
           type: number
           format: double
           description: >-
             Click-through rate: the ratio of clicks to impressions, expressed
             as a decimal between 0 and 1.
+          example: 42.5
         position:
           type: number
           format: double
@@ -624,6 +741,7 @@ components:
             1 is the topmost position. The value is averaged across all
             queries and pages.
 
+          example: 42.5
     SitesListResponse:
       type: object
       description: Response for listing Search Console sites.
@@ -634,6 +752,7 @@ components:
           items:
             $ref: '#/components/schemas/WmxSite'
 
+          example: []
     WmxSite:
       type: object
       description: >-
@@ -646,16 +765,18 @@ components:
             The URL of the site. For URL-prefix properties, this is the
             full URL including protocol. For domain properties, this uses
             the sc-domain: prefix (e.g., sc-domain:example.com).
+          example: https://www.example.com
         permissionLevel:
           type: string
           description: >-
             The user's permission level for this site in Search Console.
           enum:
-            - siteOwner
-            - siteFullUser
-            - siteRestrictedUser
-            - siteUnverifiedUser
+          - siteOwner
+          - siteFullUser
+          - siteRestrictedUser
+          - siteUnverifiedUser
 
+          example: siteOwner
     SitemapsListResponse:
       type: object
       description: Response for listing sitemaps.
@@ -666,6 +787,7 @@ components:
           items:
             $ref: '#/components/schemas/WmxSitemap'
 
+          example: []
     WmxSitemap:
       type: object
       description: >-
@@ -676,38 +798,46 @@ components:
           type: string
           format: uri
           description: The URL of the sitemap.
+          example: https://www.example.com
         lastSubmitted:
           type: string
           format: date-time
           description: >-
             Date and time when the sitemap was last submitted to Search Console.
+          example: '2026-01-15T10:30:00Z'
         isPending:
           type: boolean
           description: Whether the sitemap is still being processed.
+          example: true
         isSitemapsIndex:
           type: boolean
           description: Whether this is a sitemap index file.
+          example: true
         type:
           type: string
           description: The type of content in the sitemap.
           enum:
-            - atomFeed
-            - rssFeed
-            - sitemap
-            - urlList
-            - patternSitemap
-            - notSitemap
+          - atomFeed
+          - rssFeed
+          - sitemap
+          - urlList
+          - patternSitemap
+          - notSitemap
+          example: atomFeed
         lastDownloaded:
           type: string
           format: date-time
           description: >-
             Date and time when the sitemap was last downloaded by Google.
+          example: '2026-01-15T10:30:00Z'
         warnings:
           type: integer
           description: Number of warnings for the sitemap.
+          example: 10
         errors:
           type: integer
           description: Number of errors for the sitemap.
+          example: 10
         contents:
           type: array
           description: >-
@@ -715,6 +845,7 @@ components:
           items:
             $ref: '#/components/schemas/WmxSitemapContent'
 
+          example: []
     WmxSitemapContent:
       type: object
       description: Content type information within a sitemap.
@@ -723,31 +854,34 @@ components:
           type: string
           description: The type of content in this sitemap segment.
           enum:
-            - web
-            - image
-            - video
-            - news
-            - mobile
-            - androidApp
-            - pattern
-            - iosApp
-            - dataFeedElement
+          - web
+          - image
+          - video
+          - news
+          - mobile
+          - androidApp
+          - pattern
+          - iosApp
+          - dataFeedElement
+          example: web
         submitted:
           type: integer
           format: int64
           description: The number of URLs of this type submitted in the sitemap.
+          example: 10
         indexed:
           type: integer
           format: int64
           description: >-
             The number of URLs of this type that have been indexed by Google.
 
+          example: 10
     InspectUrlIndexRequest:
       type: object
       description: Request body for the URL Inspection API.
       required:
-        - inspectionUrl
-        - siteUrl
+      - inspectionUrl
+      - siteUrl
       properties:
         inspectionUrl:
           type: string
@@ -755,12 +889,14 @@ components:
           description: >-
             The fully qualified URL to inspect. Must be under the specified
             site property.
+          example: https://www.example.com
         siteUrl:
           type: string
           description: >-
             The URL of the site property in Search Console. Can be a
             URL-prefix property (e.g., https://example.com/) or a domain
             property (e.g., sc-domain:example.com).
+          example: https://www.example.com
         languageCode:
           type: string
           description: >-
@@ -786,6 +922,7 @@ components:
           format: uri
           description: >-
             Link to the URL inspection result in the Search Console UI.
+          example: https://www.example.com
         indexStatusResult:
           $ref: '#/components/schemas/IndexStatusInspectionResult'
         mobileUsabilityResult:
@@ -802,11 +939,12 @@ components:
           description: >-
             The overall verdict for the index status of the URL.
           enum:
-            - VERDICT_UNSPECIFIED
-            - PASS
-            - PARTIAL
-            - FAIL
-            - NEUTRAL
+          - VERDICT_UNSPECIFIED
+          - PASS
+          - PARTIAL
+          - FAIL
+          - NEUTRAL
+          example: VERDICT_UNSPECIFIED
         coverageState:
           type: string
           description: >-
@@ -814,57 +952,64 @@ components:
             appears in the index. Common values include Submitted and
             indexed, Crawled - currently not indexed, Discovered -
             currently not indexed, and URL is unknown to Google.
+          example: example_value
         robotsTxtState:
           type: string
           description: >-
             Whether the page is blocked by robots.txt.
           enum:
-            - ROBOTS_TXT_STATE_UNSPECIFIED
-            - ALLOWED
-            - DISALLOWED
+          - ROBOTS_TXT_STATE_UNSPECIFIED
+          - ALLOWED
+          - DISALLOWED
+          example: ROBOTS_TXT_STATE_UNSPECIFIED
         indexingState:
           type: string
           description: >-
             Whether the page is blocked from indexing via noindex directives.
           enum:
-            - INDEXING_STATE_UNSPECIFIED
-            - INDEXING_ALLOWED
-            - BLOCKED_BY_META_TAG
-            - BLOCKED_BY_HTTP_HEADER
-            - BLOCKED_BY_ROBOTS_TXT
+          - INDEXING_STATE_UNSPECIFIED
+          - INDEXING_ALLOWED
+          - BLOCKED_BY_META_TAG
+          - BLOCKED_BY_HTTP_HEADER
+          - BLOCKED_BY_ROBOTS_TXT
+          example: INDEXING_STATE_UNSPECIFIED
         lastCrawlTime:
           type: string
           format: date-time
           description: >-
             The last time this URL was crawled by Google, in RFC 3339 format.
+          example: '2026-01-15T10:30:00Z'
         pageFetchState:
           type: string
           description: >-
             The result of the page fetch during the last crawl.
           enum:
-            - PAGE_FETCH_STATE_UNSPECIFIED
-            - SUCCESSFUL
-            - SOFT_404
-            - BLOCKED_ROBOTS_TXT
-            - NOT_FOUND
-            - ACCESS_DENIED
-            - SERVER_ERROR
-            - REDIRECT_ERROR
-            - ACCESS_FORBIDDEN
-            - BLOCKED_4XX
-            - INTERNAL_CRAWL_ERROR
-            - INVALID_URL
+          - PAGE_FETCH_STATE_UNSPECIFIED
+          - SUCCESSFUL
+          - SOFT_404
+          - BLOCKED_ROBOTS_TXT
+          - NOT_FOUND
+          - ACCESS_DENIED
+          - SERVER_ERROR
+          - REDIRECT_ERROR
+          - ACCESS_FORBIDDEN
+          - BLOCKED_4XX
+          - INTERNAL_CRAWL_ERROR
+          - INVALID_URL
+          example: PAGE_FETCH_STATE_UNSPECIFIED
         googleCanonical:
           type: string
           format: uri
           description: >-
             The URL that Google selected as canonical for this page.
+          example: https://www.example.com
         userCanonical:
           type: string
           format: uri
           description: >-
             The canonical URL declared by the page via rel=canonical or
             the Canonical HTTP header.
+          example: https://www.example.com
         sitemap:
           type: array
           description: >-
@@ -872,6 +1017,7 @@ components:
           items:
             type: string
             format: uri
+          example: []
         referringUrls:
           type: array
           description: >-
@@ -879,15 +1025,17 @@ components:
           items:
             type: string
             format: uri
+          example: https://www.example.com
         crawledAs:
           type: string
           description: >-
             The user agent type used to crawl the URL.
           enum:
-            - CRAWLING_USER_AGENT_UNSPECIFIED
-            - DESKTOP
-            - MOBILE
+          - CRAWLING_USER_AGENT_UNSPECIFIED
+          - DESKTOP
+          - MOBILE
 
+          example: CRAWLING_USER_AGENT_UNSPECIFIED
     MobileUsabilityInspectionResult:
       type: object
       description: Mobile usability inspection results for a URL.
@@ -896,17 +1044,19 @@ components:
           type: string
           description: The overall mobile usability verdict.
           enum:
-            - VERDICT_UNSPECIFIED
-            - PASS
-            - PARTIAL
-            - FAIL
-            - NEUTRAL
+          - VERDICT_UNSPECIFIED
+          - PASS
+          - PARTIAL
+          - FAIL
+          - NEUTRAL
+          example: VERDICT_UNSPECIFIED
         issues:
           type: array
           description: A list of mobile usability issues found.
           items:
             $ref: '#/components/schemas/MobileUsabilityIssue'
 
+          example: []
     MobileUsabilityIssue:
       type: object
       description: A specific mobile usability issue.
@@ -915,24 +1065,27 @@ components:
           type: string
           description: The type of mobile usability issue.
           enum:
-            - MOBILE_USABILITY_ISSUE_TYPE_UNSPECIFIED
-            - USES_INCOMPATIBLE_PLUGINS
-            - CONFIGURE_VIEWPORT
-            - FIXED_WIDTH_VIEWPORT
-            - SIZE_CONTENT_TO_VIEWPORT
-            - USE_LEGIBLE_FONT_SIZES
-            - TAP_TARGETS_TOO_CLOSE
+          - MOBILE_USABILITY_ISSUE_TYPE_UNSPECIFIED
+          - USES_INCOMPATIBLE_PLUGINS
+          - CONFIGURE_VIEWPORT
+          - FIXED_WIDTH_VIEWPORT
+          - SIZE_CONTENT_TO_VIEWPORT
+          - USE_LEGIBLE_FONT_SIZES
+          - TAP_TARGETS_TOO_CLOSE
+          example: MOBILE_USABILITY_ISSUE_TYPE_UNSPECIFIED
         severity:
           type: string
           description: The severity of the issue.
           enum:
-            - SEVERITY_UNSPECIFIED
-            - WARNING
-            - ERROR
+          - SEVERITY_UNSPECIFIED
+          - WARNING
+          - ERROR
+          example: SEVERITY_UNSPECIFIED
         message:
           type: string
           description: A human-readable description of the issue.
 
+          example: example_value
     RichResultsInspectionResult:
       type: object
       description: Rich results inspection results for a URL.
@@ -941,11 +1094,12 @@ components:
           type: string
           description: The overall rich results verdict.
           enum:
-            - VERDICT_UNSPECIFIED
-            - PASS
-            - PARTIAL
-            - FAIL
-            - NEUTRAL
+          - VERDICT_UNSPECIFIED
+          - PASS
+          - PARTIAL
+          - FAIL
+          - NEUTRAL
+          example: VERDICT_UNSPECIFIED
         detectedItems:
           type: array
           description: >-
@@ -953,6 +1107,7 @@ components:
           items:
             $ref: '#/components/schemas/DetectedItems'
 
+          example: []
     DetectedItems:
       type: object
       description: A group of detected rich result items of a single type.
@@ -962,12 +1117,14 @@ components:
           description: >-
             The rich result type detected (e.g., Product, Recipe, FAQ,
             BreadcrumbList, Article).
+          example: example_value
         items:
           type: array
           description: The individual detected items of this type.
           items:
             $ref: '#/components/schemas/Item'
 
+          example: []
     Item:
       type: object
       description: A single detected rich result item.
@@ -975,12 +1132,14 @@ components:
         name:
           type: string
           description: The name or identifier of the rich result item.
+          example: Example Title
         issues:
           type: array
           description: Issues found with this rich result item.
           items:
             $ref: '#/components/schemas/RichResultsIssue'
 
+          example: []
     RichResultsIssue:
       type: object
       description: A specific issue with a rich result item.
@@ -988,17 +1147,20 @@ components:
         issueType:
           type: string
           description: The type identifier for this issue.
+          example: example_value
         severity:
           type: string
           description: The severity of the issue.
           enum:
-            - SEVERITY_UNSPECIFIED
-            - WARNING
-            - ERROR
+          - SEVERITY_UNSPECIFIED
+          - WARNING
+          - ERROR
+          example: SEVERITY_UNSPECIFIED
         issueMessage:
           type: string
           description: A human-readable description of the issue.
 
+          example: example_value
     Error:
       type: object
       description: Standard Google API error response.
@@ -1026,3 +1188,4 @@ components:
                     type: string
                   reason:
                     type: string
+          example: example_value

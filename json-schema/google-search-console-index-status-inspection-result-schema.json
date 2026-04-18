@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "IndexStatusInspectionResult",
+  "type": "object",
+  "description": "Index status inspection results for a URL.",
+  "properties": {
+    "verdict": {
+      "type": "string",
+      "description": "The overall verdict for the index status of the URL."
+    },
+    "coverageState": {
+      "type": "string",
+      "description": "The coverage state of the URL, indicating whether and how it appears in the index. Common values include Submitted and indexed, Crawled - currently not indexed, Discovered - currently not indexed, and URL is unknown to Google."
+    },
+    "robotsTxtState": {
+      "type": "string",
+      "description": "Whether the page is blocked by robots.txt."
+    },
+    "indexingState": {
+      "type": "string",
+      "description": "Whether the page is blocked from indexing via noindex directives."
+    },
+    "lastCrawlTime": {
+      "type": "string",
+      "description": "The last time this URL was crawled by Google, in RFC 3339 format."
+    },
+    "pageFetchState": {
+      "type": "string",
+      "description": "The result of the page fetch during the last crawl."
+    },
+    "googleCanonical": {
+      "type": "string",
+      "description": "The URL that Google selected as canonical for this page."
+    },
+    "userCanonical": {
+      "type": "string",
+      "description": "The canonical URL declared by the page via rel=canonical or the Canonical HTTP header."
+    },
+    "sitemap": {
+      "type": "array",
+      "description": "Any sitemaps that include this URL."
+    },
+    "referringUrls": {
+      "type": "array",
+      "description": "URLs that refer to this URL, as discovered during crawling."
+    },
+    "crawledAs": {
+      "type": "string",
+      "description": "The user agent type used to crawl the URL."
+    }
+  }
+}

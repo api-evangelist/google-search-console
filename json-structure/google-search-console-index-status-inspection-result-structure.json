@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "IndexStatusInspectionResult",
+  "type": "object",
+  "properties": {
+    "verdict": {
+      "type": "string"
+    },
+    "coverageState": {
+      "type": "string"
+    },
+    "robotsTxtState": {
+      "type": "string"
+    },
+    "indexingState": {
+      "type": "string"
+    },
+    "lastCrawlTime": {
+      "type": "string"
+    },
+    "pageFetchState": {
+      "type": "string"
+    },
+    "googleCanonical": {
+      "type": "string"
+    },
+    "userCanonical": {
+      "type": "string"
+    },
+    "sitemap": {
+      "type": "array"
+    },
+    "referringUrls": {
+      "type": "array"
+    },
+    "crawledAs": {
+      "type": "string"
+    }
+  }
+}

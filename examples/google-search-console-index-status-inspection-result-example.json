@@ -1,0 +1,13 @@
+{
+  "verdict": "example_value",
+  "coverageState": "example_value",
+  "robotsTxtState": "example_value",
+  "indexingState": "example_value",
+  "lastCrawlTime": "example_value",
+  "pageFetchState": "example_value",
+  "googleCanonical": "example_value",
+  "userCanonical": "example_value",
+  "sitemap": [],
+  "referringUrls": "https://www.example.com",
+  "crawledAs": "example_value"
+}

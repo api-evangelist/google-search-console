@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "SearchAnalyticsRow",
+  "type": "object",
+  "properties": {
+    "keys": {
+      "type": "array"
+    },
+    "clicks": {
+      "type": "number"
+    },
+    "impressions": {
+      "type": "number"
+    },
+    "ctr": {
+      "type": "number"
+    },
+    "position": {
+      "type": "number"
+    }
+  }
+}

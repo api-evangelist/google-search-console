@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SitesListResponse",
+  "type": "object",
+  "description": "Response for listing Search Console sites.",
+  "properties": {
+    "siteEntry": {
+      "type": "array",
+      "description": "List of verified sites."
+    }
+  }
+}

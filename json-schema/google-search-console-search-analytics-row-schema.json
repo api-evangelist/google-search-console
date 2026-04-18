@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SearchAnalyticsRow",
+  "type": "object",
+  "description": "A single row of search analytics data. Contains dimension keys and their associated metric values.",
+  "properties": {
+    "keys": {
+      "type": "array",
+      "description": "A list of dimension values for this row, in the same order as the dimensions specified in the request. For country, the value is a 3-letter country code. For device, the value is DESKTOP, MOBILE, or TABLET."
+    },
+    "clicks": {
+      "type": "number",
+      "description": "The number of clicks from Google Search results that landed on the property."
+    },
+    "impressions": {
+      "type": "number",
+      "description": "The number of times a link to the property appeared in search results and was seen by a user (not necessarily scrolled into view)."
+    },
+    "ctr": {
+      "type": "number",
+      "description": "Click-through rate: the ratio of clicks to impressions, expressed as a decimal between 0 and 1."
+    },
+    "position": {
+      "type": "number",
+      "description": "The average position of the property in search results, where 1 is the topmost position. The value is averaged across all queries and pages."
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UrlInspectionResult",
+  "type": "object",
+  "description": "The aggregated inspection result for a URL, including index status, crawl information, mobile usability, and rich results.",
+  "properties": {
+    "inspectionResultLink": {
+      "type": "string",
+      "description": "Link to the URL inspection result in the Search Console UI."
+    }
+  }
+}

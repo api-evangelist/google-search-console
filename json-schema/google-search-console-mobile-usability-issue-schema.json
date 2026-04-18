@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MobileUsabilityIssue",
+  "type": "object",
+  "description": "A specific mobile usability issue.",
+  "properties": {
+    "issueType": {
+      "type": "string",
+      "description": "The type of mobile usability issue."
+    },
+    "severity": {
+      "type": "string",
+      "description": "The severity of the issue."
+    },
+    "message": {
+      "type": "string",
+      "description": "A human-readable description of the issue."
+    }
+  }
+}

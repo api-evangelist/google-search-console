@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WmxSite",
+  "type": "object",
+  "description": "A Search Console site resource representing a verified property. Properties can be URL-prefix properties or domain properties.",
+  "properties": {
+    "siteUrl": {
+      "type": "string",
+      "description": "The URL of the site. For URL-prefix properties, this is the full URL including protocol. For domain properties, this uses the sc-domain: prefix (e.g., sc-domain:example.com)."
+    },
+    "permissionLevel": {
+      "type": "string",
+      "description": "The user's permission level for this site in Search Console."
+    }
+  }
+}

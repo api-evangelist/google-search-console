@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "DetectedItems",
+  "type": "object",
+  "properties": {
+    "richResultType": {
+      "type": "string"
+    },
+    "items": {
+      "type": "array"
+    }
+  }
+}

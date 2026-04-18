@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RichResultsIssue",
+  "type": "object",
+  "description": "A specific issue with a rich result item.",
+  "properties": {
+    "issueType": {
+      "type": "string",
+      "description": "The type identifier for this issue."
+    },
+    "severity": {
+      "type": "string",
+      "description": "The severity of the issue."
+    },
+    "issueMessage": {
+      "type": "string",
+      "description": "A human-readable description of the issue."
+    }
+  }
+}

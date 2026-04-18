@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WmxSitemap",
+  "type": "object",
+  "description": "Information about a sitemap submitted to Search Console. Includes processing status, error counts, and content details.",
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "The URL of the sitemap."
+    },
+    "lastSubmitted": {
+      "type": "string",
+      "description": "Date and time when the sitemap was last submitted to Search Console."
+    },
+    "isPending": {
+      "type": "boolean",
+      "description": "Whether the sitemap is still being processed."
+    },
+    "isSitemapsIndex": {
+      "type": "boolean",
+      "description": "Whether this is a sitemap index file."
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of content in the sitemap."
+    },
+    "lastDownloaded": {
+      "type": "string",
+      "description": "Date and time when the sitemap was last downloaded by Google."
+    },
+    "warnings": {
+      "type": "integer",
+      "description": "Number of warnings for the sitemap."
+    },
+    "errors": {
+      "type": "integer",
+      "description": "Number of errors for the sitemap."
+    },
+    "contents": {
+      "type": "array",
+      "description": "Content details for this sitemap, broken down by content type."
+    }
+  }
+}

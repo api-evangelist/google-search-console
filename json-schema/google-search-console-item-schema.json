@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Item",
+  "type": "object",
+  "description": "A single detected rich result item.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name or identifier of the rich result item."
+    },
+    "issues": {
+      "type": "array",
+      "description": "Issues found with this rich result item."
+    }
+  }
+}

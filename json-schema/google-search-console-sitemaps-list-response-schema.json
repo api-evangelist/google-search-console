@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SitemapsListResponse",
+  "type": "object",
+  "description": "Response for listing sitemaps.",
+  "properties": {
+    "sitemap": {
+      "type": "array",
+      "description": "List of sitemaps for the site."
+    }
+  }
+}

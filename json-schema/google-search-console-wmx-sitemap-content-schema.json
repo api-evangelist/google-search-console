@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WmxSitemapContent",
+  "type": "object",
+  "description": "Content type information within a sitemap.",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "The type of content in this sitemap segment."
+    },
+    "submitted": {
+      "type": "integer",
+      "description": "The number of URLs of this type submitted in the sitemap."
+    },
+    "indexed": {
+      "type": "integer",
+      "description": "The number of URLs of this type that have been indexed by Google."
+    }
+  }
+}

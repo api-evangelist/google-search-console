@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "WmxSitemap",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string"
+    },
+    "lastSubmitted": {
+      "type": "string"
+    },
+    "isPending": {
+      "type": "boolean"
+    },
+    "isSitemapsIndex": {
+      "type": "boolean"
+    },
+    "type": {
+      "type": "string"
+    },
+    "lastDownloaded": {
+      "type": "string"
+    },
+    "warnings": {
+      "type": "integer"
+    },
+    "errors": {
+      "type": "integer"
+    },
+    "contents": {
+      "type": "array"
+    }
+  }
+}

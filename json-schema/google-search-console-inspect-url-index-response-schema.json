@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InspectUrlIndexResponse",
+  "type": "object",
+  "description": "Response from the URL Inspection API.",
+  "properties": {}
+}
