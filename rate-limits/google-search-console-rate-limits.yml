@@ -4,96 +4,89 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Google Search Console
 providerId: google-search-console
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
-  - Analytics
-  - Google
+  - Rate Limiting
   - Search
   - SEO
   - Webmaster Tools
-  - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Google Search Console API surface. Captures
-  per-tier quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values
-  to be replaced with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+description: Google Search Console API enforces three categories of quotas — Search Analytics, URL
+  Inspection, and All Other Resources — measured in queries-per-minute (QPM), queries-per-day (QPD),
+  and queries-per-second (QPS) at per-site, per-user, and per-project scopes. Usage can be tracked via
+  the quota tab in the Google Cloud Console.
+sources:
+  - https://developers.google.com/webmaster-tools/limits
 responseCodes:
   throttled: 429
   quotaExceeded: 429
   serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
+  - name: Search Analytics — per-site
+    scope: site
     metric: requests_per_minute
-    limit: 10
-    burst: 20
+    limit: 1200
     timeFrame: minute
-    applies:
-      - Google Search Console API
-      - Google Search Console URL Testing Tools API
-      - Google Indexing API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Google Search Console API
-      - Google Search Console URL Testing Tools API
-      - Google Indexing API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
+  - name: Search Analytics — per-user
+    scope: user
     metric: requests_per_minute
-    limit: 100
-    burst: 200
+    limit: 1200
     timeFrame: minute
-    applies:
-      - Google Search Console API
-      - Google Search Console URL Testing Tools API
-      - Google Indexing API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Google Search Console API
-      - Google Search Console URL Testing Tools API
-      - Google Indexing API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
+  - name: Search Analytics — per-project (per minute)
+    scope: project
     metric: requests_per_minute
-    limit: 1000
-    burst: 5000
+    limit: 40000
     timeFrame: minute
-    applies:
-      - Google Search Console API
-      - Google Search Console URL Testing Tools API
-      - Google Indexing API
+  - name: Search Analytics — per-project (per day)
+    scope: project
+    metric: requests_per_day
+    limit: 30000000
+    timeFrame: day
+  - name: URL Inspection — per-site (per day)
+    scope: site
+    metric: requests_per_day
+    limit: 2000
+    timeFrame: day
+  - name: URL Inspection — per-site (per minute)
+    scope: site
+    metric: requests_per_minute
+    limit: 600
+    timeFrame: minute
+  - name: URL Inspection — per-project (per day)
+    scope: project
+    metric: requests_per_day
+    limit: 10000000
+    timeFrame: day
+  - name: URL Inspection — per-project (per minute)
+    scope: project
+    metric: requests_per_minute
+    limit: 15000
+    timeFrame: minute
+  - name: All other resources — per-user QPS
+    scope: user
+    metric: requests_per_second
+    limit: 20
+    timeFrame: second
+  - name: All other resources — per-user QPM
+    scope: user
+    metric: requests_per_minute
+    limit: 200
+    timeFrame: minute
+  - name: All other resources — per-project QPD
+    scope: project
+    metric: requests_per_day
+    limit: 100000000
+    timeFrame: day
 policies:
   - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+    description: Use exponential backoff with jitter on 429 / 503 responses; respect Retry-After when
+      present.
+  - name: Quota visibility
+    description: Track quota usage via the quota tab in the Google APIs Console for the project; raise
+      via Google Cloud support if needed.
+  - name: Load measurement
+    description: Search Analytics load is measured in 10-minute (short-term) and 1-day (long-term)
+      windows; spikes within either window can produce 429s before the per-minute limit is reached.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
