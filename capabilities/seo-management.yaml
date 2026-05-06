@@ -1,269 +1,449 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "Google Search Console SEO Management"
-  description: "Unified SEO management workflow combining search analytics, sitemap management, URL inspection, and site management for SEO specialists and webmasters."
+  label: Google Search Console SEO Management
+  description: Unified SEO management workflow combining search analytics, sitemap management, URL inspection, and site management
+    for SEO specialists and webmasters.
   tags:
-    - Google
-    - Search Console
-    - SEO
-    - Analytics
-    - Webmaster
-  created: "2026-04-18"
-  modified: "2026-04-18"
-
+  - Google
+  - Search Console
+  - SEO
+  - Analytics
+  - Webmaster
+  created: '2026-04-18'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      GOOGLE_OAUTH_TOKEN: GOOGLE_OAUTH_TOKEN
-
+- namespace: env
+  keys:
+    GOOGLE_OAUTH_TOKEN: GOOGLE_OAUTH_TOKEN
 capability:
   consumes:
-    - import: search-console
-      location: ./shared/search-console.yaml
-
+  - type: http
+    namespace: search-console
+    baseUri: https://searchconsole.googleapis.com
+    description: Google Search Console API for search analytics, sitemaps, URL inspection, and site management.
+    authentication:
+      type: bearer
+      token: '{{GOOGLE_OAUTH_TOKEN}}'
+    resources:
+    - name: sites
+      path: /webmasters/v3/sites
+      description: Manage Search Console site properties.
+      operations:
+      - name: list-sites
+        method: GET
+        description: List all Search Console sites for the authenticated user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-site
+        method: GET
+        description: Get details for a specific site.
+        inputParameters:
+        - name: siteUrl
+          in: path
+          type: string
+          required: true
+          description: The site URL including protocol.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: add-site
+        method: PUT
+        description: Add a site to Search Console.
+        inputParameters:
+        - name: siteUrl
+          in: path
+          type: string
+          required: true
+          description: The site URL to add.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: delete-site
+        method: DELETE
+        description: Remove a site from Search Console.
+        inputParameters:
+        - name: siteUrl
+          in: path
+          type: string
+          required: true
+          description: The site URL to remove.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: search-analytics
+      path: /webmasters/v3/sites/{siteUrl}/searchAnalytics
+      description: Query search traffic data.
+      operations:
+      - name: query-search-analytics
+        method: POST
+        description: Query search analytics data with filters and dimensions.
+        inputParameters:
+        - name: siteUrl
+          in: path
+          type: string
+          required: true
+          description: The site URL to query.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            startDate: '{{tools.startDate}}'
+            endDate: '{{tools.endDate}}'
+            dimensions: '{{tools.dimensions}}'
+            type: '{{tools.type}}'
+            rowLimit: '{{tools.rowLimit}}'
+    - name: sitemaps
+      path: /webmasters/v3/sites/{siteUrl}/sitemaps
+      description: Manage sitemaps for a site.
+      operations:
+      - name: list-sitemaps
+        method: GET
+        description: List sitemaps submitted for a site.
+        inputParameters:
+        - name: siteUrl
+          in: path
+          type: string
+          required: true
+          description: The site URL.
+        - name: sitemapIndex
+          in: query
+          type: string
+          required: false
+          description: Filter by sitemap index URL.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-sitemap
+        method: GET
+        description: Get details for a specific sitemap.
+        inputParameters:
+        - name: siteUrl
+          in: path
+          type: string
+          required: true
+          description: The site URL.
+        - name: feedpath
+          in: path
+          type: string
+          required: true
+          description: The sitemap URL.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: submit-sitemap
+        method: PUT
+        description: Submit a sitemap for a site.
+        inputParameters:
+        - name: siteUrl
+          in: path
+          type: string
+          required: true
+          description: The site URL.
+        - name: feedpath
+          in: path
+          type: string
+          required: true
+          description: The sitemap URL to submit.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: delete-sitemap
+        method: DELETE
+        description: Delete a previously submitted sitemap.
+        inputParameters:
+        - name: siteUrl
+          in: path
+          type: string
+          required: true
+          description: The site URL.
+        - name: feedpath
+          in: path
+          type: string
+          required: true
+          description: The sitemap URL to delete.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: url-inspection
+      path: /v1/urlInspection/index
+      description: Inspect individual URLs for indexing status.
+      operations:
+      - name: inspect-url
+        method: POST
+        description: Inspect a URL for index status, crawl info, mobile usability, and rich results.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            inspectionUrl: '{{tools.inspectionUrl}}'
+            siteUrl: '{{tools.siteUrl}}'
+            languageCode: '{{tools.languageCode}}'
   exposes:
-    - type: rest
-      port: 8080
-      namespace: seo-management-api
-      description: "Unified REST API for SEO management combining search analytics, sitemaps, URL inspection, and site management."
-      resources:
-        - path: /v1/sites
-          name: sites
-          description: "Manage Search Console sites."
-          operations:
-            - method: GET
-              name: list-sites
-              description: "List all Search Console sites."
-              call: "search-console.list-sites"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-            - method: GET
-              name: get-site
-              description: "Get details for a specific site."
-              call: "search-console.get-site"
-              with:
-                siteUrl: "rest.siteUrl"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-            - method: PUT
-              name: add-site
-              description: "Add a site to Search Console."
-              call: "search-console.add-site"
-              with:
-                siteUrl: "rest.siteUrl"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-            - method: DELETE
-              name: delete-site
-              description: "Remove a site from Search Console."
-              call: "search-console.delete-site"
-              with:
-                siteUrl: "rest.siteUrl"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/search-analytics
-          name: search-analytics
-          description: "Query search traffic data."
-          operations:
-            - method: POST
-              name: query-search-analytics
-              description: "Query search analytics data with filters."
-              call: "search-console.query-search-analytics"
-              with:
-                siteUrl: "rest.siteUrl"
-                startDate: "rest.startDate"
-                endDate: "rest.endDate"
-                dimensions: "rest.dimensions"
-                type: "rest.type"
-                rowLimit: "rest.rowLimit"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/sitemaps
-          name: sitemaps
-          description: "Manage sitemaps."
-          operations:
-            - method: GET
-              name: list-sitemaps
-              description: "List sitemaps for a site."
-              call: "search-console.list-sitemaps"
-              with:
-                siteUrl: "rest.siteUrl"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-            - method: GET
-              name: get-sitemap
-              description: "Get sitemap details."
-              call: "search-console.get-sitemap"
-              with:
-                siteUrl: "rest.siteUrl"
-                feedpath: "rest.feedpath"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-            - method: PUT
-              name: submit-sitemap
-              description: "Submit a sitemap."
-              call: "search-console.submit-sitemap"
-              with:
-                siteUrl: "rest.siteUrl"
-                feedpath: "rest.feedpath"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-            - method: DELETE
-              name: delete-sitemap
-              description: "Delete a sitemap."
-              call: "search-console.delete-sitemap"
-              with:
-                siteUrl: "rest.siteUrl"
-                feedpath: "rest.feedpath"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/url-inspection
-          name: url-inspection
-          description: "Inspect URLs for indexing status."
-          operations:
-            - method: POST
-              name: inspect-url
-              description: "Inspect a URL for index status and rich results."
-              call: "search-console.inspect-url"
-              with:
-                inspectionUrl: "rest.inspectionUrl"
-                siteUrl: "rest.siteUrl"
-                languageCode: "rest.languageCode"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9090
-      namespace: seo-management-mcp
-      transport: http
-      description: "MCP server for AI-assisted SEO management with search analytics, sitemaps, URL inspection, and site management."
-      tools:
-        - name: list-sites
-          description: "List all Search Console sites for the authenticated user."
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "search-console.list-sites"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: get-site
-          description: "Get details for a specific Search Console site."
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "search-console.get-site"
-          with:
-            siteUrl: "tools.siteUrl"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: add-site
-          description: "Add a site to Search Console."
-          hints:
-            readOnly: false
-            openWorld: true
-          call: "search-console.add-site"
-          with:
-            siteUrl: "tools.siteUrl"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: delete-site
-          description: "Remove a site from Search Console."
-          hints:
-            readOnly: false
-            destructive: true
-          call: "search-console.delete-site"
-          with:
-            siteUrl: "tools.siteUrl"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: query-search-analytics
-          description: "Query search traffic data with filters and dimensions."
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "search-console.query-search-analytics"
-          with:
-            siteUrl: "tools.siteUrl"
-            startDate: "tools.startDate"
-            endDate: "tools.endDate"
-            dimensions: "tools.dimensions"
-            type: "tools.type"
-            rowLimit: "tools.rowLimit"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-sitemaps
-          description: "List sitemaps submitted for a site."
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "search-console.list-sitemaps"
-          with:
-            siteUrl: "tools.siteUrl"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: get-sitemap
-          description: "Get details for a specific sitemap."
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "search-console.get-sitemap"
-          with:
-            siteUrl: "tools.siteUrl"
-            feedpath: "tools.feedpath"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: submit-sitemap
-          description: "Submit a sitemap for crawling."
-          hints:
-            readOnly: false
-            openWorld: true
-          call: "search-console.submit-sitemap"
-          with:
-            siteUrl: "tools.siteUrl"
-            feedpath: "tools.feedpath"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: delete-sitemap
-          description: "Delete a previously submitted sitemap."
-          hints:
-            readOnly: false
-            destructive: true
-          call: "search-console.delete-sitemap"
-          with:
-            siteUrl: "tools.siteUrl"
-            feedpath: "tools.feedpath"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: inspect-url
-          description: "Inspect a URL for index status, crawl info, mobile usability, and rich results."
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "search-console.inspect-url"
-          with:
-            inspectionUrl: "tools.inspectionUrl"
-            siteUrl: "tools.siteUrl"
-            languageCode: "tools.languageCode"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8080
+    namespace: seo-management-api
+    description: Unified REST API for SEO management combining search analytics, sitemaps, URL inspection, and site management.
+    resources:
+    - path: /v1/sites
+      name: sites
+      description: Manage Search Console sites.
+      operations:
+      - method: GET
+        name: list-sites
+        description: List all Search Console sites.
+        call: search-console.list-sites
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: get-site
+        description: Get details for a specific site.
+        call: search-console.get-site
+        with:
+          siteUrl: rest.siteUrl
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: add-site
+        description: Add a site to Search Console.
+        call: search-console.add-site
+        with:
+          siteUrl: rest.siteUrl
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: delete-site
+        description: Remove a site from Search Console.
+        call: search-console.delete-site
+        with:
+          siteUrl: rest.siteUrl
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/search-analytics
+      name: search-analytics
+      description: Query search traffic data.
+      operations:
+      - method: POST
+        name: query-search-analytics
+        description: Query search analytics data with filters.
+        call: search-console.query-search-analytics
+        with:
+          siteUrl: rest.siteUrl
+          startDate: rest.startDate
+          endDate: rest.endDate
+          dimensions: rest.dimensions
+          type: rest.type
+          rowLimit: rest.rowLimit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/sitemaps
+      name: sitemaps
+      description: Manage sitemaps.
+      operations:
+      - method: GET
+        name: list-sitemaps
+        description: List sitemaps for a site.
+        call: search-console.list-sitemaps
+        with:
+          siteUrl: rest.siteUrl
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: get-sitemap
+        description: Get sitemap details.
+        call: search-console.get-sitemap
+        with:
+          siteUrl: rest.siteUrl
+          feedpath: rest.feedpath
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: submit-sitemap
+        description: Submit a sitemap.
+        call: search-console.submit-sitemap
+        with:
+          siteUrl: rest.siteUrl
+          feedpath: rest.feedpath
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: delete-sitemap
+        description: Delete a sitemap.
+        call: search-console.delete-sitemap
+        with:
+          siteUrl: rest.siteUrl
+          feedpath: rest.feedpath
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/url-inspection
+      name: url-inspection
+      description: Inspect URLs for indexing status.
+      operations:
+      - method: POST
+        name: inspect-url
+        description: Inspect a URL for index status and rich results.
+        call: search-console.inspect-url
+        with:
+          inspectionUrl: rest.inspectionUrl
+          siteUrl: rest.siteUrl
+          languageCode: rest.languageCode
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: seo-management-mcp
+    transport: http
+    description: MCP server for AI-assisted SEO management with search analytics, sitemaps, URL inspection, and site management.
+    tools:
+    - name: list-sites
+      description: List all Search Console sites for the authenticated user.
+      hints:
+        readOnly: true
+        openWorld: true
+      call: search-console.list-sites
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-site
+      description: Get details for a specific Search Console site.
+      hints:
+        readOnly: true
+        openWorld: true
+      call: search-console.get-site
+      with:
+        siteUrl: tools.siteUrl
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-site
+      description: Add a site to Search Console.
+      hints:
+        readOnly: false
+        openWorld: true
+      call: search-console.add-site
+      with:
+        siteUrl: tools.siteUrl
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-site
+      description: Remove a site from Search Console.
+      hints:
+        readOnly: false
+        destructive: true
+      call: search-console.delete-site
+      with:
+        siteUrl: tools.siteUrl
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: query-search-analytics
+      description: Query search traffic data with filters and dimensions.
+      hints:
+        readOnly: true
+        openWorld: true
+      call: search-console.query-search-analytics
+      with:
+        siteUrl: tools.siteUrl
+        startDate: tools.startDate
+        endDate: tools.endDate
+        dimensions: tools.dimensions
+        type: tools.type
+        rowLimit: tools.rowLimit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-sitemaps
+      description: List sitemaps submitted for a site.
+      hints:
+        readOnly: true
+        openWorld: true
+      call: search-console.list-sitemaps
+      with:
+        siteUrl: tools.siteUrl
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-sitemap
+      description: Get details for a specific sitemap.
+      hints:
+        readOnly: true
+        openWorld: true
+      call: search-console.get-sitemap
+      with:
+        siteUrl: tools.siteUrl
+        feedpath: tools.feedpath
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: submit-sitemap
+      description: Submit a sitemap for crawling.
+      hints:
+        readOnly: false
+        openWorld: true
+      call: search-console.submit-sitemap
+      with:
+        siteUrl: tools.siteUrl
+        feedpath: tools.feedpath
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-sitemap
+      description: Delete a previously submitted sitemap.
+      hints:
+        readOnly: false
+        destructive: true
+      call: search-console.delete-sitemap
+      with:
+        siteUrl: tools.siteUrl
+        feedpath: tools.feedpath
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: inspect-url
+      description: Inspect a URL for index status, crawl info, mobile usability, and rich results.
+      hints:
+        readOnly: true
+        openWorld: true
+      call: search-console.inspect-url
+      with:
+        inspectionUrl: tools.inspectionUrl
+        siteUrl: tools.siteUrl
+        languageCode: tools.languageCode
+      outputParameters:
+      - type: object
+        mapping: $.
