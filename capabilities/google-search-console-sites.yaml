@@ -1,0 +1,152 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Google Search Console API — Sites
+  description: 'Google Search Console API — Sites. 4 operations. Lead operation: Google Search Console List Sites. Self-contained
+    Naftiko capability covering one Google Search Console business surface.'
+  tags:
+  - Google Search Console
+  - Sites
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GOOGLE_SEARCH_CONSOLE_API_KEY: GOOGLE_SEARCH_CONSOLE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: google-search-console-sites
+    baseUri: https://searchconsole.googleapis.com
+    description: Google Search Console API — Sites business capability. Self-contained, no shared references.
+    resources:
+    - name: webmasters-v3-sites
+      path: /webmasters/v3/sites
+      operations:
+      - name: listsites
+        method: GET
+        description: Google Search Console List Sites
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: webmasters-v3-sites-siteUrl
+      path: /webmasters/v3/sites/{siteUrl}
+      operations:
+      - name: getsite
+        method: GET
+        description: Google Search Console Get Site Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: addsite
+        method: PUT
+        description: Google Search Console Add a Site
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletesite
+        method: DELETE
+        description: Google Search Console Remove a Site
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.GOOGLE_SEARCH_CONSOLE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: google-search-console-sites-rest
+    port: 8080
+    description: REST adapter for Google Search Console API — Sites. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/webmasters/v3/sites
+      name: webmasters-v3-sites
+      description: REST surface for webmasters-v3-sites.
+      operations:
+      - method: GET
+        name: listsites
+        description: Google Search Console List Sites
+        call: google-search-console-sites.listsites
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/webmasters/v3/sites/{siteurl}
+      name: webmasters-v3-sites-siteurl
+      description: REST surface for webmasters-v3-sites-siteUrl.
+      operations:
+      - method: GET
+        name: getsite
+        description: Google Search Console Get Site Details
+        call: google-search-console-sites.getsite
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: addsite
+        description: Google Search Console Add a Site
+        call: google-search-console-sites.addsite
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletesite
+        description: Google Search Console Remove a Site
+        call: google-search-console-sites.deletesite
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: google-search-console-sites-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Google Search Console API — Sites. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: google-search-console-list-sites
+      description: Google Search Console List Sites
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: google-search-console-sites.listsites
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: google-search-console-get-site
+      description: Google Search Console Get Site Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: google-search-console-sites.getsite
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: google-search-console-add-site
+      description: Google Search Console Add a Site
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: google-search-console-sites.addsite
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: google-search-console-remove-site
+      description: Google Search Console Remove a Site
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: google-search-console-sites.deletesite
+      outputParameters:
+      - type: object
+        mapping: $.

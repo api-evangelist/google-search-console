@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Google Search Console API — URL Inspection
+  description: 'Google Search Console API — URL Inspection. 1 operations. Lead operation: Google Search Console Inspect a
+    Url. Self-contained Naftiko capability covering one Google Search Console business surface.'
+  tags:
+  - Google Search Console
+  - URL Inspection
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GOOGLE_SEARCH_CONSOLE_API_KEY: GOOGLE_SEARCH_CONSOLE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: google-search-console-url-inspection
+    baseUri: https://searchconsole.googleapis.com
+    description: Google Search Console API — URL Inspection business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-urlInspection-index:inspect
+      path: /v1/urlInspection/index:inspect
+      operations:
+      - name: inspecturl
+        method: POST
+        description: Google Search Console Inspect a Url
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.GOOGLE_SEARCH_CONSOLE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: google-search-console-url-inspection-rest
+    port: 8080
+    description: REST adapter for Google Search Console API — URL Inspection. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/v1/urlinspection/index-inspect
+      name: v1-urlinspection-index-inspect
+      description: REST surface for v1-urlInspection-index:inspect.
+      operations:
+      - method: POST
+        name: inspecturl
+        description: Google Search Console Inspect a Url
+        call: google-search-console-url-inspection.inspecturl
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: google-search-console-url-inspection-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Google Search Console API — URL Inspection. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: google-search-console-inspect-url
+      description: Google Search Console Inspect a Url
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: google-search-console-url-inspection.inspecturl
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
