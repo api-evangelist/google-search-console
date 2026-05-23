@@ -1,20 +1,6 @@
 {
   "repo": "google-search-console",
-  "feeds": [
-    {
-      "source": "https://developers.googleblog.com/",
-      "feed_url": "https://developers.googleblog.com/feed/",
-      "title": "Google Developers Blog",
-      "saved": 3
-    },
-    {
-      "source": "https://developers.google.com/search/updates",
-      "feed_url": "",
-      "title": "",
-      "saved": 0,
-      "error": "no_feed"
-    }
-  ],
+  "feeds": [],
   "post_count": 29,
   "fetched": "2026-05-17T20:48:52Z"
 }

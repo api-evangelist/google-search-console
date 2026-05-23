@@ -163,6 +163,9 @@ common:
   url: https://status.cloud.google.com/
 - type: Blog
   url: https://developers.googleblog.com/
+- url: https://developers.googleblog.com/feed/
+  type: BlogRSS
+  description: Discovered RSS/Atom feed for https://developers.googleblog.com/
 - type: PrivacyPolicy
   url: https://policies.google.com/privacy
 - type: TermsOfService
