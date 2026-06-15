@@ -1,0 +1,300 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Google Search Console API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sites",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Google Search Console List Sites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://searchconsole.googleapis.com/webmasters/v3/sites",
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+              "accessTokenUrl": "https://oauth2.googleapis.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Lists the user's Search Console sites. Returns all sites that the authenticated user has been verified for or has been granted access to through delegation."
+        },
+        {
+          "info": {
+            "name": "Google Search Console Get Site Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://searchconsole.googleapis.com/webmasters/v3/sites/:siteUrl",
+            "params": [
+              {
+                "name": "siteUrl",
+                "value": "https://example.com/",
+                "type": "path",
+                "description": "The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+              "accessTokenUrl": "https://oauth2.googleapis.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves information about a specific site, including its permission level for the authenticated user."
+        },
+        {
+          "info": {
+            "name": "Google Search Console Add a Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://searchconsole.googleapis.com/webmasters/v3/sites/:siteUrl",
+            "params": [
+              {
+                "name": "siteUrl",
+                "value": "https://example.com/",
+                "type": "path",
+                "description": "The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+              }
+            ]
+          },
+          "docs": "Adds a site to the set of the user's Search Console sites. The site URL must be a valid property URL. After adding, the site must still be verified before full data access is granted."
+        },
+        {
+          "info": {
+            "name": "Google Search Console Remove a Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://searchconsole.googleapis.com/webmasters/v3/sites/:siteUrl",
+            "params": [
+              {
+                "name": "siteUrl",
+                "value": "https://example.com/",
+                "type": "path",
+                "description": "The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+              }
+            ]
+          },
+          "docs": "Removes a site from the set of the user's Search Console sites. This does not delete any data associated with the site."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Search Analytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Google Search Console Query Search Analytics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://searchconsole.googleapis.com/webmasters/v3/sites/:siteUrl/searchAnalytics/query",
+            "params": [
+              {
+                "name": "siteUrl",
+                "value": "https://example.com/",
+                "type": "path",
+                "description": "The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Query your search traffic data with filters and parameters that you define. Returns zero or more rows grouped by the row keys (dimensions) that you define. You must define a date range of one or more days. When date is one of the dimensions, any days without data are omitted from the result list. Data is available starting from the date the site was added to Search Console, and there is a processing delay of approximately 2-3 days."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Sitemaps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Google Search Console List Sitemaps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://searchconsole.googleapis.com/webmasters/v3/sites/:siteUrl/sitemaps",
+            "params": [
+              {
+                "name": "siteUrl",
+                "value": "https://example.com/",
+                "type": "path",
+                "description": "The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+              },
+              {
+                "name": "sitemapIndex",
+                "value": "https://www.example.com",
+                "type": "query",
+                "description": "A URL of a sitemap index. If specified, only sitemaps that are listed in this sitemap index are returned."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+              "accessTokenUrl": "https://oauth2.googleapis.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Lists the sitemaps submitted for the specified site. Returns both manually submitted sitemaps and sitemaps discovered via robots.txt. Includes processing status, error counts, and content details for each sitemap."
+        },
+        {
+          "info": {
+            "name": "Google Search Console Get Sitemap Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://searchconsole.googleapis.com/webmasters/v3/sites/:siteUrl/sitemaps/:feedpath",
+            "params": [
+              {
+                "name": "siteUrl",
+                "value": "https://example.com/",
+                "type": "path",
+                "description": "The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+              },
+              {
+                "name": "feedpath",
+                "value": "https://example.com/sitemap.xml",
+                "type": "path",
+                "description": "The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+              "accessTokenUrl": "https://oauth2.googleapis.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves information about a specific sitemap, including its type, last submission time, processing status, warnings, errors, and the number of URLs it contains."
+        },
+        {
+          "info": {
+            "name": "Google Search Console Submit a Sitemap",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://searchconsole.googleapis.com/webmasters/v3/sites/:siteUrl/sitemaps/:feedpath",
+            "params": [
+              {
+                "name": "siteUrl",
+                "value": "https://example.com/",
+                "type": "path",
+                "description": "The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+              },
+              {
+                "name": "feedpath",
+                "value": "https://example.com/sitemap.xml",
+                "type": "path",
+                "description": "The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+              }
+            ]
+          },
+          "docs": "Submits a sitemap for a site. If the sitemap has already been submitted, it will be resubmitted and re-processed. The sitemap URL must be accessible to Googlebot. Submitting a sitemap index will submit all sitemaps listed in the index."
+        },
+        {
+          "info": {
+            "name": "Google Search Console Delete a Sitemap",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://searchconsole.googleapis.com/webmasters/v3/sites/:siteUrl/sitemaps/:feedpath",
+            "params": [
+              {
+                "name": "siteUrl",
+                "value": "https://example.com/",
+                "type": "path",
+                "description": "The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+              },
+              {
+                "name": "feedpath",
+                "value": "https://example.com/sitemap.xml",
+                "type": "path",
+                "description": "The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+              }
+            ]
+          },
+          "docs": "Deletes a previously submitted sitemap from Search Console. This does not prevent Google from crawling the URLs in the sitemap; it only removes the sitemap from the list of submitted sitemaps in Search Console."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "URL Inspection",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Google Search Console Inspect a Url",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://searchconsole.googleapis.com/v1/urlInspection/index:inspect",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Inspects a URL to retrieve detailed index status, crawl information, mobile usability findings, and rich results status. Returns the most recent indexing data Google has for the specified URL. The URL must belong to a property that the authenticated user has access to. This endpoint uses the v1 URL path, separate from the webmasters/v3 paths used by other Search Console endpoints."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,2841 @@
+{
+  "item": [
+    {
+      "id": "769d7d1c-861c-4848-98b2-86418fb9b83b",
+      "name": "Search Analytics",
+      "description": {
+        "content": "Query search traffic data for your site. Retrieve impressions, clicks, click-through rate, and average position grouped by dimensions such as query, page, country, device, search type, and date.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7a7343ee-a770-44e7-b73d-2a40fb4b6e59",
+          "name": "Google Search Console Query Search Analytics",
+          "request": {
+            "name": "Google Search Console Query Search Analytics",
+            "description": {
+              "content": "Query your search traffic data with filters and parameters that you define. Returns zero or more rows grouped by the row keys (dimensions) that you define. You must define a date range of one or more days. When date is one of the dimensions, any days without data are omitted from the result list. Data is available starting from the date the site was added to Search Console, and there is a processing delay of approximately 2-3 days.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webmasters",
+                "v3",
+                "sites",
+                ":siteUrl",
+                "searchAnalytics",
+                "query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "siteUrl",
+                  "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"dimensions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"type\": \"web\",\n  \"dimensionFilterGroups\": [\n    {\n      \"groupType\": \"and\",\n      \"filters\": [\n        {\n          \"dimension\": \"<string>\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        },\n        {\n          \"dimension\": \"<string>\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        }\n      ]\n    },\n    {\n      \"groupType\": \"and\",\n      \"filters\": [\n        {\n          \"dimension\": \"<string>\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        },\n        {\n          \"dimension\": \"<string>\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        }\n      ]\n    }\n  ],\n  \"aggregationType\": \"auto\",\n  \"rowLimit\": 1000,\n  \"startRow\": 0,\n  \"dataState\": \"final\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fd710d57-fcc7-434d-afd3-abba63e94280",
+              "name": "Search analytics query results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "searchAnalytics",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"2025-01-01\",\n  \"endDate\": \"2025-01-31\",\n  \"dimensions\": [\n    \"query\",\n    \"page\"\n  ],\n  \"type\": \"web\",\n  \"rowLimit\": 10,\n  \"startRow\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rows\": [\n    {\n      \"keys\": {},\n      \"clicks\": 42.5,\n      \"impressions\": 42.5,\n      \"ctr\": 42.5,\n      \"position\": 42.5\n    }\n  ],\n  \"responseAggregationType\": \"auto\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4bd56433-3aed-4447-81a1-9a490ba7f05f",
+              "name": "The request was invalid or cannot be served.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "searchAnalytics",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"2025-01-01\",\n  \"endDate\": \"2025-01-31\",\n  \"dimensions\": [\n    \"query\",\n    \"page\"\n  ],\n  \"type\": \"web\",\n  \"rowLimit\": 10,\n  \"startRow\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eaf3af39-a623-4c5e-b610-f60dc4e98090",
+              "name": "Authentication required or invalid credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "searchAnalytics",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"2025-01-01\",\n  \"endDate\": \"2025-01-31\",\n  \"dimensions\": [\n    \"query\",\n    \"page\"\n  ],\n  \"type\": \"web\",\n  \"rowLimit\": 10,\n  \"startRow\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8014ef57-9e33-4296-b3da-d5b980583148",
+              "name": "Insufficient permissions for the requested operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "searchAnalytics",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"2025-01-01\",\n  \"endDate\": \"2025-01-31\",\n  \"dimensions\": [\n    \"query\",\n    \"page\"\n  ],\n  \"type\": \"web\",\n  \"rowLimit\": 10,\n  \"startRow\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "a47c3dc9-a401-47a6-8697-8b0839f98da2",
+      "name": "Sitemaps",
+      "description": {
+        "content": "Submit and manage sitemaps and sitemap indexes for your site. List submitted sitemaps, check their processing status, submit new sitemaps, and delete previously submitted sitemaps.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b38715da-f2c0-4759-b777-4d5b71155934",
+          "name": "Google Search Console List Sitemaps",
+          "request": {
+            "name": "Google Search Console List Sitemaps",
+            "description": {
+              "content": "Lists the sitemaps submitted for the specified site. Returns both manually submitted sitemaps and sitemaps discovered via robots.txt. Includes processing status, error counts, and content details for each sitemap.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webmasters",
+                "v3",
+                "sites",
+                ":siteUrl",
+                "sitemaps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "sitemapIndex",
+                  "value": "<uri>",
+                  "description": "A URL of a sitemap index. If specified, only sitemaps that are listed in this sitemap index are returned."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "siteUrl",
+                  "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "https://www.googleapis.com/auth/webmasters https://www.googleapis.com/auth/webmasters.readonly"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://oauth2.googleapis.com/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://accounts.google.com/o/oauth2/v2/auth"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e3baf432-5742-45fb-9e46-135f13707d7d",
+              "name": "List of sitemaps.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "sitemaps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sitemapIndex",
+                      "value": "https://www.example.com"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sitemap\": [\n    {\n      \"path\": \"https://www.example.com\",\n      \"lastSubmitted\": \"2026-01-15T10:30:00Z\",\n      \"isPending\": true,\n      \"isSitemapsIndex\": true,\n      \"type\": \"atomFeed\",\n      \"lastDownloaded\": \"2026-01-15T10:30:00Z\",\n      \"warnings\": 10,\n      \"errors\": 10,\n      \"contents\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "539c4981-83a4-4101-bdfa-f0252d51402a",
+              "name": "Authentication required or invalid credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "sitemaps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sitemapIndex",
+                      "value": "https://www.example.com"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8bdb18dc-fb4f-4fe3-87d2-03d09ba26bac",
+              "name": "Insufficient permissions for the requested operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "sitemaps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sitemapIndex",
+                      "value": "https://www.example.com"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ef6601c0-17fe-4b44-bf7c-4192dc65a9f4",
+          "name": "Google Search Console Get Sitemap Details",
+          "request": {
+            "name": "Google Search Console Get Sitemap Details",
+            "description": {
+              "content": "Retrieves information about a specific sitemap, including its type, last submission time, processing status, warnings, errors, and the number of URLs it contains.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webmasters",
+                "v3",
+                "sites",
+                ":siteUrl",
+                "sitemaps",
+                ":feedpath"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "siteUrl",
+                  "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uri>",
+                  "key": "feedpath",
+                  "description": "(Required) The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "https://www.googleapis.com/auth/webmasters https://www.googleapis.com/auth/webmasters.readonly"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://oauth2.googleapis.com/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://accounts.google.com/o/oauth2/v2/auth"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "df0db8c5-f131-4085-9a8b-256173c5036e",
+              "name": "Sitemap details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "sitemaps",
+                    ":feedpath"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uri>",
+                      "key": "feedpath",
+                      "description": "(Required) The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"path\": \"https://www.example.com\",\n  \"lastSubmitted\": \"2026-01-15T10:30:00Z\",\n  \"isPending\": true,\n  \"isSitemapsIndex\": true,\n  \"type\": \"atomFeed\",\n  \"lastDownloaded\": \"2026-01-15T10:30:00Z\",\n  \"warnings\": 10,\n  \"errors\": 10,\n  \"contents\": [\n    {\n      \"type\": \"web\",\n      \"submitted\": 10,\n      \"indexed\": 10\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d06d8dc-6508-4719-8707-5ce7f1185735",
+              "name": "Authentication required or invalid credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "sitemaps",
+                    ":feedpath"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uri>",
+                      "key": "feedpath",
+                      "description": "(Required) The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14429d75-37db-4cb7-a970-e57aaa8db935",
+              "name": "Insufficient permissions for the requested operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "sitemaps",
+                    ":feedpath"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uri>",
+                      "key": "feedpath",
+                      "description": "(Required) The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9ab6ff9-62cd-42c6-9c1b-eeaea542ffa1",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "sitemaps",
+                    ":feedpath"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uri>",
+                      "key": "feedpath",
+                      "description": "(Required) The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c6f39dbe-4968-4a74-bd1f-206893635005",
+          "name": "Google Search Console Submit a Sitemap",
+          "request": {
+            "name": "Google Search Console Submit a Sitemap",
+            "description": {
+              "content": "Submits a sitemap for a site. If the sitemap has already been submitted, it will be resubmitted and re-processed. The sitemap URL must be accessible to Googlebot. Submitting a sitemap index will submit all sitemaps listed in the index.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webmasters",
+                "v3",
+                "sites",
+                ":siteUrl",
+                "sitemaps",
+                ":feedpath"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "siteUrl",
+                  "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uri>",
+                  "key": "feedpath",
+                  "description": "(Required) The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bcd7d589-634c-4d0a-909a-c396125fd725",
+              "name": "Sitemap submitted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "sitemaps",
+                    ":feedpath"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uri>",
+                      "key": "feedpath",
+                      "description": "(Required) The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b9cfc374-643b-4c4a-b74b-3cf10fb45603",
+              "name": "The request was invalid or cannot be served.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "sitemaps",
+                    ":feedpath"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uri>",
+                      "key": "feedpath",
+                      "description": "(Required) The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c06269e2-1d0b-443b-9b63-eb25bf815b84",
+              "name": "Authentication required or invalid credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "sitemaps",
+                    ":feedpath"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uri>",
+                      "key": "feedpath",
+                      "description": "(Required) The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "25a9f870-0d47-4f86-a2b8-81ab9b41c115",
+              "name": "Insufficient permissions for the requested operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "sitemaps",
+                    ":feedpath"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uri>",
+                      "key": "feedpath",
+                      "description": "(Required) The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4b0b8da6-71f6-4f63-83e6-32ac05724810",
+          "name": "Google Search Console Delete a Sitemap",
+          "request": {
+            "name": "Google Search Console Delete a Sitemap",
+            "description": {
+              "content": "Deletes a previously submitted sitemap from Search Console. This does not prevent Google from crawling the URLs in the sitemap; it only removes the sitemap from the list of submitted sitemaps in Search Console.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webmasters",
+                "v3",
+                "sites",
+                ":siteUrl",
+                "sitemaps",
+                ":feedpath"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "siteUrl",
+                  "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uri>",
+                  "key": "feedpath",
+                  "description": "(Required) The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2e6ca2cd-84a6-4f99-a17d-b492376cb2dc",
+              "name": "Sitemap deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "sitemaps",
+                    ":feedpath"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uri>",
+                      "key": "feedpath",
+                      "description": "(Required) The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "591e55bc-e3a1-48d0-87cc-91d537a3e968",
+              "name": "Authentication required or invalid credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "sitemaps",
+                    ":feedpath"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uri>",
+                      "key": "feedpath",
+                      "description": "(Required) The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "25af5ae3-f6b3-4b01-9748-63b09d9e0b71",
+              "name": "Insufficient permissions for the requested operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "sitemaps",
+                    ":feedpath"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uri>",
+                      "key": "feedpath",
+                      "description": "(Required) The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8413e850-8be8-4b17-ad3b-4c7c7685afb8",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl",
+                    "sitemaps",
+                    ":feedpath"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uri>",
+                      "key": "feedpath",
+                      "description": "(Required) The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "27acf95f-137f-4d7a-ba62-6a100bf48dce",
+      "name": "Sites",
+      "description": {
+        "content": "Manage site-level access and verification. List verified sites, get details about a specific site, add new sites, and remove sites from your Search Console account.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "40214502-3c57-4366-af64-02bfc1b1c90e",
+          "name": "Google Search Console List Sites",
+          "request": {
+            "name": "Google Search Console List Sites",
+            "description": {
+              "content": "Lists the user's Search Console sites. Returns all sites that the authenticated user has been verified for or has been granted access to through delegation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webmasters",
+                "v3",
+                "sites"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "https://www.googleapis.com/auth/webmasters https://www.googleapis.com/auth/webmasters.readonly"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://oauth2.googleapis.com/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://accounts.google.com/o/oauth2/v2/auth"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "41ac7820-6c97-4513-aa08-7425ee628170",
+              "name": "List of Search Console sites.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"siteEntry\": [\n    {\n      \"siteUrl\": \"https://www.example.com\",\n      \"permissionLevel\": \"siteOwner\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ab1c16f-fb63-4b16-bdcb-af7a64baa5d8",
+              "name": "Authentication required or invalid credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "75ea5095-c370-4704-8989-01f355cd5d06",
+              "name": "Insufficient permissions for the requested operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cf99b873-b548-4d74-9dcb-fc0990730f22",
+          "name": "Google Search Console Get Site Details",
+          "request": {
+            "name": "Google Search Console Get Site Details",
+            "description": {
+              "content": "Retrieves information about a specific site, including its permission level for the authenticated user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webmasters",
+                "v3",
+                "sites",
+                ":siteUrl"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "siteUrl",
+                  "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "https://www.googleapis.com/auth/webmasters https://www.googleapis.com/auth/webmasters.readonly"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://oauth2.googleapis.com/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://accounts.google.com/o/oauth2/v2/auth"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d76db3d4-363f-43cc-ada1-b3f7ded5ebfe",
+              "name": "Site details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"siteUrl\": \"https://www.example.com\",\n  \"permissionLevel\": \"siteOwner\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf5559ee-fedc-44ab-9f97-fdbe3dfe6f75",
+              "name": "Authentication required or invalid credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c013553-8766-47cc-aff4-1ab2752cc04e",
+              "name": "Insufficient permissions for the requested operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "018c2b1d-b741-41bb-9d5e-1eb6c41a40c4",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 2249,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "53c64f99-5804-4ee7-a097-7eaf0dec63bc",
+          "name": "Google Search Console Add a Site",
+          "request": {
+            "name": "Google Search Console Add a Site",
+            "description": {
+              "content": "Adds a site to the set of the user's Search Console sites. The site URL must be a valid property URL. After adding, the site must still be verified before full data access is granted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webmasters",
+                "v3",
+                "sites",
+                ":siteUrl"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "siteUrl",
+                  "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7f27b8f7-7225-4088-8c79-f875307c3107",
+              "name": "Site added successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a619c2e7-10a6-49e8-808a-52b817a1d25e",
+              "name": "Authentication required or invalid credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "029150c2-0016-4e7a-98f3-3f7b5a891a98",
+              "name": "Insufficient permissions for the requested operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ec5b3fdc-0906-4f53-aee1-a3e4a3fd29aa",
+          "name": "Google Search Console Remove a Site",
+          "request": {
+            "name": "Google Search Console Remove a Site",
+            "description": {
+              "content": "Removes a site from the set of the user's Search Console sites. This does not delete any data associated with the site.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webmasters",
+                "v3",
+                "sites",
+                ":siteUrl"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "siteUrl",
+                  "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "32f8246b-5346-4975-9441-0a465e629d5b",
+              "name": "Site removed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "96fb04b3-c223-4327-99c9-751f8bb4697e",
+              "name": "Authentication required or invalid credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31eab5fd-7d4e-4550-a976-817b48b6f2cf",
+              "name": "Insufficient permissions for the requested operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07b80520-067e-406d-869f-78b210e206f5",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webmasters",
+                    "v3",
+                    "sites",
+                    ":siteUrl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "siteUrl",
+                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 965,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "2bd680cf-d27d-4f40-bb0e-629b4fc91433",
+      "name": "URL Inspection",
+      "description": {
+        "content": "Inspect individual URLs to retrieve detailed indexing, crawling, and serving information. Check whether a URL is indexed, view crawl details, mobile usability status, and rich results eligibility.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6369c496-9f52-45a2-86df-be58b16f1149",
+          "name": "Google Search Console Inspect a Url",
+          "request": {
+            "name": "Google Search Console Inspect a Url",
+            "description": {
+              "content": "Inspects a URL to retrieve detailed index status, crawl information, mobile usability findings, and rich results status. Returns the most recent indexing data Google has for the specified URL. The URL must belong to a property that the authenticated user has access to. This endpoint uses the v1 URL path, separate from the webmasters/v3 paths used by other Search Console endpoints.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "urlInspection",
+                "index:inspect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inspectionUrl\": \"<uri>\",\n  \"siteUrl\": \"<string>\",\n  \"languageCode\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d028a0f2-cc84-48ff-a0a9-cad5e0c29ee4",
+              "name": "URL inspection results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "urlInspection",
+                    "index:inspect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inspectionUrl\": \"https://example.com/page\",\n  \"siteUrl\": \"https://example.com/\",\n  \"languageCode\": \"en-US\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"inspectionResult\": {\n    \"inspectionResultLink\": \"https://www.example.com\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92086075-ee4a-4745-94d2-3b532e73d8a2",
+              "name": "The request was invalid or cannot be served.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "urlInspection",
+                    "index:inspect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inspectionUrl\": \"https://example.com/page\",\n  \"siteUrl\": \"https://example.com/\",\n  \"languageCode\": \"en-US\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 2249,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "454cfb46-f4a2-45cb-935c-e5d47be338b6",
+              "name": "Authentication required or invalid credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "urlInspection",
+                    "index:inspect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inspectionUrl\": \"https://example.com/page\",\n  \"siteUrl\": \"https://example.com/\",\n  \"languageCode\": \"en-US\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 2249,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "860ff48d-df65-456f-8740-5b0f9407811b",
+              "name": "Insufficient permissions for the requested operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "urlInspection",
+                    "index:inspect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inspectionUrl\": \"https://example.com/page\",\n  \"siteUrl\": \"https://example.com/\",\n  \"languageCode\": \"en-US\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 2249,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4cb1833a-1e4e-491e-8914-eed913c6d87c",
+              "name": "Rate limit exceeded. Retry after the specified delay.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "urlInspection",
+                    "index:inspect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inspectionUrl\": \"https://example.com/page\",\n  \"siteUrl\": \"https://example.com/\",\n  \"languageCode\": \"en-US\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 2249,\n    \"message\": \"string\",\n    \"status\": \"string\",\n    \"errors\": [\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"message\": \"string\",\n        \"domain\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://searchconsole.googleapis.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "https://www.googleapis.com/auth/webmasters https://www.googleapis.com/auth/webmasters.readonly"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://oauth2.googleapis.com/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://accounts.google.com/o/oauth2/v2/auth"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "27333cee-42d5-4e5e-a936-83ad541c89d3",
+    "name": "Google Search Console API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Google Search Console API provides programmatic access to Search Console data. Query search analytics to understand how your site appears in Google Search results, manage sitemaps for efficient crawling, inspect individual URLs to check indexing status and crawl details, and manage site-level verification and permissions.\n\nContact Support:\n Name: Google Search Console API Support",
+      "type": "text/plain"
+    }
+  }
+}
