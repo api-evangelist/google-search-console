@@ -16,11 +16,11 @@
       "method": "feed"
     },
     {
-      "source": "https://developers.google.com/search/updates",
-      "feed_url": "https://developers.google.com/search/updates",
+      "source": "https://developers.google.com/search/updates/search_docs_updates.rss",
+      "feed_url": "https://developers.google.com/search/updates/search_docs_updates.rss",
       "title": "",
       "saved": 0,
-      "method": "none"
+      "method": "feed"
     },
     {
       "source": "https://developers.google.com/api-client-library",
@@ -30,6 +30,6 @@
       "method": "none"
     }
   ],
-  "post_count": 33,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 53,
+  "fetched": "2026-06-27T12:03:07Z"
 }

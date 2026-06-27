@@ -58,10 +58,10 @@ apis:
       - type: Documentation
         url: https://developers.google.com/webmaster-tools/v1/prereqs
         title: Prerequisites
-      - type: Quickstart
+      - type: GettingStarted
         url: https://developers.google.com/webmaster-tools/v1/quickstart/quickstart-python
         title: Python Quickstart
-      - type: SDK
+      - type: SDKs
         url: https://developers.google.com/webmaster-tools/v1/libraries
         title: Client Libraries
       - type: Documentation
@@ -140,7 +140,7 @@ apis:
       - type: Pricing
         url: https://developers.google.com/search/apis/indexing-api/v3/quota-pricing
         title: Quota and Pricing
-      - type: SDK
+      - type: SDKs
         url: https://developers.google.com/search/apis/indexing-api/v3/libraries
         title: Client Libraries
       - type: APIReference
@@ -169,7 +169,7 @@ common:
   - type: Authentication
     url: https://developers.google.com/identity/protocols/oauth2/scopes
     title: OAuth 2.0 Scopes
-  - type: SDK
+  - type: SDKs
     url: https://developers.google.com/api-client-library
     title: API Client Libraries
   - type: Blog
