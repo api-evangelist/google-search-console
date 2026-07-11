@@ -153,6 +153,8 @@ maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
 common:
+  - type: OAuthScopes
+    url: scopes/google-search-console-scopes.yml
   - type: DeveloperPortal
     url: https://developers.google.com/
   - type: StatusPage

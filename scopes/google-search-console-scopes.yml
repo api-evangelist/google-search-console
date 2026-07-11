@@ -1,0 +1,25 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/google-search-console-api-openapi.yml
+schemes:
+- name: OAuth2
+  source: openapi/google-search-console-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+    tokenUrl: https://oauth2.googleapis.com/token
+  description: OAuth 2.0 authentication for accessing Google Search Console data. Requires the
+    webmasters or webmasters.readonly scope depending on the operation.
+scopes:
+- scope: https://www.googleapis.com/auth/webmasters
+  description: View and manage Search Console data for your verified sites
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/google-search-console-api-openapi.yml
+- scope: https://www.googleapis.com/auth/webmasters.readonly
+  description: View Search Console data for your verified sites
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/google-search-console-api-openapi.yml
