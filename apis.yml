@@ -153,6 +153,12 @@ maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
 common:
+  - type: VulnerabilityDisclosure
+    url: security/google-search-console-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/google-search-console-domain-security.yml
+  - type: Authentication
+    url: authentication/google-search-console-authentication.yml
   - type: OAuthScopes
     url: scopes/google-search-console-scopes.yml
   - type: DeveloperPortal
