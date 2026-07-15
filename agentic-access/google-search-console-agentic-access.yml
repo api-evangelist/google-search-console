@@ -1,0 +1,172 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/google-search-console-api-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 10
+  by_action_class:
+    connected: 4
+    acting: 6
+  by_consequence:
+    read: 4
+    write: 6
+  human_in_the_loop_required: 0
+operations:
+- path: /webmasters/v3/sites
+  method: get
+  operationId: listSites
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - https://www.googleapis.com/auth/webmasters.readonly
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /webmasters/v3/sites/{siteUrl}
+  method: get
+  operationId: getSite
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - https://www.googleapis.com/auth/webmasters.readonly
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /webmasters/v3/sites/{siteUrl}
+  method: put
+  operationId: addSite
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://www.googleapis.com/auth/webmasters
+- path: /webmasters/v3/sites/{siteUrl}
+  method: delete
+  operationId: deleteSite
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://www.googleapis.com/auth/webmasters
+- path: /webmasters/v3/sites/{siteUrl}/searchAnalytics/query
+  method: post
+  operationId: querySearchAnalytics
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://www.googleapis.com/auth/webmasters
+- path: /webmasters/v3/sites/{siteUrl}/sitemaps
+  method: get
+  operationId: listSitemaps
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - https://www.googleapis.com/auth/webmasters.readonly
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}
+  method: get
+  operationId: getSitemap
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - https://www.googleapis.com/auth/webmasters.readonly
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}
+  method: put
+  operationId: submitSitemap
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://www.googleapis.com/auth/webmasters
+- path: /webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}
+  method: delete
+  operationId: deleteSitemap
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://www.googleapis.com/auth/webmasters
+- path: /v1/urlInspection/index:inspect
+  method: post
+  operationId: inspectUrl
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://www.googleapis.com/auth/webmasters
