@@ -1,0 +1,320 @@
+openapi: 3.1.0
+info:
+  title: Google Search Console Search Analytics API
+  description: The Google Search Console API provides programmatic access to Search Console data. Query search analytics to understand how your site appears in Google Search results, manage sitemaps for efficient crawling, inspect individual URLs to check indexing status and crawl details, and manage site-level verification and permissions.
+  version: v1
+  contact:
+    name: Google Search Console API Support
+    url: https://support.google.com/webmasters/
+  termsOfService: https://developers.google.com/terms
+  license:
+    name: Creative Commons Attribution 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+- url: https://searchconsole.googleapis.com
+  description: Google Search Console API Production Server
+security:
+- OAuth2:
+  - https://www.googleapis.com/auth/webmasters
+tags:
+- name: Search Analytics
+  description: Query search traffic data for your site. Retrieve impressions, clicks, click-through rate, and average position grouped by dimensions such as query, page, country, device, search type, and date.
+paths:
+  /webmasters/v3/sites/{siteUrl}/searchAnalytics/query:
+    post:
+      operationId: querySearchAnalytics
+      summary: Google Search Console Query Search Analytics
+      description: Query your search traffic data with filters and parameters that you define. Returns zero or more rows grouped by the row keys (dimensions) that you define. You must define a date range of one or more days. When date is one of the dimensions, any days without data are omitted from the result list. Data is available starting from the date the site was added to Search Console, and there is a processing delay of approximately 2-3 days.
+      tags:
+      - Search Analytics
+      parameters:
+      - $ref: '#/components/parameters/SiteUrl'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchAnalyticsQueryRequest'
+            example:
+              startDate: '2025-01-01'
+              endDate: '2025-01-31'
+              dimensions:
+              - query
+              - page
+              type: web
+              rowLimit: 10
+              startRow: 0
+      responses:
+        '200':
+          description: Search analytics query results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchAnalyticsQueryResponse'
+              examples:
+                Querysearchanalytics200Example:
+                  summary: Default querySearchAnalytics 200 response
+                  x-microcks-default: true
+                  value:
+                    rows:
+                    - keys: {}
+                      clicks: 42.5
+                      impressions: 42.5
+                      ctr: 42.5
+                      position: 42.5
+                    responseAggregationType: auto
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  responses:
+    Forbidden:
+      description: Insufficient permissions for the requested operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required or invalid credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was invalid or cannot be served.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    DimensionFilter:
+      type: object
+      description: A filter on a specific dimension.
+      required:
+      - dimension
+      - expression
+      properties:
+        dimension:
+          type: string
+          description: The dimension to filter on.
+          enum:
+          - query
+          - page
+          - country
+          - device
+          - searchAppearance
+          example: query
+        operator:
+          type: string
+          description: How to filter. The contains operator performs a case-insensitive substring match. The equals operator performs a case-sensitive exact match. The notContains and notEquals operators are the negations of contains and equals respectively. The includingRegex and excludingRegex operators use RE2 syntax.
+          enum:
+          - contains
+          - equals
+          - notContains
+          - notEquals
+          - includingRegex
+          - excludingRegex
+          default: equals
+          example: contains
+        expression:
+          type: string
+          description: The value to filter on. For country, use the 3-letter country code (ISO 3166-1 alpha-3). For device, use DESKTOP, MOBILE, or TABLET.
+          example: example_value
+    SearchAnalyticsQueryRequest:
+      type: object
+      description: Request body for querying search analytics data. Defines the date range, dimensions, filters, and aggregation type for the query.
+      required:
+      - startDate
+      - endDate
+      properties:
+        startDate:
+          type: string
+          format: date
+          description: Start date of the requested date range, in YYYY-MM-DD format. Must be less than or equal to the end date. Data is available starting from the date the site was added to Search Console.
+          example: '2026-01-15'
+        endDate:
+          type: string
+          format: date
+          description: End date of the requested date range, in YYYY-MM-DD format. Must be greater than or equal to the start date. There is a processing delay of approximately 2-3 days.
+          example: '2026-01-15'
+        dimensions:
+          type: array
+          description: Zero or more dimensions to group results by. Results are grouped in the order that dimensions are specified. Valid dimensions are date, query, page, country, device, and searchAppearance.
+          items:
+            type: string
+            enum:
+            - date
+            - query
+            - page
+            - country
+            - device
+            - searchAppearance
+          example: []
+        type:
+          type: string
+          description: Filter results to the specified search type. Defaults to web.
+          enum:
+          - web
+          - image
+          - video
+          - news
+          - discover
+          - googleNews
+          default: web
+          example: web
+        dimensionFilterGroups:
+          type: array
+          description: Zero or more groups of dimension filters. All filter groups are ANDed together. Within a group, filters are combined using the group type (AND by default).
+          items:
+            $ref: '#/components/schemas/DimensionFilterGroup'
+          example: []
+        aggregationType:
+          type: string
+          description: How data is aggregated. If auto, data is aggregated by property type. If byPage, all data is aggregated by page. If byProperty, all data is aggregated by property.
+          enum:
+          - auto
+          - byPage
+          - byProperty
+          default: auto
+          example: auto
+        rowLimit:
+          type: integer
+          description: Maximum number of rows to return. Valid range is 1 to 25000. Default is 1000.
+          minimum: 1
+          maximum: 25000
+          default: 1000
+          example: 10
+        startRow:
+          type: integer
+          description: Zero-based index of the first row in the response. Must be a non-negative number. Default is 0.
+          minimum: 0
+          default: 0
+          example: 10
+        dataState:
+          type: string
+          description: The data state to filter on. If set to final, only finalized data is returned. If set to all, both finalized and fresh data are included.
+          enum:
+          - final
+          - all
+          default: final
+          example: final
+    SearchAnalyticsQueryResponse:
+      type: object
+      description: Response for a search analytics query.
+      properties:
+        rows:
+          type: array
+          description: A list of rows grouped by the requested dimensions. Rows are ordered by click count descending. If no data is available for the specified date range and filters, this field is omitted.
+          items:
+            $ref: '#/components/schemas/SearchAnalyticsRow'
+          example: []
+        responseAggregationType:
+          type: string
+          description: How the results were aggregated.
+          enum:
+          - auto
+          - byPage
+          - byProperty
+          example: auto
+    SearchAnalyticsRow:
+      type: object
+      description: A single row of search analytics data. Contains dimension keys and their associated metric values.
+      properties:
+        keys:
+          type: array
+          description: A list of dimension values for this row, in the same order as the dimensions specified in the request. For country, the value is a 3-letter country code. For device, the value is DESKTOP, MOBILE, or TABLET.
+          items:
+            type: string
+          example: []
+        clicks:
+          type: number
+          description: The number of clicks from Google Search results that landed on the property.
+          example: 42.5
+        impressions:
+          type: number
+          description: The number of times a link to the property appeared in search results and was seen by a user (not necessarily scrolled into view).
+          example: 42.5
+        ctr:
+          type: number
+          format: double
+          description: 'Click-through rate: the ratio of clicks to impressions, expressed as a decimal between 0 and 1.'
+          example: 42.5
+        position:
+          type: number
+          format: double
+          description: The average position of the property in search results, where 1 is the topmost position. The value is averaged across all queries and pages.
+          example: 42.5
+    DimensionFilterGroup:
+      type: object
+      description: A group of dimension filters applied to the query.
+      properties:
+        groupType:
+          type: string
+          description: How filters within this group are combined.
+          enum:
+          - and
+          default: and
+          example: and
+        filters:
+          type: array
+          description: Filters within this group.
+          items:
+            $ref: '#/components/schemas/DimensionFilter'
+          example: []
+    Error:
+      type: object
+      description: Standard Google API error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: HTTP status code.
+            message:
+              type: string
+              description: A human-readable error message.
+            status:
+              type: string
+              description: The status code string (e.g., INVALID_ARGUMENT).
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  domain:
+                    type: string
+                  reason:
+                    type: string
+          example: example_value
+  parameters:
+    SiteUrl:
+      name: siteUrl
+      in: path
+      required: true
+      description: The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded.
+      schema:
+        type: string
+      example: https://example.com/
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: OAuth 2.0 authentication for accessing Google Search Console data. Requires the webmasters or webmasters.readonly scope depending on the operation.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/webmasters: View and manage Search Console data for your verified sites
+            https://www.googleapis.com/auth/webmasters.readonly: View Search Console data for your verified sites
+externalDocs:
+  description: Google Search Console API Documentation
+  url: https://developers.google.com/webmaster-tools/v1/api_reference_index

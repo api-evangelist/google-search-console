@@ -1,0 +1,226 @@
+openapi: 3.1.0
+info:
+  title: Google Search Console Search Analytics Sites API
+  description: The Google Search Console API provides programmatic access to Search Console data. Query search analytics to understand how your site appears in Google Search results, manage sitemaps for efficient crawling, inspect individual URLs to check indexing status and crawl details, and manage site-level verification and permissions.
+  version: v1
+  contact:
+    name: Google Search Console API Support
+    url: https://support.google.com/webmasters/
+  termsOfService: https://developers.google.com/terms
+  license:
+    name: Creative Commons Attribution 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+- url: https://searchconsole.googleapis.com
+  description: Google Search Console API Production Server
+security:
+- OAuth2:
+  - https://www.googleapis.com/auth/webmasters
+tags:
+- name: Sites
+  description: Manage site-level access and verification. List verified sites, get details about a specific site, add new sites, and remove sites from your Search Console account.
+paths:
+  /webmasters/v3/sites:
+    get:
+      operationId: listSites
+      summary: Google Search Console List Sites
+      description: Lists the user's Search Console sites. Returns all sites that the authenticated user has been verified for or has been granted access to through delegation.
+      tags:
+      - Sites
+      security:
+      - OAuth2:
+        - https://www.googleapis.com/auth/webmasters.readonly
+      responses:
+        '200':
+          description: List of Search Console sites.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SitesListResponse'
+              examples:
+                Listsites200Example:
+                  summary: Default listSites 200 response
+                  x-microcks-default: true
+                  value:
+                    siteEntry:
+                    - siteUrl: https://www.example.com
+                      permissionLevel: siteOwner
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /webmasters/v3/sites/{siteUrl}:
+    get:
+      operationId: getSite
+      summary: Google Search Console Get Site Details
+      description: Retrieves information about a specific site, including its permission level for the authenticated user.
+      tags:
+      - Sites
+      security:
+      - OAuth2:
+        - https://www.googleapis.com/auth/webmasters.readonly
+      parameters:
+      - $ref: '#/components/parameters/SiteUrl'
+      responses:
+        '200':
+          description: Site details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WmxSite'
+              examples:
+                Getsite200Example:
+                  summary: Default getSite 200 response
+                  x-microcks-default: true
+                  value:
+                    siteUrl: https://www.example.com
+                    permissionLevel: siteOwner
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: addSite
+      summary: Google Search Console Add a Site
+      description: Adds a site to the set of the user's Search Console sites. The site URL must be a valid property URL. After adding, the site must still be verified before full data access is granted.
+      tags:
+      - Sites
+      parameters:
+      - $ref: '#/components/parameters/SiteUrl'
+      responses:
+        '204':
+          description: Site added successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteSite
+      summary: Google Search Console Remove a Site
+      description: Removes a site from the set of the user's Search Console sites. This does not delete any data associated with the site.
+      tags:
+      - Sites
+      parameters:
+      - $ref: '#/components/parameters/SiteUrl'
+      responses:
+        '204':
+          description: Site removed successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Insufficient permissions for the requested operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required or invalid credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    SiteUrl:
+      name: siteUrl
+      in: path
+      required: true
+      description: The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded.
+      schema:
+        type: string
+      example: https://example.com/
+  schemas:
+    WmxSite:
+      type: object
+      description: A Search Console site resource representing a verified property. Properties can be URL-prefix properties or domain properties.
+      properties:
+        siteUrl:
+          type: string
+          description: 'The URL of the site. For URL-prefix properties, this is the full URL including protocol. For domain properties, this uses the sc-domain: prefix (e.g., sc-domain:example.com).'
+          example: https://www.example.com
+        permissionLevel:
+          type: string
+          description: The user's permission level for this site in Search Console.
+          enum:
+          - siteOwner
+          - siteFullUser
+          - siteRestrictedUser
+          - siteUnverifiedUser
+          example: siteOwner
+    SitesListResponse:
+      type: object
+      description: Response for listing Search Console sites.
+      properties:
+        siteEntry:
+          type: array
+          description: List of verified sites.
+          items:
+            $ref: '#/components/schemas/WmxSite'
+          example: []
+    Error:
+      type: object
+      description: Standard Google API error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: HTTP status code.
+            message:
+              type: string
+              description: A human-readable error message.
+            status:
+              type: string
+              description: The status code string (e.g., INVALID_ARGUMENT).
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  domain:
+                    type: string
+                  reason:
+                    type: string
+          example: example_value
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: OAuth 2.0 authentication for accessing Google Search Console data. Requires the webmasters or webmasters.readonly scope depending on the operation.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/webmasters: View and manage Search Console data for your verified sites
+            https://www.googleapis.com/auth/webmasters.readonly: View Search Console data for your verified sites
+externalDocs:
+  description: Google Search Console API Documentation
+  url: https://developers.google.com/webmaster-tools/v1/api_reference_index

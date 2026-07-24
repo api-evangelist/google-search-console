@@ -1,0 +1,336 @@
+openapi: 3.1.0
+info:
+  title: Google Search Console Search Analytics Sitemaps API
+  description: The Google Search Console API provides programmatic access to Search Console data. Query search analytics to understand how your site appears in Google Search results, manage sitemaps for efficient crawling, inspect individual URLs to check indexing status and crawl details, and manage site-level verification and permissions.
+  version: v1
+  contact:
+    name: Google Search Console API Support
+    url: https://support.google.com/webmasters/
+  termsOfService: https://developers.google.com/terms
+  license:
+    name: Creative Commons Attribution 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+- url: https://searchconsole.googleapis.com
+  description: Google Search Console API Production Server
+security:
+- OAuth2:
+  - https://www.googleapis.com/auth/webmasters
+tags:
+- name: Sitemaps
+  description: Submit and manage sitemaps and sitemap indexes for your site. List submitted sitemaps, check their processing status, submit new sitemaps, and delete previously submitted sitemaps.
+paths:
+  /webmasters/v3/sites/{siteUrl}/sitemaps:
+    get:
+      operationId: listSitemaps
+      summary: Google Search Console List Sitemaps
+      description: Lists the sitemaps submitted for the specified site. Returns both manually submitted sitemaps and sitemaps discovered via robots.txt. Includes processing status, error counts, and content details for each sitemap.
+      tags:
+      - Sitemaps
+      security:
+      - OAuth2:
+        - https://www.googleapis.com/auth/webmasters.readonly
+      parameters:
+      - $ref: '#/components/parameters/SiteUrl'
+      - name: sitemapIndex
+        in: query
+        required: false
+        description: A URL of a sitemap index. If specified, only sitemaps that are listed in this sitemap index are returned.
+        schema:
+          type: string
+          format: uri
+        example: https://www.example.com
+      responses:
+        '200':
+          description: List of sitemaps.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SitemapsListResponse'
+              examples:
+                Listsitemaps200Example:
+                  summary: Default listSitemaps 200 response
+                  x-microcks-default: true
+                  value:
+                    sitemap:
+                    - path: https://www.example.com
+                      lastSubmitted: '2026-01-15T10:30:00Z'
+                      isPending: true
+                      isSitemapsIndex: true
+                      type: atomFeed
+                      lastDownloaded: '2026-01-15T10:30:00Z'
+                      warnings: 10
+                      errors: 10
+                      contents: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}:
+    get:
+      operationId: getSitemap
+      summary: Google Search Console Get Sitemap Details
+      description: Retrieves information about a specific sitemap, including its type, last submission time, processing status, warnings, errors, and the number of URLs it contains.
+      tags:
+      - Sitemaps
+      security:
+      - OAuth2:
+        - https://www.googleapis.com/auth/webmasters.readonly
+      parameters:
+      - $ref: '#/components/parameters/SiteUrl'
+      - $ref: '#/components/parameters/Feedpath'
+      responses:
+        '200':
+          description: Sitemap details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WmxSitemap'
+              examples:
+                Getsitemap200Example:
+                  summary: Default getSitemap 200 response
+                  x-microcks-default: true
+                  value:
+                    path: https://www.example.com
+                    lastSubmitted: '2026-01-15T10:30:00Z'
+                    isPending: true
+                    isSitemapsIndex: true
+                    type: atomFeed
+                    lastDownloaded: '2026-01-15T10:30:00Z'
+                    warnings: 10
+                    errors: 10
+                    contents:
+                    - type: web
+                      submitted: 10
+                      indexed: 10
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: submitSitemap
+      summary: Google Search Console Submit a Sitemap
+      description: Submits a sitemap for a site. If the sitemap has already been submitted, it will be resubmitted and re-processed. The sitemap URL must be accessible to Googlebot. Submitting a sitemap index will submit all sitemaps listed in the index.
+      tags:
+      - Sitemaps
+      parameters:
+      - $ref: '#/components/parameters/SiteUrl'
+      - $ref: '#/components/parameters/Feedpath'
+      responses:
+        '204':
+          description: Sitemap submitted successfully.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteSitemap
+      summary: Google Search Console Delete a Sitemap
+      description: Deletes a previously submitted sitemap from Search Console. This does not prevent Google from crawling the URLs in the sitemap; it only removes the sitemap from the list of submitted sitemaps in Search Console.
+      tags:
+      - Sitemaps
+      parameters:
+      - $ref: '#/components/parameters/SiteUrl'
+      - $ref: '#/components/parameters/Feedpath'
+      responses:
+        '204':
+          description: Sitemap deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Insufficient permissions for the requested operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required or invalid credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was invalid or cannot be served.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    SiteUrl:
+      name: siteUrl
+      in: path
+      required: true
+      description: The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded.
+      schema:
+        type: string
+      example: https://example.com/
+    Feedpath:
+      name: feedpath
+      in: path
+      required: true
+      description: The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded.
+      schema:
+        type: string
+        format: uri
+      example: https://example.com/sitemap.xml
+  schemas:
+    WmxSitemap:
+      type: object
+      description: Information about a sitemap submitted to Search Console. Includes processing status, error counts, and content details.
+      properties:
+        path:
+          type: string
+          format: uri
+          description: The URL of the sitemap.
+          example: https://www.example.com
+        lastSubmitted:
+          type: string
+          format: date-time
+          description: Date and time when the sitemap was last submitted to Search Console.
+          example: '2026-01-15T10:30:00Z'
+        isPending:
+          type: boolean
+          description: Whether the sitemap is still being processed.
+          example: true
+        isSitemapsIndex:
+          type: boolean
+          description: Whether this is a sitemap index file.
+          example: true
+        type:
+          type: string
+          description: The type of content in the sitemap.
+          enum:
+          - atomFeed
+          - rssFeed
+          - sitemap
+          - urlList
+          - patternSitemap
+          - notSitemap
+          example: atomFeed
+        lastDownloaded:
+          type: string
+          format: date-time
+          description: Date and time when the sitemap was last downloaded by Google.
+          example: '2026-01-15T10:30:00Z'
+        warnings:
+          type: integer
+          description: Number of warnings for the sitemap.
+          example: 10
+        errors:
+          type: integer
+          description: Number of errors for the sitemap.
+          example: 10
+        contents:
+          type: array
+          description: Content details for this sitemap, broken down by content type.
+          items:
+            $ref: '#/components/schemas/WmxSitemapContent'
+          example: []
+    SitemapsListResponse:
+      type: object
+      description: Response for listing sitemaps.
+      properties:
+        sitemap:
+          type: array
+          description: List of sitemaps for the site.
+          items:
+            $ref: '#/components/schemas/WmxSitemap'
+          example: []
+    WmxSitemapContent:
+      type: object
+      description: Content type information within a sitemap.
+      properties:
+        type:
+          type: string
+          description: The type of content in this sitemap segment.
+          enum:
+          - web
+          - image
+          - video
+          - news
+          - mobile
+          - androidApp
+          - pattern
+          - iosApp
+          - dataFeedElement
+          example: web
+        submitted:
+          type: integer
+          format: int64
+          description: The number of URLs of this type submitted in the sitemap.
+          example: 10
+        indexed:
+          type: integer
+          format: int64
+          description: The number of URLs of this type that have been indexed by Google.
+          example: 10
+    Error:
+      type: object
+      description: Standard Google API error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: HTTP status code.
+            message:
+              type: string
+              description: A human-readable error message.
+            status:
+              type: string
+              description: The status code string (e.g., INVALID_ARGUMENT).
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  domain:
+                    type: string
+                  reason:
+                    type: string
+          example: example_value
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: OAuth 2.0 authentication for accessing Google Search Console data. Requires the webmasters or webmasters.readonly scope depending on the operation.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/webmasters: View and manage Search Console data for your verified sites
+            https://www.googleapis.com/auth/webmasters.readonly: View Search Console data for your verified sites
+externalDocs:
+  description: Google Search Console API Documentation
+  url: https://developers.google.com/webmaster-tools/v1/api_reference_index

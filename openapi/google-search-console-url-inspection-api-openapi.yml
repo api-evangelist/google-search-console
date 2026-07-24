@@ -1,0 +1,380 @@
+openapi: 3.1.0
+info:
+  title: Google Search Console Search Analytics URL Inspection API
+  description: The Google Search Console API provides programmatic access to Search Console data. Query search analytics to understand how your site appears in Google Search results, manage sitemaps for efficient crawling, inspect individual URLs to check indexing status and crawl details, and manage site-level verification and permissions.
+  version: v1
+  contact:
+    name: Google Search Console API Support
+    url: https://support.google.com/webmasters/
+  termsOfService: https://developers.google.com/terms
+  license:
+    name: Creative Commons Attribution 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+- url: https://searchconsole.googleapis.com
+  description: Google Search Console API Production Server
+security:
+- OAuth2:
+  - https://www.googleapis.com/auth/webmasters
+tags:
+- name: URL Inspection
+  description: Inspect individual URLs to retrieve detailed indexing, crawling, and serving information. Check whether a URL is indexed, view crawl details, mobile usability status, and rich results eligibility.
+paths:
+  /v1/urlInspection/index:inspect:
+    post:
+      operationId: inspectUrl
+      summary: Google Search Console Inspect a Url
+      description: Inspects a URL to retrieve detailed index status, crawl information, mobile usability findings, and rich results status. Returns the most recent indexing data Google has for the specified URL. The URL must belong to a property that the authenticated user has access to. This endpoint uses the v1 URL path, separate from the webmasters/v3 paths used by other Search Console endpoints.
+      tags:
+      - URL Inspection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InspectUrlIndexRequest'
+            example:
+              inspectionUrl: https://example.com/page
+              siteUrl: https://example.com/
+              languageCode: en-US
+      responses:
+        '200':
+          description: URL inspection results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InspectUrlIndexResponse'
+              examples:
+                Inspecturl200Example:
+                  summary: Default inspectUrl 200 response
+                  x-microcks-default: true
+                  value:
+                    inspectionResult:
+                      inspectionResultLink: https://www.example.com
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    RichResultsIssue:
+      type: object
+      description: A specific issue with a rich result item.
+      properties:
+        issueType:
+          type: string
+          description: The type identifier for this issue.
+          example: example_value
+        severity:
+          type: string
+          description: The severity of the issue.
+          enum:
+          - SEVERITY_UNSPECIFIED
+          - WARNING
+          - ERROR
+          example: SEVERITY_UNSPECIFIED
+        issueMessage:
+          type: string
+          description: A human-readable description of the issue.
+          example: example_value
+    MobileUsabilityInspectionResult:
+      type: object
+      description: Mobile usability inspection results for a URL.
+      properties:
+        verdict:
+          type: string
+          description: The overall mobile usability verdict.
+          enum:
+          - VERDICT_UNSPECIFIED
+          - PASS
+          - PARTIAL
+          - FAIL
+          - NEUTRAL
+          example: VERDICT_UNSPECIFIED
+        issues:
+          type: array
+          description: A list of mobile usability issues found.
+          items:
+            $ref: '#/components/schemas/MobileUsabilityIssue'
+          example: []
+    MobileUsabilityIssue:
+      type: object
+      description: A specific mobile usability issue.
+      properties:
+        issueType:
+          type: string
+          description: The type of mobile usability issue.
+          enum:
+          - MOBILE_USABILITY_ISSUE_TYPE_UNSPECIFIED
+          - USES_INCOMPATIBLE_PLUGINS
+          - CONFIGURE_VIEWPORT
+          - FIXED_WIDTH_VIEWPORT
+          - SIZE_CONTENT_TO_VIEWPORT
+          - USE_LEGIBLE_FONT_SIZES
+          - TAP_TARGETS_TOO_CLOSE
+          example: MOBILE_USABILITY_ISSUE_TYPE_UNSPECIFIED
+        severity:
+          type: string
+          description: The severity of the issue.
+          enum:
+          - SEVERITY_UNSPECIFIED
+          - WARNING
+          - ERROR
+          example: SEVERITY_UNSPECIFIED
+        message:
+          type: string
+          description: A human-readable description of the issue.
+          example: example_value
+    UrlInspectionResult:
+      type: object
+      description: The aggregated inspection result for a URL, including index status, crawl information, mobile usability, and rich results.
+      properties:
+        inspectionResultLink:
+          type: string
+          format: uri
+          description: Link to the URL inspection result in the Search Console UI.
+          example: https://www.example.com
+        indexStatusResult:
+          $ref: '#/components/schemas/IndexStatusInspectionResult'
+        mobileUsabilityResult:
+          $ref: '#/components/schemas/MobileUsabilityInspectionResult'
+        richResultsResult:
+          $ref: '#/components/schemas/RichResultsInspectionResult'
+    InspectUrlIndexResponse:
+      type: object
+      description: Response from the URL Inspection API.
+      properties:
+        inspectionResult:
+          $ref: '#/components/schemas/UrlInspectionResult'
+    RichResultsInspectionResult:
+      type: object
+      description: Rich results inspection results for a URL.
+      properties:
+        verdict:
+          type: string
+          description: The overall rich results verdict.
+          enum:
+          - VERDICT_UNSPECIFIED
+          - PASS
+          - PARTIAL
+          - FAIL
+          - NEUTRAL
+          example: VERDICT_UNSPECIFIED
+        detectedItems:
+          type: array
+          description: A list of detected rich result item types and their status.
+          items:
+            $ref: '#/components/schemas/DetectedItems'
+          example: []
+    DetectedItems:
+      type: object
+      description: A group of detected rich result items of a single type.
+      properties:
+        richResultType:
+          type: string
+          description: The rich result type detected (e.g., Product, Recipe, FAQ, BreadcrumbList, Article).
+          example: example_value
+        items:
+          type: array
+          description: The individual detected items of this type.
+          items:
+            $ref: '#/components/schemas/Item'
+          example: []
+    Item:
+      type: object
+      description: A single detected rich result item.
+      properties:
+        name:
+          type: string
+          description: The name or identifier of the rich result item.
+          example: Example Title
+        issues:
+          type: array
+          description: Issues found with this rich result item.
+          items:
+            $ref: '#/components/schemas/RichResultsIssue'
+          example: []
+    InspectUrlIndexRequest:
+      type: object
+      description: Request body for the URL Inspection API.
+      required:
+      - inspectionUrl
+      - siteUrl
+      properties:
+        inspectionUrl:
+          type: string
+          format: uri
+          description: The fully qualified URL to inspect. Must be under the specified site property.
+          example: https://www.example.com
+        siteUrl:
+          type: string
+          description: The URL of the site property in Search Console. Can be a URL-prefix property (e.g., https://example.com/) or a domain property (e.g., sc-domain:example.com).
+          example: https://www.example.com
+        languageCode:
+          type: string
+          description: Optional BCP-47 language code for the response. If not specified, the response will be in English.
+          example: en-US
+    IndexStatusInspectionResult:
+      type: object
+      description: Index status inspection results for a URL.
+      properties:
+        verdict:
+          type: string
+          description: The overall verdict for the index status of the URL.
+          enum:
+          - VERDICT_UNSPECIFIED
+          - PASS
+          - PARTIAL
+          - FAIL
+          - NEUTRAL
+          example: VERDICT_UNSPECIFIED
+        coverageState:
+          type: string
+          description: The coverage state of the URL, indicating whether and how it appears in the index. Common values include Submitted and indexed, Crawled - currently not indexed, Discovered - currently not indexed, and URL is unknown to Google.
+          example: example_value
+        robotsTxtState:
+          type: string
+          description: Whether the page is blocked by robots.txt.
+          enum:
+          - ROBOTS_TXT_STATE_UNSPECIFIED
+          - ALLOWED
+          - DISALLOWED
+          example: ROBOTS_TXT_STATE_UNSPECIFIED
+        indexingState:
+          type: string
+          description: Whether the page is blocked from indexing via noindex directives.
+          enum:
+          - INDEXING_STATE_UNSPECIFIED
+          - INDEXING_ALLOWED
+          - BLOCKED_BY_META_TAG
+          - BLOCKED_BY_HTTP_HEADER
+          - BLOCKED_BY_ROBOTS_TXT
+          example: INDEXING_STATE_UNSPECIFIED
+        lastCrawlTime:
+          type: string
+          format: date-time
+          description: The last time this URL was crawled by Google, in RFC 3339 format.
+          example: '2026-01-15T10:30:00Z'
+        pageFetchState:
+          type: string
+          description: The result of the page fetch during the last crawl.
+          enum:
+          - PAGE_FETCH_STATE_UNSPECIFIED
+          - SUCCESSFUL
+          - SOFT_404
+          - BLOCKED_ROBOTS_TXT
+          - NOT_FOUND
+          - ACCESS_DENIED
+          - SERVER_ERROR
+          - REDIRECT_ERROR
+          - ACCESS_FORBIDDEN
+          - BLOCKED_4XX
+          - INTERNAL_CRAWL_ERROR
+          - INVALID_URL
+          example: PAGE_FETCH_STATE_UNSPECIFIED
+        googleCanonical:
+          type: string
+          format: uri
+          description: The URL that Google selected as canonical for this page.
+          example: https://www.example.com
+        userCanonical:
+          type: string
+          format: uri
+          description: The canonical URL declared by the page via rel=canonical or the Canonical HTTP header.
+          example: https://www.example.com
+        sitemap:
+          type: array
+          description: Any sitemaps that include this URL.
+          items:
+            type: string
+            format: uri
+          example: []
+        referringUrls:
+          type: array
+          description: URLs that refer to this URL, as discovered during crawling.
+          items:
+            type: string
+            format: uri
+          example: https://www.example.com
+        crawledAs:
+          type: string
+          description: The user agent type used to crawl the URL.
+          enum:
+          - CRAWLING_USER_AGENT_UNSPECIFIED
+          - DESKTOP
+          - MOBILE
+          example: CRAWLING_USER_AGENT_UNSPECIFIED
+    Error:
+      type: object
+      description: Standard Google API error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: HTTP status code.
+            message:
+              type: string
+              description: A human-readable error message.
+            status:
+              type: string
+              description: The status code string (e.g., INVALID_ARGUMENT).
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  domain:
+                    type: string
+                  reason:
+                    type: string
+          example: example_value
+  responses:
+    Forbidden:
+      description: Insufficient permissions for the requested operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded. Retry after the specified delay.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required or invalid credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was invalid or cannot be served.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: OAuth 2.0 authentication for accessing Google Search Console data. Requires the webmasters or webmasters.readonly scope depending on the operation.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/webmasters: View and manage Search Console data for your verified sites
+            https://www.googleapis.com/auth/webmasters.readonly: View Search Console data for your verified sites
+externalDocs:
+  description: Google Search Console API Documentation
+  url: https://developers.google.com/webmaster-tools/v1/api_reference_index
