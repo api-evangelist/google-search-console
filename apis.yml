@@ -3,6 +3,19 @@ name: Google Search Console
 description: >-
   The Google Search Console API provides programmatic access to Search Console data, allowing you to monitor and
   maintain your site's presence in Google Search results.
+accessModel:
+  pricing: free
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Free · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 image: https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png
 url: https://search.google.com/search-console/about
 created: '2024-01-01'
@@ -16,143 +29,310 @@ tags:
   - SEO
   - Webmaster Tools
 apis:
-  - name: Google Search Console API
-    description: >-
-      Provides access to Search Console data including search analytics, sitemaps, URL inspection, and index coverage
-      reports.
-    image: https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png
-    humanURL: https://developers.google.com/webmaster-tools
-    baseURL: https://searchconsole.googleapis.com
-    tags:
-      - Indexing
-      - Search Analytics
-      - SEO
-      - Sitemaps
-    properties:
-      - type: Documentation
-        url: https://developers.google.com/webmaster-tools/v1/api_reference_index
-      - type: OpenAPI
-        url: openapi/google-search-console-api-openapi.yml
-      - type: Documentation
-        url: https://searchconsole.googleapis.com/$discovery/rest?version=v1
-        title: Discovery Document
-      - type: Authentication
-        url: https://developers.google.com/webmaster-tools/v1/how-tos/authorizing
-      - type: GettingStarted
-        url: https://developers.google.com/webmaster-tools/v1/quickstart
-      - type: Console
-        url: https://console.cloud.google.com/apis/library/searchconsole.googleapis.com
-      - type: Pricing
-        url: https://developers.google.com/webmaster-tools/v1/limits
-      - type: TermsOfService
-        url: https://developers.google.com/terms
-      - type: CodeExamples
-        url: https://developers.google.com/webmaster-tools/v1/samples
-      - type: ChangeLog
-        url: https://developers.google.com/webmaster-tools/v1/release-notes
-      - type: Support
-        url: https://support.google.com/webmasters/
-      - type: Documentation
-        url: https://developers.google.com/webmaster-tools/about
-        title: Overview
-      - type: Documentation
-        url: https://developers.google.com/webmaster-tools/v1/prereqs
-        title: Prerequisites
-      - type: GettingStarted
-        url: https://developers.google.com/webmaster-tools/v1/quickstart/quickstart-python
-        title: Python Quickstart
-      - type: SDKs
-        url: https://developers.google.com/webmaster-tools/v1/libraries
-        title: Client Libraries
-      - type: Documentation
-        url: https://developers.google.com/webmaster-tools/v1/how-tos/search_analytics
-        title: Search Analytics Guide
-      - type: APIReference
-        url: https://developers.google.com/webmaster-tools/v1/searchanalytics/query
-        title: Search Analytics Query
-      - type: APIReference
-        url: https://developers.google.com/webmaster-tools/v1/sitemaps
-        title: Sitemaps Reference
-      - type: APIReference
-        url: https://developers.google.com/webmaster-tools/v1/sitemaps/get
-        title: Sitemaps Get
-      - type: APIReference
-        url: https://developers.google.com/webmaster-tools/v1/sitemaps/submit
-        title: Sitemaps Submit
-      - type: APIReference
-        url: https://developers.google.com/webmaster-tools/v1/sites/get
-        title: Sites Get
-      - type: APIReference
-        url: https://developers.google.com/webmaster-tools/v1/urlInspection.index/inspect
-        title: URL Inspection
-      - type: APIReference
-        url: https://developers.google.com/webmaster-tools/v1/urlInspection.index/UrlInspectionResult
-        title: URL Inspection Result
-      - type: JSONSchema
-        url: json-schema/google-search-console-query-schema.json
-      - type: JSONLD
-        url: json-ld/google-search-console-context.jsonld
-  - name: Google Search Console URL Testing Tools API
-    description: >-
-      Provides tools for running validation tests against single URLs, including mobile-friendly testing and rich
-      results validation for structured data.
-    image: https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png
-    humanURL: https://developers.google.com/webmaster-tools/search-console-api
-    baseURL: https://searchconsole.googleapis.com
-    tags:
-      - Mobile Friendly
-      - Rich Results
-      - Structured Data
-      - Testing
-      - Validation
-    properties:
-      - type: Documentation
-        url: https://developers.google.com/webmaster-tools/search-console-api/v1/
-      - type: Documentation
-        url: https://developers.google.com/webmaster-tools/search-console-api/about
-        title: About
-      - type: Documentation
-        url: https://search.google.com/test/rich-results
-        title: Rich Results Test
-  - name: Google Indexing API
-    description: >-
-      The Indexing API allows any site owner to directly notify Google when pages are added or removed, enabling faster
-      crawling and indexing of content such as job postings and livestream videos.
-    image: https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png
-    humanURL: https://developers.google.com/search/apis/indexing-api/v3/quickstart
-    baseURL: https://indexing.googleapis.com
-    tags:
-      - Crawling
-      - Indexing
-      - SEO
-      - URL Submission
-    properties:
-      - type: Documentation
-        url: https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rest
-      - type: GettingStarted
-        url: https://developers.google.com/search/apis/indexing-api/v3/quickstart
-      - type: Tutorials
-        url: https://developers.google.com/search/apis/indexing-api/v3/using-api
-        title: How-To Guide
-      - type: Documentation
-        url: https://developers.google.com/search/apis/indexing-api/v3/prereqs
-        title: Prerequisites
-      - type: Pricing
-        url: https://developers.google.com/search/apis/indexing-api/v3/quota-pricing
-        title: Quota and Pricing
-      - type: SDKs
-        url: https://developers.google.com/search/apis/indexing-api/v3/libraries
-        title: Client Libraries
-      - type: APIReference
-        url: https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rpc
-        title: RPC Reference
-      - type: APIReference
-        url: https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rest/v3/urlNotifications/publish
-        title: Publish Method
+- name: Google Search Console URL Testing Tools API
+  description: >-
+    Provides tools for running validation tests against single URLs, including mobile-friendly testing
+    and rich results validation for structured data.
+  image: https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png
+  humanURL: https://developers.google.com/webmaster-tools/search-console-api
+  baseURL: https://searchconsole.googleapis.com
+  tags:
+  - Mobile Friendly
+  - Rich Results
+  - Structured Data
+  - Testing
+  - Validation
+  properties:
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/search-console-api/v1/
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/search-console-api/about
+    title: About
+  - type: Documentation
+    url: https://search.google.com/test/rich-results
+    title: Rich Results Test
+- name: Google Indexing API
+  description: >-
+    The Indexing API allows any site owner to directly notify Google when pages are added or removed,
+    enabling faster crawling and indexing of content such as job postings and livestream videos.
+  image: https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png
+  humanURL: https://developers.google.com/search/apis/indexing-api/v3/quickstart
+  baseURL: https://indexing.googleapis.com
+  tags:
+  - Crawling
+  - Indexing
+  - SEO
+  - URL Submission
+  properties:
+  - type: Documentation
+    url: https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rest
+  - type: GettingStarted
+    url: https://developers.google.com/search/apis/indexing-api/v3/quickstart
+  - type: Tutorials
+    url: https://developers.google.com/search/apis/indexing-api/v3/using-api
+    title: How-To Guide
+  - type: Documentation
+    url: https://developers.google.com/search/apis/indexing-api/v3/prereqs
+    title: Prerequisites
+  - type: Pricing
+    url: https://developers.google.com/search/apis/indexing-api/v3/quota-pricing
+    title: Quota and Pricing
+  - type: SDKs
+    url: https://developers.google.com/search/apis/indexing-api/v3/libraries
+    title: Client Libraries
+  - type: APIReference
+    url: https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rpc
+    title: RPC Reference
+  - type: APIReference
+    url: >-
+      https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rest/v3/urlNotifications/publish
+    title: Publish Method
+- aid: google-search-console:google-search-console-search-analytics-api
+  name: Google Search Console Search Analytics API
+  description: >-
+    Query search traffic data for your site. Retrieve impressions, clicks, click-through rate, and average
+    position grouped by dimensions such as query, page, country, device, search type, and date.
+  humanURL: https://developers.google.com/webmaster-tools
+  baseURL: https://searchconsole.googleapis.com
+  tags:
+  - Search Analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/google-search-console-search-analytics-api-openapi.yml
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/v1/api_reference_index
+  - type: Documentation
+    url: https://searchconsole.googleapis.com/$discovery/rest?version=v1
+  - type: Authentication
+    url: https://developers.google.com/webmaster-tools/v1/how-tos/authorizing
+  - type: GettingStarted
+    url: https://developers.google.com/webmaster-tools/v1/quickstart
+  - type: Console
+    url: https://console.cloud.google.com/apis/library/searchconsole.googleapis.com
+  - type: Pricing
+    url: https://developers.google.com/webmaster-tools/v1/limits
+  - type: TermsOfService
+    url: https://developers.google.com/terms
+  - type: CodeExamples
+    url: https://developers.google.com/webmaster-tools/v1/samples
+  - type: ChangeLog
+    url: https://developers.google.com/webmaster-tools/v1/release-notes
+  - type: Support
+    url: https://support.google.com/webmasters/
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/about
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/v1/prereqs
+  - type: GettingStarted
+    url: https://developers.google.com/webmaster-tools/v1/quickstart/quickstart-python
+  - type: SDKs
+    url: https://developers.google.com/webmaster-tools/v1/libraries
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/v1/how-tos/search_analytics
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/searchanalytics/query
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/sitemaps
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/sitemaps/get
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/sitemaps/submit
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/sites/get
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/urlInspection.index/inspect
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/urlInspection.index/UrlInspectionResult
+  - type: JSONSchema
+    url: json-schema/google-search-console-query-schema.json
+  - type: JSONLD
+    url: json-ld/google-search-console-context.jsonld
+- aid: google-search-console:google-search-console-sitemaps-api
+  name: Google Search Console Sitemaps API
+  description: >-
+    Submit and manage sitemaps and sitemap indexes for your site. List submitted sitemaps, check their
+    processing status, submit new sitemaps, and delete previously submitted sitemaps.
+  humanURL: https://developers.google.com/webmaster-tools
+  baseURL: https://searchconsole.googleapis.com
+  tags:
+  - Sitemaps
+  properties:
+  - type: OpenAPI
+    url: openapi/google-search-console-sitemaps-api-openapi.yml
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/v1/api_reference_index
+  - type: Documentation
+    url: https://searchconsole.googleapis.com/$discovery/rest?version=v1
+  - type: Authentication
+    url: https://developers.google.com/webmaster-tools/v1/how-tos/authorizing
+  - type: GettingStarted
+    url: https://developers.google.com/webmaster-tools/v1/quickstart
+  - type: Console
+    url: https://console.cloud.google.com/apis/library/searchconsole.googleapis.com
+  - type: Pricing
+    url: https://developers.google.com/webmaster-tools/v1/limits
+  - type: TermsOfService
+    url: https://developers.google.com/terms
+  - type: CodeExamples
+    url: https://developers.google.com/webmaster-tools/v1/samples
+  - type: ChangeLog
+    url: https://developers.google.com/webmaster-tools/v1/release-notes
+  - type: Support
+    url: https://support.google.com/webmasters/
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/about
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/v1/prereqs
+  - type: GettingStarted
+    url: https://developers.google.com/webmaster-tools/v1/quickstart/quickstart-python
+  - type: SDKs
+    url: https://developers.google.com/webmaster-tools/v1/libraries
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/v1/how-tos/search_analytics
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/searchanalytics/query
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/sitemaps
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/sitemaps/get
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/sitemaps/submit
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/sites/get
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/urlInspection.index/inspect
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/urlInspection.index/UrlInspectionResult
+  - type: JSONSchema
+    url: json-schema/google-search-console-query-schema.json
+  - type: JSONLD
+    url: json-ld/google-search-console-context.jsonld
+- aid: google-search-console:google-search-console-sites-api
+  name: Google Search Console Sites API
+  description: >-
+    Manage site-level access and verification. List verified sites, get details about a specific site,
+    add new sites, and remove sites from your Search Console account.
+  humanURL: https://developers.google.com/webmaster-tools
+  baseURL: https://searchconsole.googleapis.com
+  tags:
+  - Sites
+  properties:
+  - type: OpenAPI
+    url: openapi/google-search-console-sites-api-openapi.yml
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/v1/api_reference_index
+  - type: Documentation
+    url: https://searchconsole.googleapis.com/$discovery/rest?version=v1
+  - type: Authentication
+    url: https://developers.google.com/webmaster-tools/v1/how-tos/authorizing
+  - type: GettingStarted
+    url: https://developers.google.com/webmaster-tools/v1/quickstart
+  - type: Console
+    url: https://console.cloud.google.com/apis/library/searchconsole.googleapis.com
+  - type: Pricing
+    url: https://developers.google.com/webmaster-tools/v1/limits
+  - type: TermsOfService
+    url: https://developers.google.com/terms
+  - type: CodeExamples
+    url: https://developers.google.com/webmaster-tools/v1/samples
+  - type: ChangeLog
+    url: https://developers.google.com/webmaster-tools/v1/release-notes
+  - type: Support
+    url: https://support.google.com/webmasters/
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/about
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/v1/prereqs
+  - type: GettingStarted
+    url: https://developers.google.com/webmaster-tools/v1/quickstart/quickstart-python
+  - type: SDKs
+    url: https://developers.google.com/webmaster-tools/v1/libraries
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/v1/how-tos/search_analytics
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/searchanalytics/query
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/sitemaps
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/sitemaps/get
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/sitemaps/submit
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/sites/get
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/urlInspection.index/inspect
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/urlInspection.index/UrlInspectionResult
+  - type: JSONSchema
+    url: json-schema/google-search-console-query-schema.json
+  - type: JSONLD
+    url: json-ld/google-search-console-context.jsonld
+- aid: google-search-console:google-search-console-url-inspection-api
+  name: Google Search Console URL Inspection API
+  description: >-
+    Inspect individual URLs to retrieve detailed indexing, crawling, and serving information. Check whether
+    a URL is indexed, view crawl details, mobile usability status, and rich results eligibility.
+  humanURL: https://developers.google.com/webmaster-tools
+  baseURL: https://searchconsole.googleapis.com
+  tags:
+  - URL Inspection
+  properties:
+  - type: OpenAPI
+    url: openapi/google-search-console-url-inspection-api-openapi.yml
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/v1/api_reference_index
+  - type: Documentation
+    url: https://searchconsole.googleapis.com/$discovery/rest?version=v1
+  - type: Authentication
+    url: https://developers.google.com/webmaster-tools/v1/how-tos/authorizing
+  - type: GettingStarted
+    url: https://developers.google.com/webmaster-tools/v1/quickstart
+  - type: Console
+    url: https://console.cloud.google.com/apis/library/searchconsole.googleapis.com
+  - type: Pricing
+    url: https://developers.google.com/webmaster-tools/v1/limits
+  - type: TermsOfService
+    url: https://developers.google.com/terms
+  - type: CodeExamples
+    url: https://developers.google.com/webmaster-tools/v1/samples
+  - type: ChangeLog
+    url: https://developers.google.com/webmaster-tools/v1/release-notes
+  - type: Support
+    url: https://support.google.com/webmasters/
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/about
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/v1/prereqs
+  - type: GettingStarted
+    url: https://developers.google.com/webmaster-tools/v1/quickstart/quickstart-python
+  - type: SDKs
+    url: https://developers.google.com/webmaster-tools/v1/libraries
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/v1/how-tos/search_analytics
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/searchanalytics/query
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/sitemaps
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/sitemaps/get
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/sitemaps/submit
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/sites/get
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/urlInspection.index/inspect
+  - type: APIReference
+    url: https://developers.google.com/webmaster-tools/v1/urlInspection.index/UrlInspectionResult
+  - type: JSONSchema
+    url: json-schema/google-search-console-query-schema.json
+  - type: JSONLD
+    url: json-ld/google-search-console-context.jsonld
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/google-search-console/overview
   - type: AgenticAccess
     url: agentic-access/google-search-console-agentic-access.yml
   - type: VulnerabilityDisclosure
