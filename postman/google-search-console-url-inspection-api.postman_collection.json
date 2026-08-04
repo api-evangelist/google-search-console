@@ -1,0 +1,409 @@
+{
+  "info": {
+    "_postman_id": "0019606f-12e8-4919-b98b-1913eba14c82",
+    "name": "Google Search Console Search Analytics URL Inspection API",
+    "description": "The Google Search Console API provides programmatic access to Search Console data. Query search analytics to understand how your site appears in Google Search results, manage sitemaps for efficient crawling, inspect individual URLs to check indexing status and crawl details, and manage site-level verification and permissions.\n\nContact Support:\n Name: Google Search Console API Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:50:28.000Z",
+    "updatedAt": "2026-07-28T01:50:28.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-0019606f-12e8-4919-b98b-1913eba14c82"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "urlInspection",
+          "item": [
+            {
+              "name": "index:inspect",
+              "item": [
+                {
+                  "name": "Google Search Console Inspect a Url",
+                  "id": "d2e300f2-d3f7-42ae-b7d5-39ade91fb474",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"inspectionUrl\": \"<uri>\",\n  \"siteUrl\": \"<string>\",\n  \"languageCode\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/urlInspection/index:inspect",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "urlInspection",
+                        "index:inspect"
+                      ]
+                    },
+                    "description": "Inspects a URL to retrieve detailed index status, crawl information, mobile usability findings, and rich results status. Returns the most recent indexing data Google has for the specified URL. The URL must belong to a property that the authenticated user has access to. This endpoint uses the v1 URL path, separate from the webmasters/v3 paths used by other Search Console endpoints."
+                  },
+                  "response": [
+                    {
+                      "id": "2fc2a7ed-3729-4d81-bab5-0984ec9d10b1",
+                      "name": "URL inspection results.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"inspectionUrl\": \"<uri>\",\n  \"siteUrl\": \"<string>\",\n  \"languageCode\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/urlInspection/index:inspect",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "urlInspection",
+                            "index:inspect"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"inspectionResult\": {\n    \"inspectionResultLink\": \"<uri>\",\n    \"indexStatusResult\": {\n      \"verdict\": \"PARTIAL\",\n      \"coverageState\": \"<string>\",\n      \"robotsTxtState\": \"ROBOTS_TXT_STATE_UNSPECIFIED\",\n      \"indexingState\": \"INDEXING_STATE_UNSPECIFIED\",\n      \"lastCrawlTime\": \"<dateTime>\",\n      \"pageFetchState\": \"REDIRECT_ERROR\",\n      \"googleCanonical\": \"<uri>\",\n      \"userCanonical\": \"<uri>\",\n      \"sitemap\": [\n        \"<uri>\",\n        \"<uri>\"\n      ],\n      \"referringUrls\": [\n        \"<uri>\",\n        \"<uri>\"\n      ],\n      \"crawledAs\": \"CRAWLING_USER_AGENT_UNSPECIFIED\"\n    },\n    \"mobileUsabilityResult\": {\n      \"verdict\": \"PASS\",\n      \"issues\": [\n        {\n          \"issueType\": \"MOBILE_USABILITY_ISSUE_TYPE_UNSPECIFIED\",\n          \"severity\": \"SEVERITY_UNSPECIFIED\",\n          \"message\": \"<string>\"\n        },\n        {\n          \"issueType\": \"SIZE_CONTENT_TO_VIEWPORT\",\n          \"severity\": \"SEVERITY_UNSPECIFIED\",\n          \"message\": \"<string>\"\n        }\n      ]\n    },\n    \"richResultsResult\": {\n      \"verdict\": \"PARTIAL\",\n      \"detectedItems\": [\n        {\n          \"richResultType\": \"<string>\",\n          \"items\": [\n            {\n              \"name\": \"<string>\",\n              \"issues\": [\n                {\n                  \"issueType\": \"<string>\",\n                  \"severity\": \"ERROR\",\n                  \"issueMessage\": \"<string>\"\n                },\n                {\n                  \"issueType\": \"<string>\",\n                  \"severity\": \"WARNING\",\n                  \"issueMessage\": \"<string>\"\n                }\n              ]\n            },\n            {\n              \"name\": \"<string>\",\n              \"issues\": [\n                {\n                  \"issueType\": \"<string>\",\n                  \"severity\": \"SEVERITY_UNSPECIFIED\",\n                  \"issueMessage\": \"<string>\"\n                },\n                {\n                  \"issueType\": \"<string>\",\n                  \"severity\": \"ERROR\",\n                  \"issueMessage\": \"<string>\"\n                }\n              ]\n            }\n          ]\n        },\n        {\n          \"richResultType\": \"<string>\",\n          \"items\": [\n            {\n              \"name\": \"<string>\",\n              \"issues\": [\n                {\n                  \"issueType\": \"<string>\",\n                  \"severity\": \"ERROR\",\n                  \"issueMessage\": \"<string>\"\n                },\n                {\n                  \"issueType\": \"<string>\",\n                  \"severity\": \"WARNING\",\n                  \"issueMessage\": \"<string>\"\n                }\n              ]\n            },\n            {\n              \"name\": \"<string>\",\n              \"issues\": [\n                {\n                  \"issueType\": \"<string>\",\n                  \"severity\": \"SEVERITY_UNSPECIFIED\",\n                  \"issueMessage\": \"<string>\"\n                },\n                {\n                  \"issueType\": \"<string>\",\n                  \"severity\": \"WARNING\",\n                  \"issueMessage\": \"<string>\"\n                }\n              ]\n            }\n          ]\n        }\n      ]\n    }\n  }\n}",
+                      "createdAt": "2026-07-28T01:50:28.000Z",
+                      "updatedAt": "2026-07-28T01:50:28.000Z",
+                      "uid": "35240-2fc2a7ed-3729-4d81-bab5-0984ec9d10b1"
+                    },
+                    {
+                      "id": "bfca7b8b-4ca7-4163-8fbf-2ab5e59de772",
+                      "name": "The request was invalid or cannot be served.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"inspectionUrl\": \"<uri>\",\n  \"siteUrl\": \"<string>\",\n  \"languageCode\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/urlInspection/index:inspect",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "urlInspection",
+                            "index:inspect"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"status\": \"<string>\",\n    \"errors\": [\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-07-28T01:50:28.000Z",
+                      "updatedAt": "2026-07-28T01:50:28.000Z",
+                      "uid": "35240-bfca7b8b-4ca7-4163-8fbf-2ab5e59de772"
+                    },
+                    {
+                      "id": "dee1faa6-3bba-4201-9079-c6b2c30a2920",
+                      "name": "Authentication required or invalid credentials.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"inspectionUrl\": \"<uri>\",\n  \"siteUrl\": \"<string>\",\n  \"languageCode\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/urlInspection/index:inspect",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "urlInspection",
+                            "index:inspect"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"status\": \"<string>\",\n    \"errors\": [\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-07-28T01:50:28.000Z",
+                      "updatedAt": "2026-07-28T01:50:28.000Z",
+                      "uid": "35240-dee1faa6-3bba-4201-9079-c6b2c30a2920"
+                    },
+                    {
+                      "id": "8ea6811c-7394-4f40-b008-4b676cf36cca",
+                      "name": "Insufficient permissions for the requested operation.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"inspectionUrl\": \"<uri>\",\n  \"siteUrl\": \"<string>\",\n  \"languageCode\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/urlInspection/index:inspect",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "urlInspection",
+                            "index:inspect"
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"status\": \"<string>\",\n    \"errors\": [\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-07-28T01:50:28.000Z",
+                      "updatedAt": "2026-07-28T01:50:28.000Z",
+                      "uid": "35240-8ea6811c-7394-4f40-b008-4b676cf36cca"
+                    },
+                    {
+                      "id": "6416c61c-4ff2-4539-babc-ef40e70ab6b7",
+                      "name": "Rate limit exceeded. Retry after the specified delay.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"inspectionUrl\": \"<uri>\",\n  \"siteUrl\": \"<string>\",\n  \"languageCode\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/urlInspection/index:inspect",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "urlInspection",
+                            "index:inspect"
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"status\": \"<string>\",\n    \"errors\": [\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-07-28T01:50:28.000Z",
+                      "updatedAt": "2026-07-28T01:50:28.000Z",
+                      "uid": "35240-6416c61c-4ff2-4539-babc-ef40e70ab6b7"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:50:28.000Z",
+                  "updatedAt": "2026-07-28T01:50:28.000Z",
+                  "uid": "35240-d2e300f2-d3f7-42ae-b7d5-39ade91fb474"
+                }
+              ],
+              "id": "d3577e33-9cfa-4f34-85ce-6736cc3458ac",
+              "createdAt": "2026-07-28T01:50:28.000Z",
+              "updatedAt": "2026-07-28T01:50:28.000Z",
+              "uid": "35240-d3577e33-9cfa-4f34-85ce-6736cc3458ac"
+            }
+          ],
+          "id": "f008c1c7-31b8-42d3-bf3a-d5e5ece2c27c",
+          "createdAt": "2026-07-28T01:50:28.000Z",
+          "updatedAt": "2026-07-28T01:50:28.000Z",
+          "uid": "35240-f008c1c7-31b8-42d3-bf3a-d5e5ece2c27c"
+        }
+      ],
+      "id": "90675afb-2928-41dd-917b-584b126118d3",
+      "createdAt": "2026-07-28T01:50:28.000Z",
+      "updatedAt": "2026-07-28T01:50:28.000Z",
+      "uid": "35240-90675afb-2928-41dd-917b-584b126118d3"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "https://www.googleapis.com/auth/webmasters https://www.googleapis.com/auth/webmasters.readonly",
+        "type": "string"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://oauth2.googleapis.com/token",
+        "type": "string"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://accounts.google.com/o/oauth2/v2/auth",
+        "type": "string"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://searchconsole.googleapis.com"
+    }
+  ]
+}

@@ -1,0 +1,421 @@
+{
+  "info": {
+    "_postman_id": "ef97de4a-d08d-473d-b9d6-6167a10498c5",
+    "name": "Google Search Console Search Analytics API",
+    "description": "The Google Search Console API provides programmatic access to Search Console data. Query search analytics to understand how your site appears in Google Search results, manage sitemaps for efficient crawling, inspect individual URLs to check indexing status and crawl details, and manage site-level verification and permissions.\n\nContact Support:\n Name: Google Search Console API Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:50:18.000Z",
+    "updatedAt": "2026-07-28T01:50:18.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ef97de4a-d08d-473d-b9d6-6167a10498c5"
+  },
+  "item": [
+    {
+      "name": "webmasters",
+      "item": [
+        {
+          "name": "v3",
+          "item": [
+            {
+              "name": "sites",
+              "item": [
+                {
+                  "name": "{siteUrl}",
+                  "item": [
+                    {
+                      "name": "searchAnalytics",
+                      "item": [
+                        {
+                          "name": "query",
+                          "item": [
+                            {
+                              "name": "Google Search Console Query Search Analytics",
+                              "id": "c69f8f00-7cc4-420d-b732-ed5ae026061b",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"dimensions\": [\n    \"page\",\n    \"page\"\n  ],\n  \"type\": \"web\",\n  \"dimensionFilterGroups\": [\n    {\n      \"groupType\": \"and\",\n      \"filters\": [\n        {\n          \"dimension\": \"page\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        },\n        {\n          \"dimension\": \"country\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        }\n      ]\n    },\n    {\n      \"groupType\": \"and\",\n      \"filters\": [\n        {\n          \"dimension\": \"query\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        },\n        {\n          \"dimension\": \"query\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        }\n      ]\n    }\n  ],\n  \"aggregationType\": \"auto\",\n  \"rowLimit\": 1000,\n  \"startRow\": 0,\n  \"dataState\": \"final\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl/searchAnalytics/query",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "webmasters",
+                                    "v3",
+                                    "sites",
+                                    ":siteUrl",
+                                    "searchAnalytics",
+                                    "query"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "a14ce7b6-cbc9-47a8-aaaf-d538d843efa0",
+                                      "key": "siteUrl",
+                                      "value": "<string>",
+                                      "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                                    }
+                                  ]
+                                },
+                                "description": "Query your search traffic data with filters and parameters that you define. Returns zero or more rows grouped by the row keys (dimensions) that you define. You must define a date range of one or more days. When date is one of the dimensions, any days without data are omitted from the result list. Data is available starting from the date the site was added to Search Console, and there is a processing delay of approximately 2-3 days."
+                              },
+                              "response": [
+                                {
+                                  "id": "c7d1f455-6bc5-406d-a589-b9e83299b758",
+                                  "name": "Search analytics query results.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: oauth2",
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"dimensions\": [\n    \"page\",\n    \"page\"\n  ],\n  \"type\": \"web\",\n  \"dimensionFilterGroups\": [\n    {\n      \"groupType\": \"and\",\n      \"filters\": [\n        {\n          \"dimension\": \"page\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        },\n        {\n          \"dimension\": \"country\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        }\n      ]\n    },\n    {\n      \"groupType\": \"and\",\n      \"filters\": [\n        {\n          \"dimension\": \"query\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        },\n        {\n          \"dimension\": \"query\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        }\n      ]\n    }\n  ],\n  \"aggregationType\": \"auto\",\n  \"rowLimit\": 1000,\n  \"startRow\": 0,\n  \"dataState\": \"final\"\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl/searchAnalytics/query",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "webmasters",
+                                        "v3",
+                                        "sites",
+                                        ":siteUrl",
+                                        "searchAnalytics",
+                                        "query"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "siteUrl"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"rows\": [\n    {\n      \"keys\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"clicks\": \"<number>\",\n      \"impressions\": \"<number>\",\n      \"ctr\": \"<double>\",\n      \"position\": \"<double>\"\n    },\n    {\n      \"keys\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"clicks\": \"<number>\",\n      \"impressions\": \"<number>\",\n      \"ctr\": \"<double>\",\n      \"position\": \"<double>\"\n    }\n  ],\n  \"responseAggregationType\": \"byPage\"\n}",
+                                  "createdAt": "2026-07-28T01:50:19.000Z",
+                                  "updatedAt": "2026-07-28T01:50:19.000Z",
+                                  "uid": "35240-c7d1f455-6bc5-406d-a589-b9e83299b758"
+                                },
+                                {
+                                  "id": "a2f94a18-268d-4175-8fea-7e1b52ca942c",
+                                  "name": "The request was invalid or cannot be served.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: oauth2",
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"dimensions\": [\n    \"page\",\n    \"page\"\n  ],\n  \"type\": \"web\",\n  \"dimensionFilterGroups\": [\n    {\n      \"groupType\": \"and\",\n      \"filters\": [\n        {\n          \"dimension\": \"page\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        },\n        {\n          \"dimension\": \"country\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        }\n      ]\n    },\n    {\n      \"groupType\": \"and\",\n      \"filters\": [\n        {\n          \"dimension\": \"query\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        },\n        {\n          \"dimension\": \"query\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        }\n      ]\n    }\n  ],\n  \"aggregationType\": \"auto\",\n  \"rowLimit\": 1000,\n  \"startRow\": 0,\n  \"dataState\": \"final\"\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl/searchAnalytics/query",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "webmasters",
+                                        "v3",
+                                        "sites",
+                                        ":siteUrl",
+                                        "searchAnalytics",
+                                        "query"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "siteUrl"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Bad Request",
+                                  "code": 400,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"status\": \"<string>\",\n    \"errors\": [\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                                  "createdAt": "2026-07-28T01:50:19.000Z",
+                                  "updatedAt": "2026-07-28T01:50:19.000Z",
+                                  "uid": "35240-a2f94a18-268d-4175-8fea-7e1b52ca942c"
+                                },
+                                {
+                                  "id": "3f62cf6a-a511-43c4-81a9-cc4d305b4f9c",
+                                  "name": "Authentication required or invalid credentials.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: oauth2",
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"dimensions\": [\n    \"page\",\n    \"page\"\n  ],\n  \"type\": \"web\",\n  \"dimensionFilterGroups\": [\n    {\n      \"groupType\": \"and\",\n      \"filters\": [\n        {\n          \"dimension\": \"page\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        },\n        {\n          \"dimension\": \"country\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        }\n      ]\n    },\n    {\n      \"groupType\": \"and\",\n      \"filters\": [\n        {\n          \"dimension\": \"query\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        },\n        {\n          \"dimension\": \"query\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        }\n      ]\n    }\n  ],\n  \"aggregationType\": \"auto\",\n  \"rowLimit\": 1000,\n  \"startRow\": 0,\n  \"dataState\": \"final\"\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl/searchAnalytics/query",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "webmasters",
+                                        "v3",
+                                        "sites",
+                                        ":siteUrl",
+                                        "searchAnalytics",
+                                        "query"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "siteUrl"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"status\": \"<string>\",\n    \"errors\": [\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                                  "createdAt": "2026-07-28T01:50:19.000Z",
+                                  "updatedAt": "2026-07-28T01:50:19.000Z",
+                                  "uid": "35240-3f62cf6a-a511-43c4-81a9-cc4d305b4f9c"
+                                },
+                                {
+                                  "id": "24f01bd1-4004-4e83-8e04-59b5425cf718",
+                                  "name": "Insufficient permissions for the requested operation.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: oauth2",
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"dimensions\": [\n    \"page\",\n    \"page\"\n  ],\n  \"type\": \"web\",\n  \"dimensionFilterGroups\": [\n    {\n      \"groupType\": \"and\",\n      \"filters\": [\n        {\n          \"dimension\": \"page\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        },\n        {\n          \"dimension\": \"country\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        }\n      ]\n    },\n    {\n      \"groupType\": \"and\",\n      \"filters\": [\n        {\n          \"dimension\": \"query\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        },\n        {\n          \"dimension\": \"query\",\n          \"expression\": \"<string>\",\n          \"operator\": \"equals\"\n        }\n      ]\n    }\n  ],\n  \"aggregationType\": \"auto\",\n  \"rowLimit\": 1000,\n  \"startRow\": 0,\n  \"dataState\": \"final\"\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl/searchAnalytics/query",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "webmasters",
+                                        "v3",
+                                        "sites",
+                                        ":siteUrl",
+                                        "searchAnalytics",
+                                        "query"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "siteUrl"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Forbidden",
+                                  "code": 403,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"status\": \"<string>\",\n    \"errors\": [\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                                  "createdAt": "2026-07-28T01:50:19.000Z",
+                                  "updatedAt": "2026-07-28T01:50:19.000Z",
+                                  "uid": "35240-24f01bd1-4004-4e83-8e04-59b5425cf718"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T01:50:19.000Z",
+                              "updatedAt": "2026-07-28T01:50:19.000Z",
+                              "uid": "35240-c69f8f00-7cc4-420d-b732-ed5ae026061b"
+                            }
+                          ],
+                          "id": "f2498d3a-1879-4acd-8ce7-747d8b53f033",
+                          "createdAt": "2026-07-28T01:50:19.000Z",
+                          "updatedAt": "2026-07-28T01:50:19.000Z",
+                          "uid": "35240-f2498d3a-1879-4acd-8ce7-747d8b53f033"
+                        }
+                      ],
+                      "id": "04e1d175-daa3-4236-b64c-3c13fa7c4666",
+                      "createdAt": "2026-07-28T01:50:19.000Z",
+                      "updatedAt": "2026-07-28T01:50:19.000Z",
+                      "uid": "35240-04e1d175-daa3-4236-b64c-3c13fa7c4666"
+                    }
+                  ],
+                  "id": "d73859b1-9375-4986-8e0b-c6324b44bf58",
+                  "createdAt": "2026-07-28T01:50:19.000Z",
+                  "updatedAt": "2026-07-28T01:50:19.000Z",
+                  "uid": "35240-d73859b1-9375-4986-8e0b-c6324b44bf58"
+                }
+              ],
+              "id": "a4761f50-51e6-47c9-9b1b-f4012fe180b2",
+              "createdAt": "2026-07-28T01:50:19.000Z",
+              "updatedAt": "2026-07-28T01:50:19.000Z",
+              "uid": "35240-a4761f50-51e6-47c9-9b1b-f4012fe180b2"
+            }
+          ],
+          "id": "5e235d86-de14-4011-8120-573fdbb0b6e2",
+          "createdAt": "2026-07-28T01:50:19.000Z",
+          "updatedAt": "2026-07-28T01:50:19.000Z",
+          "uid": "35240-5e235d86-de14-4011-8120-573fdbb0b6e2"
+        }
+      ],
+      "id": "e6b57860-a8bc-44c6-940a-8e46b3cbb067",
+      "createdAt": "2026-07-28T01:50:19.000Z",
+      "updatedAt": "2026-07-28T01:50:19.000Z",
+      "uid": "35240-e6b57860-a8bc-44c6-940a-8e46b3cbb067"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "https://www.googleapis.com/auth/webmasters https://www.googleapis.com/auth/webmasters.readonly",
+        "type": "string"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://oauth2.googleapis.com/token",
+        "type": "string"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://accounts.google.com/o/oauth2/v2/auth",
+        "type": "string"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://searchconsole.googleapis.com"
+    }
+  ]
+}

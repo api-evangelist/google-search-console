@@ -1,0 +1,954 @@
+{
+  "info": {
+    "_postman_id": "6e1ab00d-d7cf-4b8f-b173-caac2d67dce1",
+    "name": "Google Search Console Search Analytics Sites API",
+    "description": "The Google Search Console API provides programmatic access to Search Console data. Query search analytics to understand how your site appears in Google Search results, manage sitemaps for efficient crawling, inspect individual URLs to check indexing status and crawl details, and manage site-level verification and permissions.\n\nContact Support:\n Name: Google Search Console API Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:50:27.000Z",
+    "updatedAt": "2026-07-28T01:50:27.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-6e1ab00d-d7cf-4b8f-b173-caac2d67dce1"
+  },
+  "item": [
+    {
+      "name": "webmasters",
+      "item": [
+        {
+          "name": "v3",
+          "item": [
+            {
+              "name": "sites",
+              "item": [
+                {
+                  "name": "{siteUrl}",
+                  "item": [
+                    {
+                      "name": "Google Search Console Get Site Details",
+                      "id": "6023c753-039b-47ea-b3c8-c0c736f75813",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "oauth2",
+                          "oauth2": [
+                            {
+                              "key": "scope",
+                              "value": "https://www.googleapis.com/auth/webmasters https://www.googleapis.com/auth/webmasters.readonly",
+                              "type": "string"
+                            },
+                            {
+                              "key": "accessTokenUrl",
+                              "value": "https://oauth2.googleapis.com/token",
+                              "type": "string"
+                            },
+                            {
+                              "key": "authUrl",
+                              "value": "https://accounts.google.com/o/oauth2/v2/auth",
+                              "type": "string"
+                            },
+                            {
+                              "key": "grant_type",
+                              "value": "authorization_code",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "webmasters",
+                            "v3",
+                            "sites",
+                            ":siteUrl"
+                          ],
+                          "variable": [
+                            {
+                              "id": "62caf246-c6a3-40c0-8690-44f335e81c55",
+                              "key": "siteUrl",
+                              "value": "<string>",
+                              "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                            }
+                          ]
+                        },
+                        "description": "Retrieves information about a specific site, including its permission level for the authenticated user."
+                      },
+                      "response": [
+                        {
+                          "id": "81ea0e7a-8b0a-4da9-9c1d-edaf734cb296",
+                          "name": "Site details.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: oauth2",
+                                "key": "Authorization",
+                                "value": "<token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "webmasters",
+                                "v3",
+                                "sites",
+                                ":siteUrl"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "siteUrl"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"siteUrl\": \"<string>\",\n  \"permissionLevel\": \"siteRestrictedUser\"\n}",
+                          "createdAt": "2026-07-28T01:50:27.000Z",
+                          "updatedAt": "2026-07-28T01:50:27.000Z",
+                          "uid": "35240-81ea0e7a-8b0a-4da9-9c1d-edaf734cb296"
+                        },
+                        {
+                          "id": "5b6cb80e-c44f-4056-9641-dded9bcc3a1f",
+                          "name": "Authentication required or invalid credentials.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: oauth2",
+                                "key": "Authorization",
+                                "value": "<token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "webmasters",
+                                "v3",
+                                "sites",
+                                ":siteUrl"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "siteUrl"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"status\": \"<string>\",\n    \"errors\": [\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-07-28T01:50:27.000Z",
+                          "updatedAt": "2026-07-28T01:50:27.000Z",
+                          "uid": "35240-5b6cb80e-c44f-4056-9641-dded9bcc3a1f"
+                        },
+                        {
+                          "id": "4dee7406-ceef-4bd5-bda6-42662bf8a48d",
+                          "name": "Insufficient permissions for the requested operation.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: oauth2",
+                                "key": "Authorization",
+                                "value": "<token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "webmasters",
+                                "v3",
+                                "sites",
+                                ":siteUrl"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "siteUrl"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"status\": \"<string>\",\n    \"errors\": [\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-07-28T01:50:27.000Z",
+                          "updatedAt": "2026-07-28T01:50:27.000Z",
+                          "uid": "35240-4dee7406-ceef-4bd5-bda6-42662bf8a48d"
+                        },
+                        {
+                          "id": "95a1ea3f-01bd-4ec4-95ac-deb18164d64b",
+                          "name": "The requested resource was not found.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: oauth2",
+                                "key": "Authorization",
+                                "value": "<token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "webmasters",
+                                "v3",
+                                "sites",
+                                ":siteUrl"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "siteUrl"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"status\": \"<string>\",\n    \"errors\": [\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-07-28T01:50:27.000Z",
+                          "updatedAt": "2026-07-28T01:50:27.000Z",
+                          "uid": "35240-95a1ea3f-01bd-4ec4-95ac-deb18164d64b"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:50:27.000Z",
+                      "updatedAt": "2026-07-28T01:50:27.000Z",
+                      "uid": "35240-6023c753-039b-47ea-b3c8-c0c736f75813"
+                    },
+                    {
+                      "name": "Google Search Console Add a Site",
+                      "id": "c6696582-369e-4fa2-8351-3a5f8d906e25",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "webmasters",
+                            "v3",
+                            "sites",
+                            ":siteUrl"
+                          ],
+                          "variable": [
+                            {
+                              "id": "e2e6be9f-244f-4a53-bb2c-0d85bb8b5cee",
+                              "key": "siteUrl",
+                              "value": "<string>",
+                              "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                            }
+                          ]
+                        },
+                        "description": "Adds a site to the set of the user's Search Console sites. The site URL must be a valid property URL. After adding, the site must still be verified before full data access is granted."
+                      },
+                      "response": [
+                        {
+                          "id": "59072a74-f53a-4460-9ef1-40cad4428bcf",
+                          "name": "Site added successfully.",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: oauth2",
+                                "key": "Authorization",
+                                "value": "<token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "webmasters",
+                                "v3",
+                                "sites",
+                                ":siteUrl"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "siteUrl"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "No Content",
+                          "code": 204,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T01:50:27.000Z",
+                          "updatedAt": "2026-07-28T01:50:27.000Z",
+                          "uid": "35240-59072a74-f53a-4460-9ef1-40cad4428bcf"
+                        },
+                        {
+                          "id": "83d06d60-dbae-40fd-9c97-a96a12bf3075",
+                          "name": "Authentication required or invalid credentials.",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: oauth2",
+                                "key": "Authorization",
+                                "value": "<token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "webmasters",
+                                "v3",
+                                "sites",
+                                ":siteUrl"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "siteUrl"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"status\": \"<string>\",\n    \"errors\": [\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-07-28T01:50:27.000Z",
+                          "updatedAt": "2026-07-28T01:50:27.000Z",
+                          "uid": "35240-83d06d60-dbae-40fd-9c97-a96a12bf3075"
+                        },
+                        {
+                          "id": "54ff0eaa-4e61-4bc1-88dd-46fbd89a8478",
+                          "name": "Insufficient permissions for the requested operation.",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: oauth2",
+                                "key": "Authorization",
+                                "value": "<token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "webmasters",
+                                "v3",
+                                "sites",
+                                ":siteUrl"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "siteUrl"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"status\": \"<string>\",\n    \"errors\": [\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-07-28T01:50:27.000Z",
+                          "updatedAt": "2026-07-28T01:50:27.000Z",
+                          "uid": "35240-54ff0eaa-4e61-4bc1-88dd-46fbd89a8478"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:50:27.000Z",
+                      "updatedAt": "2026-07-28T01:50:27.000Z",
+                      "uid": "35240-c6696582-369e-4fa2-8351-3a5f8d906e25"
+                    },
+                    {
+                      "name": "Google Search Console Remove a Site",
+                      "id": "d2adabfe-83ac-485e-8db5-96c4db3ff624",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "webmasters",
+                            "v3",
+                            "sites",
+                            ":siteUrl"
+                          ],
+                          "variable": [
+                            {
+                              "id": "e3b298a0-e5fd-4a99-a1ad-32d80c9710c7",
+                              "key": "siteUrl",
+                              "value": "<string>",
+                              "description": "(Required) The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+                            }
+                          ]
+                        },
+                        "description": "Removes a site from the set of the user's Search Console sites. This does not delete any data associated with the site."
+                      },
+                      "response": [
+                        {
+                          "id": "82555b91-4425-47ae-b27f-fd7da6d9e723",
+                          "name": "Site removed successfully.",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: oauth2",
+                                "key": "Authorization",
+                                "value": "<token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "webmasters",
+                                "v3",
+                                "sites",
+                                ":siteUrl"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "siteUrl"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "No Content",
+                          "code": 204,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T01:50:27.000Z",
+                          "updatedAt": "2026-07-28T01:50:27.000Z",
+                          "uid": "35240-82555b91-4425-47ae-b27f-fd7da6d9e723"
+                        },
+                        {
+                          "id": "c7be2282-67b2-4249-b3bf-ad1c35770bd9",
+                          "name": "Authentication required or invalid credentials.",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: oauth2",
+                                "key": "Authorization",
+                                "value": "<token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "webmasters",
+                                "v3",
+                                "sites",
+                                ":siteUrl"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "siteUrl"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"status\": \"<string>\",\n    \"errors\": [\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-07-28T01:50:27.000Z",
+                          "updatedAt": "2026-07-28T01:50:27.000Z",
+                          "uid": "35240-c7be2282-67b2-4249-b3bf-ad1c35770bd9"
+                        },
+                        {
+                          "id": "eb372160-3cbb-457c-87d0-141f3ec4bad7",
+                          "name": "Insufficient permissions for the requested operation.",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: oauth2",
+                                "key": "Authorization",
+                                "value": "<token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "webmasters",
+                                "v3",
+                                "sites",
+                                ":siteUrl"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "siteUrl"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"status\": \"<string>\",\n    \"errors\": [\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-07-28T01:50:27.000Z",
+                          "updatedAt": "2026-07-28T01:50:27.000Z",
+                          "uid": "35240-eb372160-3cbb-457c-87d0-141f3ec4bad7"
+                        },
+                        {
+                          "id": "4264fe3b-47d3-4562-ab63-2d33cd38724b",
+                          "name": "The requested resource was not found.",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: oauth2",
+                                "key": "Authorization",
+                                "value": "<token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/webmasters/v3/sites/:siteUrl",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "webmasters",
+                                "v3",
+                                "sites",
+                                ":siteUrl"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "siteUrl"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"status\": \"<string>\",\n    \"errors\": [\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-07-28T01:50:27.000Z",
+                          "updatedAt": "2026-07-28T01:50:27.000Z",
+                          "uid": "35240-4264fe3b-47d3-4562-ab63-2d33cd38724b"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:50:27.000Z",
+                      "updatedAt": "2026-07-28T01:50:27.000Z",
+                      "uid": "35240-d2adabfe-83ac-485e-8db5-96c4db3ff624"
+                    }
+                  ],
+                  "id": "e17778c8-9ee4-49ad-a285-fec9cc9c24b9",
+                  "createdAt": "2026-07-28T01:50:27.000Z",
+                  "updatedAt": "2026-07-28T01:50:27.000Z",
+                  "uid": "35240-e17778c8-9ee4-49ad-a285-fec9cc9c24b9"
+                },
+                {
+                  "name": "Google Search Console List Sites",
+                  "id": "088e03fd-c428-4cf6-8095-bb656964ad9e",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "https://www.googleapis.com/auth/webmasters https://www.googleapis.com/auth/webmasters.readonly",
+                          "type": "string"
+                        },
+                        {
+                          "key": "accessTokenUrl",
+                          "value": "https://oauth2.googleapis.com/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "authUrl",
+                          "value": "https://accounts.google.com/o/oauth2/v2/auth",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "authorization_code",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webmasters/v3/sites",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webmasters",
+                        "v3",
+                        "sites"
+                      ]
+                    },
+                    "description": "Lists the user's Search Console sites. Returns all sites that the authenticated user has been verified for or has been granted access to through delegation."
+                  },
+                  "response": [
+                    {
+                      "id": "e991dbd0-f059-4049-86f3-1225e0b06041",
+                      "name": "List of Search Console sites.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/webmasters/v3/sites",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "webmasters",
+                            "v3",
+                            "sites"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"siteEntry\": [\n    {\n      \"siteUrl\": \"<string>\",\n      \"permissionLevel\": \"siteFullUser\"\n    },\n    {\n      \"siteUrl\": \"<string>\",\n      \"permissionLevel\": \"siteRestrictedUser\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T01:50:27.000Z",
+                      "updatedAt": "2026-07-28T01:50:27.000Z",
+                      "uid": "35240-e991dbd0-f059-4049-86f3-1225e0b06041"
+                    },
+                    {
+                      "id": "6cd5b583-78f4-427f-a28c-d23e6d7c5dea",
+                      "name": "Authentication required or invalid credentials.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/webmasters/v3/sites",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "webmasters",
+                            "v3",
+                            "sites"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"status\": \"<string>\",\n    \"errors\": [\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-07-28T01:50:27.000Z",
+                      "updatedAt": "2026-07-28T01:50:27.000Z",
+                      "uid": "35240-6cd5b583-78f4-427f-a28c-d23e6d7c5dea"
+                    },
+                    {
+                      "id": "4a6577bc-2cbf-450c-ae8d-9ed32eeb54eb",
+                      "name": "Insufficient permissions for the requested operation.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/webmasters/v3/sites",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "webmasters",
+                            "v3",
+                            "sites"
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<integer>\",\n    \"message\": \"<string>\",\n    \"status\": \"<string>\",\n    \"errors\": [\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"message\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-07-28T01:50:27.000Z",
+                      "updatedAt": "2026-07-28T01:50:27.000Z",
+                      "uid": "35240-4a6577bc-2cbf-450c-ae8d-9ed32eeb54eb"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:50:27.000Z",
+                  "updatedAt": "2026-07-28T01:50:27.000Z",
+                  "uid": "35240-088e03fd-c428-4cf6-8095-bb656964ad9e"
+                }
+              ],
+              "id": "d3bffa53-7e48-40da-92f7-702a8c63c52d",
+              "createdAt": "2026-07-28T01:50:27.000Z",
+              "updatedAt": "2026-07-28T01:50:27.000Z",
+              "uid": "35240-d3bffa53-7e48-40da-92f7-702a8c63c52d"
+            }
+          ],
+          "id": "418eec46-4b92-47e4-831b-1e6ae511c7d6",
+          "createdAt": "2026-07-28T01:50:27.000Z",
+          "updatedAt": "2026-07-28T01:50:27.000Z",
+          "uid": "35240-418eec46-4b92-47e4-831b-1e6ae511c7d6"
+        }
+      ],
+      "id": "e9b8e0f0-173e-49db-b614-13b68ce4ffed",
+      "createdAt": "2026-07-28T01:50:27.000Z",
+      "updatedAt": "2026-07-28T01:50:27.000Z",
+      "uid": "35240-e9b8e0f0-173e-49db-b614-13b68ce4ffed"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "https://www.googleapis.com/auth/webmasters https://www.googleapis.com/auth/webmasters.readonly",
+        "type": "string"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://oauth2.googleapis.com/token",
+        "type": "string"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://accounts.google.com/o/oauth2/v2/auth",
+        "type": "string"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://searchconsole.googleapis.com"
+    }
+  ]
+}
