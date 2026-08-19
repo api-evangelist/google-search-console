@@ -1,0 +1,68 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  Discovery document `revision` fields read live on 2026-08-13 from
+  https://searchconsole.googleapis.com/$discovery/rest?version=v1 and
+  https://indexing.googleapis.com/$discovery/rest?version=v3, plus a 404 probe of the release-notes
+  path previously referenced in this repo's apis.yml.
+provider: Google Search Console
+providerId: google-search-console
+scheme: dated Discovery-document revision (YYYYMMDD); no semantic version, no human changelog
+published_changelog: false
+finding: >-
+  Google publishes no changelog for the Search Console API. The path this repo previously pointed
+  at as a ChangeLog — https://developers.google.com/webmaster-tools/v1/release-notes — returns HTTP
+  404 and has been removed from apis.yml. The only version signal Google emits for these APIs is
+  the `revision` date stamped on each Discovery document, which changes several times a month
+  without any statement of what changed. A consumer who needs to know when the contract moved must
+  diff the Discovery document themselves; there is nothing to subscribe to. The Search Central
+  "What's new" feed is a documentation changelog for Search features, not an API changelog, and
+  the two do not track each other.
+current:
+- api: Google Search Console API
+  service: searchconsole
+  version: v1
+  revision: '20260812'
+  revision_date: '2026-08-12'
+  discovery: https://searchconsole.googleapis.com/$discovery/rest?version=v1
+  snapshot: openapi/_original/google-search-console-searchconsole-v1-discovery.json
+- api: Web Search Indexing API
+  service: indexing
+  version: v3
+  revision: '20260805'
+  revision_date: '2026-08-05'
+  discovery: https://indexing.googleapis.com/$discovery/rest?version=v3
+  snapshot: openapi/_original/google-search-console-indexing-v3-discovery.json
+entries:
+- date: '2026-08-12'
+  version: searchconsole v1 rev 20260812
+  breaking: false
+  additions: []
+  highlights:
+  - >-
+    Discovery revision current as of this pass. Two fields carry deprecation markers in this
+    revision — WmxSitemapContent.indexed ("*Deprecated; do not use.*") and
+    UrlInspectionResult.mobileUsabilityResult. Google states no change beyond the revision stamp;
+    this entry records what the contract said on the date it was read, not a published release note.
+- date: '2026-08-05'
+  version: indexing v3 rev 20260805
+  breaking: false
+  additions: []
+  highlights:
+  - >-
+    Discovery revision current as of this pass. Surface unchanged in shape: two operations
+    (urlNotifications.publish, urlNotifications.getMetadata) and three schemas.
+related:
+- url: https://developers.google.com/search/updates
+  name: Search Central "What's new" — documentation changelog, dated, not API-scoped
+  status: 200
+- url: https://developers.google.com/search/blog
+  name: Google Search Central Blog — where API retirements are announced
+  status: 200
+- url: https://developers.google.com/webmaster-tools/v1/release-notes
+  name: Previously referenced release notes
+  status: 404
+  note: Dead. Removed from apis.yml in this pass.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

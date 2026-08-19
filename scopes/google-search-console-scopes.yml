@@ -1,25 +1,99 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/google-search-console-api-openapi.yml
+generated: '2026-08-13'
+method: searched
+docs: https://developers.google.com/identity/protocols/oauth2/scopes#searchconsole
+source: >-
+  Scope strings and descriptions confirmed verbatim against Google's own Discovery documents
+  (auth.oauth2.scopes) fetched live on 2026-08-13 from
+  https://searchconsole.googleapis.com/$discovery/rest?version=v1 and
+  https://indexing.googleapis.com/$discovery/rest?version=v3, and against the OAuth 2.0 Scopes for
+  Google APIs reference. Baseline derived from openapi/google-search-console-indexing-api-openapi.yml, openapi/google-search-console-search-analytics-api-openapi.yml,
+  openapi/google-search-console-sitemaps-api-openapi.yml, openapi/google-search-console-sites-api-openapi.yml,
+  openapi/google-search-console-url-inspection-api-openapi.yml, openapi/google-search-console-url-testing-tools-api-openapi.yml
 schemes:
 - name: OAuth2
-  source: openapi/google-search-console-api-openapi.yml
+  source: openapi/google-search-console-indexing-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+    tokenUrl: https://oauth2.googleapis.com/token
+  description: 'Google OAuth 2.0. Authorization server metadata: https://accounts.google.com/.well-known/openid-configuration'
+- name: OAuth2
+  source: openapi/google-search-console-search-analytics-api-openapi.yml
   flows:
   - flow: authorizationCode
     authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
     tokenUrl: https://oauth2.googleapis.com/token
   description: OAuth 2.0 authentication for accessing Google Search Console data. Requires the
     webmasters or webmasters.readonly scope depending on the operation.
+- name: OAuth2
+  source: openapi/google-search-console-sitemaps-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+    tokenUrl: https://oauth2.googleapis.com/token
+  description: OAuth 2.0 authentication for accessing Google Search Console data. Requires the
+    webmasters or webmasters.readonly scope depending on the operation.
+- name: OAuth2
+  source: openapi/google-search-console-sites-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+    tokenUrl: https://oauth2.googleapis.com/token
+  description: OAuth 2.0 authentication for accessing Google Search Console data. Requires the
+    webmasters or webmasters.readonly scope depending on the operation.
+- name: OAuth2
+  source: openapi/google-search-console-url-inspection-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+    tokenUrl: https://oauth2.googleapis.com/token
+  description: OAuth 2.0 authentication for accessing Google Search Console data. Requires the
+    webmasters or webmasters.readonly scope depending on the operation.
+- name: OAuth2
+  source: openapi/google-search-console-url-testing-tools-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+    tokenUrl: https://oauth2.googleapis.com/token
+  description: 'Google OAuth 2.0. Authorization server metadata: https://accounts.google.com/.well-known/openid-configuration'
 scopes:
+- scope: https://www.googleapis.com/auth/indexing
+  description: Submit data to Google for indexing
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/google-search-console-indexing-api-openapi.yml
 - scope: https://www.googleapis.com/auth/webmasters
   description: View and manage Search Console data for your verified sites
   flows:
   - authorizationCode
   sources:
-  - openapi/google-search-console-api-openapi.yml
+  - openapi/google-search-console-search-analytics-api-openapi.yml
+  - openapi/google-search-console-sitemaps-api-openapi.yml
+  - openapi/google-search-console-sites-api-openapi.yml
+  - openapi/google-search-console-url-inspection-api-openapi.yml
+  - openapi/google-search-console-url-testing-tools-api-openapi.yml
 - scope: https://www.googleapis.com/auth/webmasters.readonly
   description: View Search Console data for your verified sites
   flows:
   - authorizationCode
   sources:
-  - openapi/google-search-console-api-openapi.yml
+  - openapi/google-search-console-search-analytics-api-openapi.yml
+  - openapi/google-search-console-sitemaps-api-openapi.yml
+  - openapi/google-search-console-sites-api-openapi.yml
+  - openapi/google-search-console-url-inspection-api-openapi.yml
+  - openapi/google-search-console-url-testing-tools-api-openapi.yml
+notes:
+- >-
+  Three scopes across two hosts. webmasters and webmasters.readonly cover searchconsole.googleapis.com;
+  indexing is a separate scope for indexing.googleapis.com and is not interchangeable with them.
+- >-
+  urlTestingTools.mobileFriendlyTest.run declares NO scope in the Discovery document — the only
+  operation on this surface that does not require one.
+- >-
+  Scope alone is not access. Search Console authorizes per verified property: the token must belong
+  to an account that owns or is delegated on the property, and for the Indexing API the service
+  account must be added as an Owner inside Search Console.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

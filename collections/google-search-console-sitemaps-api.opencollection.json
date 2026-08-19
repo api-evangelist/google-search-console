@@ -1,0 +1,150 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Google Search Console Search Analytics Sitemaps API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sitemaps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Google Search Console List Sitemaps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://searchconsole.googleapis.com/webmasters/v3/sites/:siteUrl/sitemaps",
+            "params": [
+              {
+                "name": "siteUrl",
+                "value": "https://example.com/",
+                "type": "path",
+                "description": "The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+              },
+              {
+                "name": "sitemapIndex",
+                "value": "https://www.example.com",
+                "type": "query",
+                "description": "A URL of a sitemap index. If specified, only sitemaps that are listed in this sitemap index are returned."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+              "accessTokenUrl": "https://oauth2.googleapis.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Lists the sitemaps submitted for the specified site. Returns both manually submitted sitemaps and sitemaps discovered via robots.txt. Includes processing status, error counts, and content details for each sitemap."
+        },
+        {
+          "info": {
+            "name": "Google Search Console Get Sitemap Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://searchconsole.googleapis.com/webmasters/v3/sites/:siteUrl/sitemaps/:feedpath",
+            "params": [
+              {
+                "name": "siteUrl",
+                "value": "https://example.com/",
+                "type": "path",
+                "description": "The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+              },
+              {
+                "name": "feedpath",
+                "value": "https://example.com/sitemap.xml",
+                "type": "path",
+                "description": "The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+              "accessTokenUrl": "https://oauth2.googleapis.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves information about a specific sitemap, including its type, last submission time, processing status, warnings, errors, and the number of URLs it contains."
+        },
+        {
+          "info": {
+            "name": "Google Search Console Submit a Sitemap",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://searchconsole.googleapis.com/webmasters/v3/sites/:siteUrl/sitemaps/:feedpath",
+            "params": [
+              {
+                "name": "siteUrl",
+                "value": "https://example.com/",
+                "type": "path",
+                "description": "The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+              },
+              {
+                "name": "feedpath",
+                "value": "https://example.com/sitemap.xml",
+                "type": "path",
+                "description": "The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+              }
+            ]
+          },
+          "docs": "Submits a sitemap for a site. If the sitemap has already been submitted, it will be resubmitted and re-processed. The sitemap URL must be accessible to Googlebot. Submitting a sitemap index will submit all sitemaps listed in the index."
+        },
+        {
+          "info": {
+            "name": "Google Search Console Delete a Sitemap",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://searchconsole.googleapis.com/webmasters/v3/sites/:siteUrl/sitemaps/:feedpath",
+            "params": [
+              {
+                "name": "siteUrl",
+                "value": "https://example.com/",
+                "type": "path",
+                "description": "The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+              },
+              {
+                "name": "feedpath",
+                "value": "https://example.com/sitemap.xml",
+                "type": "path",
+                "description": "The URL of the sitemap. Must be the full URL, including the protocol (e.g., https://example.com/sitemap.xml). The URL must be encoded."
+              }
+            ]
+          },
+          "docs": "Deletes a previously submitted sitemap from Search Console. This does not prevent Google from crawling the URLs in the sitemap; it only removes the sitemap from the list of submitted sitemaps in Search Console."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

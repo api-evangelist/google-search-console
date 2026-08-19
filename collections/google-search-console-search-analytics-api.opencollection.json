@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Google Search Console Search Analytics API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search Analytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Google Search Console Query Search Analytics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://searchconsole.googleapis.com/webmasters/v3/sites/:siteUrl/searchAnalytics/query",
+            "params": [
+              {
+                "name": "siteUrl",
+                "value": "https://example.com/",
+                "type": "path",
+                "description": "The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Query your search traffic data with filters and parameters that you define. Returns zero or more rows grouped by the row keys (dimensions) that you define. You must define a date range of one or more days. When date is one of the dimensions, any days without data are omitted from the result list. Data is available starting from the date the site was added to Search Console, and there is a processing delay of approximately 2-3 days."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Google Search Console URL Testing Tools API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "urlTestingTools",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Runs Mobile-Friendly Test for a given URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://searchconsole.googleapis.com/v1/urlTestingTools/mobileFriendlyTest:run",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Runs Mobile-Friendly Test for a given URL."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

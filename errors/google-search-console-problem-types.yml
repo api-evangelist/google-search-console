@@ -1,0 +1,197 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.google.com/webmaster-tools/v1/errors
+derived_from:
+- openapi/google-search-console-search-analytics-api-openapi.yml
+- openapi/google-search-console-sites-api-openapi.yml
+- openapi/google-search-console-sitemaps-api-openapi.yml
+- openapi/google-search-console-url-inspection-api-openapi.yml
+- openapi/google-search-console-url-testing-tools-api-openapi.yml
+- openapi/google-search-console-indexing-api-openapi.yml
+provider: Google Search Console
+providerId: google-search-console
+format: google-json-error
+rfc9457: false
+content_type: application/json
+note: >-
+  Search Console does not use RFC 9457 problem+json. It returns Google's standard API JSON error
+  envelope, shared across every Discovery-based Google API. The machine-readable code is
+  `error.errors[].reason` — NOT `error.code`, which only repeats the HTTP status. Clients that
+  branch on the HTTP status alone cannot tell a daily quota exhaustion (403 dailyLimitExceeded,
+  wait for reset) from a per-minute burst (403 rateLimitExceeded, back off and retry) from a
+  permissions problem (403 insufficientPermissions, never retryable). The catalogue below is the
+  subset of Google's standard error reference that this API surface can actually return, with the
+  Search Console-specific meaning of each.
+envelope:
+  shape: |-
+    {
+      "error": {
+        "code": 403,
+        "message": "Quota exceeded for quota metric ...",
+        "errors": [
+          {
+            "domain": "usageLimits",
+            "reason": "rateLimitExceeded",
+            "message": "Rate Limit Exceeded",
+            "locationType": "header",
+            "location": "Authorization"
+          }
+        ]
+      }
+    }
+  fields:
+  - field: error.code
+    description: HTTP status code, repeated in the body.
+  - field: error.message
+    description: Human-readable summary. Not stable — do not match on it.
+  - field: error.errors[].reason
+    description: The stable machine-readable error code. Branch on this.
+  - field: error.errors[].domain
+    description: Error family — global, usageLimits, or the service name.
+  - field: error.errors[].location / locationType
+    description: Which parameter, header or property caused the failure.
+problem_types:
+- code: badRequest
+  status: 400
+  title: The API request is invalid or improperly formed.
+  retryable: false
+  remediation: >-
+    Check the request body against the OpenAPI schema. In Search Console the usual causes are a
+    searchAnalytics query with startDate after endDate, an unknown dimension, or a siteUrl that is
+    not URL-encoded in the path.
+- code: invalidParameter
+  status: 400
+  title: The request contained an invalid parameter.
+  retryable: false
+  remediation: Verify the parameter name and value against the API reference.
+- code: invalid
+  status: 400
+  title: A supplied value is invalid.
+  retryable: false
+  remediation: >-
+    Check error.errors[].location for the offending field. For urlNotifications:publish this is
+    usually a `url` outside the verified property or a `type` other than URL_UPDATED / URL_DELETED.
+- code: parseError
+  status: 400
+  title: The server could not parse the request body.
+  retryable: false
+  remediation: Send well-formed JSON with Content-Type application/json.
+- code: required
+  status: 400
+  title: The request is missing required information.
+  retryable: false
+  remediation: >-
+    Supply the required properties — inspectionUrl and siteUrl for urlInspection, startDate and
+    endDate for searchAnalytics, url and type for urlNotifications:publish.
+- code: unauthorized
+  status: 401
+  title: The user is not authorized to make this request.
+  retryable: false
+  remediation: Send a valid OAuth 2.0 bearer token in the Authorization header.
+- code: authError
+  status: 401
+  title: The authorization credentials provided are invalid.
+  retryable: false
+  remediation: >-
+    The access token is malformed, revoked or for the wrong project. Re-run the authorization
+    code flow against https://accounts.google.com/o/oauth2/v2/auth.
+- code: expired
+  status: 401
+  title: The session has expired.
+  retryable: true
+  remediation: >-
+    Refresh the access token at https://oauth2.googleapis.com/token using the refresh token, then
+    replay the request once.
+- code: forbidden
+  status: 403
+  title: The requested operation is forbidden.
+  retryable: false
+  remediation: Use an operation the caller is permitted to perform on this property.
+- code: insufficientPermissions
+  status: 403
+  title: The authenticated user does not have sufficient permissions.
+  retryable: false
+  remediation: >-
+    The single most common Search Console failure. The account must be a verified owner or a
+    delegated user of the property, and the siteUrl must match the verified property exactly —
+    including the trailing slash for URL-prefix properties and the `sc-domain:` prefix for domain
+    properties. For the Indexing API the service account must be added as an Owner of the property
+    in Search Console, not merely granted a project role.
+- code: accessNotConfigured
+  status: 403
+  title: The Cloud project is not configured to access this API.
+  retryable: false
+  remediation: >-
+    Enable the API for the project at
+    https://console.cloud.google.com/apis/library/searchconsole.googleapis.com (or
+    indexing.googleapis.com), then wait a few minutes for propagation.
+- code: rateLimitExceeded
+  status: 403
+  title: Too many requests in a given time span.
+  retryable: true
+  remediation: >-
+    Back off exponentially with jitter and retry. Search Analytics load is measured in 10-minute
+    and 1-day windows, so a burst can trip this before the documented per-minute number is
+    reached. See rate-limits/google-search-console-rate-limits.yml.
+- code: userRateLimitExceeded
+  status: 403
+  title: The per-user rate limit has been reached.
+  retryable: true
+  remediation: >-
+    Serialize or shard calls across users. The all-other-resources per-user ceiling is 20 QPS and
+    200 QPM.
+- code: dailyLimitExceeded
+  status: 403
+  title: The daily quota for this API has been reached.
+  retryable: false
+  remediation: >-
+    Not retryable within the day. URL Inspection is capped at 2,000 QPD per site — the limit most
+    integrations hit. Wait for the daily reset or request a quota increase through Google Cloud
+    support.
+- code: quotaExceeded
+  status: 403
+  title: The operation requires more resources than the quota allows.
+  retryable: false
+  remediation: >-
+    Check the quota tab for the project in the Google APIs Console and request an increase. There
+    is no paid tier — quota increases are granted case by case, not purchased.
+- code: notFound
+  status: 404
+  title: The resource associated with the request could not be found.
+  retryable: false
+  remediation: >-
+    For sitemaps, the feedpath must be the full absolute sitemap URL, percent-encoded, and it must
+    already be submitted. For sites, the siteUrl must be an existing verified property.
+- code: httpMethodNotAllowed
+  status: 405
+  title: The HTTP method is not supported for this endpoint.
+  retryable: false
+  remediation: >-
+    Search Console uses PUT (not POST) to create sites and submit sitemaps, and POST for the
+    :query, :inspect, :run and :publish custom verbs.
+- code: conflict
+  status: 409
+  title: The operation would conflict with an existing item.
+  retryable: false
+  remediation: Reconcile with the existing resource before retrying.
+- code: rateLimitExceeded429
+  status: 429
+  title: Too many requests.
+  retryable: true
+  remediation: >-
+    Honour Retry-After when present; otherwise exponential backoff with jitter. Google returns
+    both 403 and 429 for rate limiting on this surface, so a client must treat both as throttling.
+- code: internalError
+  status: 500
+  title: The request failed due to an internal error.
+  retryable: true
+  remediation: Retry with backoff. If persistent, report through Search Console Help.
+- code: backendError
+  status: 503
+  title: A backend error occurred.
+  retryable: true
+  remediation: >-
+    Retry with backoff. Check https://status.search.google.com/ before escalating.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

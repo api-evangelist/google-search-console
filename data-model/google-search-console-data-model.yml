@@ -1,0 +1,311 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  Derived from the $ref graph of openapi/google-search-console-sites-api-openapi.yml,
+  -sitemaps-api-, -search-analytics-api-, -url-inspection-api-, -url-testing-tools-api- and
+  -indexing-api-openapi.yml, all of which trace back to the Google Discovery documents saved in
+  openapi/_original/.
+provider: Google Search Console
+providerId: google-search-console
+summary:
+  entities: 22
+  root_entities: 3
+  relationships: 21
+  note: >-
+    There is no numeric or opaque identifier anywhere in this data model. Every entity is keyed by
+    a URL string: a site by its verified property string (`https://example.com/` or
+    `sc-domain:example.com`), a sitemap by its absolute feed path, an inspected page by its
+    absolute URL. That makes URL normalization — trailing slash, scheme, www, percent-encoding —
+    the single most common integration failure, because a mismatch produces a 403
+    insufficientPermissions or a 404 rather than a lookup miss.
+identifiers:
+- entity: WmxSite
+  field: siteUrl
+  form: >-
+    Either a URL-prefix property with a trailing slash (`https://www.example.com/`) or a domain
+    property with the `sc-domain:` prefix (`sc-domain:example.com`). Must be percent-encoded when
+    used as a path segment.
+- entity: WmxSitemap
+  field: path
+  form: Absolute sitemap URL. Percent-encoded as the `feedpath` path segment.
+- entity: UrlInspectionResult
+  field: inspectionUrl
+  form: Absolute URL of the page, which must fall inside the property named by siteUrl.
+- entity: UrlNotification
+  field: url
+  form: Absolute URL of the page whose change is being announced.
+entities:
+- name: WmxSite
+  api: Google Search Console API
+  root: true
+  operations:
+  - listSites
+  - getSite
+  - addSite
+  - deleteSite
+  fields:
+  - siteUrl
+  - permissionLevel
+  description: A verified Search Console property and the caller's permission level on it.
+- name: SitesListResponse
+  api: Google Search Console API
+  description: Envelope returned by listSites.
+- name: WmxSitemap
+  api: Google Search Console API
+  root: true
+  operations:
+  - listSitemaps
+  - getSitemap
+  - submitSitemap
+  - deleteSitemap
+  fields:
+  - path
+  - lastSubmitted
+  - isPending
+  - isSitemapsIndex
+  - type
+  - lastDownloaded
+  - warnings
+  - errors
+  - contents
+  description: A submitted sitemap or sitemap index, with processing state and error counts.
+- name: WmxSitemapContent
+  api: Google Search Console API
+  fields:
+  - type
+  - submitted
+  - indexed
+  description: Per-content-type counts inside a sitemap. `indexed` is marked deprecated at source.
+- name: SitemapsListResponse
+  api: Google Search Console API
+  description: Envelope returned by listSitemaps.
+- name: SearchAnalyticsQueryRequest
+  api: Google Search Console API
+  fields:
+  - startDate
+  - endDate
+  - dimensions
+  - type
+  - dimensionFilterGroups
+  - aggregationType
+  - rowLimit
+  - startRow
+  - dataState
+  description: The search-traffic query. Dates are PT, not UTC.
+- name: SearchAnalyticsQueryResponse
+  api: Google Search Console API
+  fields:
+  - rows
+  - responseAggregationType
+- name: SearchAnalyticsRow
+  api: Google Search Console API
+  fields:
+  - keys
+  - clicks
+  - impressions
+  - ctr
+  - position
+  description: >-
+    One grouped row. `keys` is positional — it aligns index-for-index with the `dimensions` array
+    of the request, so the request must be kept alongside the response to interpret it.
+- name: DimensionFilterGroup
+  api: Google Search Console API
+  fields:
+  - groupType
+  - filters
+- name: DimensionFilter
+  api: Google Search Console API
+  fields:
+  - dimension
+  - operator
+  - expression
+- name: InspectUrlIndexRequest
+  api: Google Search Console API
+  fields:
+  - inspectionUrl
+  - siteUrl
+  - languageCode
+- name: InspectUrlIndexResponse
+  api: Google Search Console API
+  fields:
+  - inspectionResult
+- name: UrlInspectionResult
+  api: Google Search Console API
+  root: true
+  operations:
+  - inspectUrl
+  fields:
+  - inspectionResultLink
+  - indexStatusResult
+  - ampResult
+  - mobileUsabilityResult
+  - richResultsResult
+  description: >-
+    The composite inspection verdict. `mobileUsabilityResult` is marked deprecated at source.
+- name: IndexStatusInspectionResult
+  api: Google Search Console API
+  fields:
+  - sitemap
+  - referringUrls
+  - verdict
+  - coverageState
+  - robotsTxtState
+  - indexingState
+  - lastCrawlTime
+  - pageFetchState
+  - googleCanonical
+  - userCanonical
+  - crawledAs
+- name: MobileUsabilityInspectionResult
+  api: Google Search Console API
+  deprecated: true
+- name: MobileUsabilityIssue
+  api: Google Search Console API
+- name: RichResultsInspectionResult
+  api: Google Search Console API
+  fields:
+  - verdict
+  - detectedItems
+- name: DetectedItems
+  api: Google Search Console API
+  fields:
+  - richResultType
+  - items
+- name: Item
+  api: Google Search Console API
+  fields:
+  - name
+  - issues
+- name: RichResultsIssue
+  api: Google Search Console API
+- name: RunMobileFriendlyTestRequest
+  api: Google Search Console URL Testing Tools API
+  fields:
+  - url
+  - requestScreenshot
+- name: RunMobileFriendlyTestResponse
+  api: Google Search Console URL Testing Tools API
+  root: true
+  operations:
+  - searchconsole_urlTestingTools_mobileFriendlyTest_run
+  fields:
+  - testStatus
+  - mobileFriendliness
+  - mobileFriendlyIssues
+  - resourceIssues
+  - screenshot
+- name: UrlNotification
+  api: Web Search Indexing API
+  root: true
+  operations:
+  - indexing_urlNotifications_publish
+  fields:
+  - url
+  - type
+  - notifyTime
+- name: UrlNotificationMetadata
+  api: Web Search Indexing API
+  operations:
+  - indexing_urlNotifications_getMetadata
+  fields:
+  - url
+  - latestUpdate
+  - latestRemove
+relationships:
+- from: WmxSite
+  to: WmxSitemap
+  type: has_many
+  via: siteUrl (path parameter)
+  note: Sitemaps are addressed only underneath a site; there is no global sitemap collection.
+- from: SitesListResponse
+  to: WmxSite
+  type: has_many
+  via: siteEntry[]
+- from: SitemapsListResponse
+  to: WmxSitemap
+  type: has_many
+  via: sitemap[]
+- from: WmxSitemap
+  to: WmxSitemapContent
+  type: has_many
+  via: contents[]
+- from: SearchAnalyticsQueryRequest
+  to: DimensionFilterGroup
+  type: has_many
+  via: dimensionFilterGroups[]
+- from: DimensionFilterGroup
+  to: DimensionFilter
+  type: has_many
+  via: filters[]
+- from: SearchAnalyticsQueryResponse
+  to: SearchAnalyticsRow
+  type: has_many
+  via: rows[]
+- from: SearchAnalyticsRow
+  to: WmxSite
+  type: belongs_to
+  via: the siteUrl path parameter of the query, not a field on the row
+- from: InspectUrlIndexRequest
+  to: WmxSite
+  type: belongs_to
+  via: siteUrl
+- from: InspectUrlIndexResponse
+  to: UrlInspectionResult
+  type: has_one
+  via: inspectionResult
+- from: UrlInspectionResult
+  to: IndexStatusInspectionResult
+  type: has_one
+  via: indexStatusResult
+- from: UrlInspectionResult
+  to: MobileUsabilityInspectionResult
+  type: has_one
+  via: mobileUsabilityResult (deprecated)
+- from: UrlInspectionResult
+  to: RichResultsInspectionResult
+  type: has_one
+  via: richResultsResult
+- from: IndexStatusInspectionResult
+  to: WmxSitemap
+  type: belongs_to
+  via: sitemap[] — the sitemap URLs that reference this page
+- from: MobileUsabilityInspectionResult
+  to: MobileUsabilityIssue
+  type: has_many
+  via: issues[]
+- from: RichResultsInspectionResult
+  to: DetectedItems
+  type: has_many
+  via: detectedItems[]
+- from: DetectedItems
+  to: Item
+  type: has_many
+  via: items[]
+- from: Item
+  to: RichResultsIssue
+  type: has_many
+  via: issues[]
+- from: RunMobileFriendlyTestResponse
+  to: MobileFriendlyIssue
+  type: has_many
+  via: mobileFriendlyIssues[]
+- from: RunMobileFriendlyTestResponse
+  to: ResourceIssue
+  type: has_many
+  via: resourceIssues[]
+- from: UrlNotificationMetadata
+  to: UrlNotification
+  type: has_many
+  via: latestUpdate and latestRemove
+cross_api_joins:
+- entities:
+  - WmxSite
+  - UrlNotification
+  join_on: >-
+    The Indexing API has no concept of a site. A url published through
+    urlNotifications:publish is accepted only if it falls inside a Search Console property the
+    calling service account owns, so the join between the two APIs is by URL prefix and is
+    enforced server-side rather than expressed in the schema.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

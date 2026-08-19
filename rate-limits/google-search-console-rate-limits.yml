@@ -4,7 +4,17 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Google Search Console
 providerId: google-search-console
 created: '2026-05-04'
-modified: '2026-05-05'
+# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
+# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
+# 2026-08-13: every figure below was re-read against the provider's own limits page and
+# matched exactly, so the artifact is upgraded from generated to searched.
+method: searched
+modified: '2026-08-13'
+verified: '2026-08-13'
+verification: >-
+  https://developers.google.com/webmaster-tools/limits fetched 2026-08-13 (HTTP 200). All eleven
+  limits below match the published figures. The page previously referenced in this repo,
+  https://developers.google.com/webmaster-tools/v1/limits, returns HTTP 404.
 reconciled: true
 tags:
   - Rate Limiting
@@ -17,10 +27,26 @@ description: Google Search Console API enforces three categories of quotas — S
   the quota tab in the Google Cloud Console.
 sources:
   - https://developers.google.com/webmaster-tools/limits
+  - https://developers.google.com/search/apis/indexing-api/v3/quota-pricing
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
+  throttledAlternate: 403
+  quotaExceeded: 403
   serviceUnavailable: 503
+  note: >-
+    Google returns BOTH 403 and 429 for throttling on this surface. The distinguishing signal is
+    error.errors[].reason — rateLimitExceeded and userRateLimitExceeded are retryable, while
+    dailyLimitExceeded and quotaExceeded are not retryable within the window.
+headers:
+  published: false
+  ratelimit_headers: []
+  retry_after: unconfirmed
+  note: >-
+    The provider publishes no X-RateLimit-* or RateLimit-* response headers and documents no
+    Retry-After. There is no runtime signal of remaining quota anywhere in the response — a client
+    can only see consumption in the quota tab of the Google Cloud project. The error itself is the
+    first and only warning, which is why exponential backoff is mandatory here rather than
+    advisory. Recorded as an honest absence, not an unchecked field.
 limits:
   - name: Search Analytics — per-site
     scope: site

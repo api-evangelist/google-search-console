@@ -1,0 +1,192 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  Registry metadata endpoints queried live 2026-08-13 (registry.npmjs.org, pypi.org/pypi/*/json,
+  rubygems.org/api/v1/gems/*.json, api.nuget.org registration index, search.maven.org solrsearch,
+  proxy.golang.org, packagist.org) cross-referenced against the provider's own client-library
+  pages: https://developers.google.com/webmaster-tools/v1/libraries and
+  https://developers.google.com/search/apis/indexing-api/v3/libraries
+provider: Google Search Console
+providerId: google-search-console
+summary:
+  total: 13
+  official: 13
+  languages:
+  - JavaScript/TypeScript
+  - Python
+  - Ruby
+  - .NET
+  - Java
+  - Go
+  - PHP
+  note: >-
+    Google does not ship a hand-written SDK for Search Console. Every client below is generated
+    from the same Google Discovery document this repo harvested
+    (https://searchconsole.googleapis.com/$discovery/rest?version=v1 and
+    https://indexing.googleapis.com/$discovery/rest?version=v3), published under the googleapis
+    GitHub organization. Two categories exist: the umbrella client for the whole Google API
+    surface (googleapis, google-api-python-client, google-api-php-client, google-api-go-client)
+    and per-service generated packages (@googleapis/searchconsole,
+    google-apis-searchconsole_v1, Google.Apis.SearchConsole.v1,
+    com.google.apis:google-api-services-searchconsole). Currency varies sharply by ecosystem:
+    the Node, Python, Ruby, .NET and Go clients are all released within the last 90 days, while
+    the Java (Maven) artifacts are pinned to a 2025 and a 2023 discovery revision. The
+    google-apis-webmasters_v3 gem and the google-api-client gem are superseded and have not
+    shipped since 2021.
+packages:
+- name: googleapis
+  registry: npm
+  language: JavaScript/TypeScript
+  official: true
+  url: https://www.npmjs.com/package/googleapis
+  repository: https://github.com/googleapis/google-api-nodejs-client
+  version: 174.0.1
+  published: '2026-08-05'
+  covers:
+  - Google Search Console API
+  - Web Search Indexing API
+  note: Umbrella Node.js client covering every Google Discovery API, including searchconsole v1
+    and indexing v3.
+- name: '@googleapis/searchconsole'
+  registry: npm
+  language: JavaScript/TypeScript
+  official: true
+  url: https://www.npmjs.com/package/@googleapis/searchconsole
+  repository: https://github.com/googleapis/google-api-nodejs-client
+  version: 7.0.0
+  published: '2026-08-03'
+  covers:
+  - Google Search Console API
+  note: Service-scoped build of the Node client for searchconsole v1 only.
+- name: '@googleapis/indexing'
+  registry: npm
+  language: JavaScript/TypeScript
+  official: true
+  url: https://www.npmjs.com/package/@googleapis/indexing
+  repository: https://github.com/googleapis/google-api-nodejs-client
+  version: 7.0.0
+  published: '2026-08-03'
+  covers:
+  - Web Search Indexing API
+- name: google-api-python-client
+  registry: pypi
+  language: Python
+  official: true
+  url: https://pypi.org/project/google-api-python-client/
+  repository: https://github.com/googleapis/google-api-python-client
+  version: 2.198.0
+  published: '2026-06-25'
+  covers:
+  - Google Search Console API
+  - Web Search Indexing API
+  note: >-
+    The library the provider's own Python quickstart uses; the service is reached with
+    build('searchconsole', 'v1', ...) or build('indexing', 'v3', ...).
+- name: google-apis-searchconsole_v1
+  registry: rubygems
+  language: Ruby
+  official: true
+  url: https://rubygems.org/gems/google-apis-searchconsole_v1
+  repository: https://github.com/googleapis/google-api-ruby-client/tree/main/generated/google-apis-searchconsole_v1
+  version: 0.23.0
+  published: '2026-08-09'
+  covers:
+  - Google Search Console API
+- name: google-apis-indexing_v3
+  registry: rubygems
+  language: Ruby
+  official: true
+  url: https://rubygems.org/gems/google-apis-indexing_v3
+  repository: https://github.com/googleapis/google-api-ruby-client/tree/main/generated/google-apis-indexing_v3
+  version: 0.19.0
+  published: '2026-06-21'
+  covers:
+  - Web Search Indexing API
+- name: google-apis-webmasters_v3
+  registry: rubygems
+  language: Ruby
+  official: true
+  status: superseded
+  url: https://rubygems.org/gems/google-apis-webmasters_v3
+  repository: https://github.com/googleapis/google-api-ruby-client/tree/main/generated/google-apis-webmasters_v3
+  version: 0.6.0
+  published: '2021-10-27'
+  covers:
+  - Google Search Console API
+  note: >-
+    Legacy gem for the webmasters v3 surface. No release in nearly five years; superseded by
+    google-apis-searchconsole_v1, which wraps the same webmasters/v3 paths under the current
+    searchconsole v1 service name.
+- name: Google.Apis.SearchConsole.v1
+  registry: nuget
+  language: .NET
+  official: true
+  url: https://www.nuget.org/packages/Google.Apis.SearchConsole.v1
+  repository: https://github.com/googleapis/google-api-dotnet-client
+  version: 1.75.0.4234
+  published: '2026-08-11'
+  covers:
+  - Google Search Console API
+- name: Google.Apis.Indexing.v3
+  registry: nuget
+  language: .NET
+  official: true
+  url: https://www.nuget.org/packages/Google.Apis.Indexing.v3
+  repository: https://github.com/googleapis/google-api-dotnet-client
+  version: 1.74.0.3191
+  published: '2026-05-12'
+  covers:
+  - Web Search Indexing API
+- name: com.google.apis:google-api-services-searchconsole
+  registry: maven
+  language: Java
+  official: true
+  url: https://central.sonatype.com/artifact/com.google.apis/google-api-services-searchconsole
+  repository: https://github.com/googleapis/google-api-java-client-services
+  version: v1-rev20250409-2.0.0
+  published: '2025-04-23'
+  covers:
+  - Google Search Console API
+  note: >-
+    Pinned to the 2025-04-09 discovery revision; the live discovery document this repo harvested
+    is revision 20260812, so the Java artifact is roughly sixteen months behind the contract it
+    generates from.
+- name: com.google.apis:google-api-services-indexing
+  registry: maven
+  language: Java
+  official: true
+  url: https://central.sonatype.com/artifact/com.google.apis/google-api-services-indexing
+  repository: https://github.com/googleapis/google-api-java-client-services
+  version: v3-rev20230927-2.0.0
+  published: '2023-10-04'
+  covers:
+  - Web Search Indexing API
+  note: >-
+    Pinned to the 2023-09-27 discovery revision. The strongest decay signal in this set — the
+    live indexing v3 discovery document is revision 20260805.
+- name: google.golang.org/api
+  registry: go
+  language: Go
+  official: true
+  url: https://pkg.go.dev/google.golang.org/api
+  repository: https://github.com/googleapis/google-api-go-client
+  version: v0.293.0
+  published: '2026-08-11'
+  covers:
+  - Google Search Console API
+  - Web Search Indexing API
+  note: Service packages google.golang.org/api/searchconsole/v1 and .../indexing/v3.
+- name: google/apiclient
+  registry: packagist
+  language: PHP
+  official: true
+  url: https://packagist.org/packages/google/apiclient
+  repository: https://github.com/googleapis/google-api-php-client
+  version: v2.19.4
+  published: '2026-06-29'
+  covers:
+  - Google Search Console API
+  - Web Search Indexing API
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

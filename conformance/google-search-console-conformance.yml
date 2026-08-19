@@ -1,0 +1,118 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  Derived from the OpenAPI definitions in openapi/, the Google Discovery documents in
+  openapi/_original/, and live probes of https://accounts.google.com/.well-known/openid-configuration,
+  https://accounts.google.com/.well-known/oauth-authorization-server and
+  https://www.google.com/.well-known/security.txt, cross-read against
+  https://developers.google.com/webmaster-tools/v1/how-tos/authorizing and
+  https://developers.google.com/webmaster-tools/v1/errors
+provider: Google Search Console
+providerId: google-search-console
+summary:
+  asserted: 12
+  conforms: 5
+  partial: 2
+  does_not_conform: 5
+standards:
+- id: oauth2
+  name: OAuth 2.0 (RFC 6749)
+  conforms: true
+  evidence: >-
+    Every operation except the mobile-friendly test declares an oauth2 securityScheme with the
+    authorizationCode flow, authorizationUrl https://accounts.google.com/o/oauth2/v2/auth and
+    tokenUrl https://oauth2.googleapis.com/token. The Google Discovery documents carry the same
+    auth.oauth2.scopes block. Service-account (JWT bearer) and device-code grants are also
+    advertised by the authorization server.
+- id: oauth2-authorization-server-metadata
+  name: OAuth 2.0 Authorization Server Metadata (RFC 8414)
+  conforms: true
+  evidence: >-
+    https://accounts.google.com/.well-known/oauth-authorization-server returned HTTP 200 with a
+    valid metadata document (issuer https://accounts.google.com) on 2026-08-13. Saved verbatim to
+    well-known/google-search-console-oauth-authorization-server.json.
+- id: oidc
+  name: OpenID Connect Discovery 1.0
+  conforms: true
+  evidence: >-
+    https://accounts.google.com/.well-known/openid-configuration returned HTTP 200 on 2026-08-13
+    with issuer, authorization_endpoint, token_endpoint, jwks_uri and userinfo_endpoint. Applies
+    to the authorization server the API delegates to, not to the API surface itself — the Search
+    Console endpoints accept bearer tokens and do not implement OIDC themselves.
+- id: rfc9116
+  name: security.txt (RFC 9116)
+  conforms: true
+  evidence: >-
+    https://www.google.com/.well-known/security.txt and
+    https://search.google.com/.well-known/security.txt both returned HTTP 200 with Contact, Policy,
+    Acknowledgments, Encryption and Expires fields. Saved to
+    well-known/google-search-console-security.txt.
+- id: rfc8615
+  name: Well-Known URIs (RFC 8615)
+  conforms: partial
+  evidence: >-
+    The API hosts themselves serve nothing under /.well-known/ — searchconsole.googleapis.com and
+    indexing.googleapis.com 404 on all five probed paths. The well-known surface exists only on
+    google.com (security.txt) and accounts.google.com (OAuth/OIDC metadata). See
+    well-known/google-search-console-well-known.yml.
+- id: rfc9457
+  name: Problem Details for HTTP APIs (RFC 9457 / RFC 7807)
+  conforms: false
+  evidence: >-
+    Google uses its own JSON error envelope with content type application/json, not
+    application/problem+json. The stable code is error.errors[].reason. Documented at
+    https://developers.google.com/webmaster-tools/v1/errors and catalogued in
+    errors/google-search-console-problem-types.yml.
+- id: idempotency
+  name: Idempotency keys (draft-ietf-httpapi-idempotency-key-header)
+  conforms: false
+  evidence: >-
+    No Idempotency-Key header and no idempotency semantics are documented anywhere in the Search
+    Console, URL Testing Tools or Indexing API references. Safe replay relies entirely on HTTP
+    method semantics: addSite, submitSitemap, deleteSite and deleteSitemap use PUT/DELETE and are
+    naturally idempotent, while the POST custom verbs (:query, :inspect, :run, :publish) are not
+    protected by any client-supplied key. Republishing the same urlNotification is harmless but
+    consumes quota each time.
+- id: pagination
+  name: Pagination
+  conforms: partial
+  evidence: >-
+    There is no cursor or page-token pagination on this surface. searchAnalytics.query pages with
+    startRow plus rowLimit (max 25,000 rows per request) and terminates when a page returns fewer
+    rows than requested — an offset scheme, not a token scheme. sites.list, sitemaps.list,
+    urlInspection and the Indexing API return unpaginated collections.
+- id: rfc8594
+  name: Sunset HTTP Header (RFC 8594)
+  conforms: false
+  evidence: >-
+    Neither the Discovery documents nor the API reference mention Sunset or Deprecation response
+    headers, and no operation carries deprecated:true. Google announces retirements through the
+    Search Central blog instead. See lifecycle/google-search-console-lifecycle.yml.
+- id: json-api
+  name: JSON:API
+  conforms: false
+  evidence: Plain JSON resource representations; no JSON:API document structure or media type.
+- id: odata
+  name: OData
+  conforms: false
+  evidence: No $metadata document, no OData query options.
+- id: openapi
+  name: OpenAPI 3.1
+  conforms: partial
+  evidence: >-
+    Google does not publish OpenAPI for this API. The machine-readable contract it does publish is
+    the Google Discovery document, harvested verbatim into openapi/_original/. The OpenAPI 3.1
+    definitions in openapi/ are converted from those documents by API Evangelist, so operations,
+    paths, parameters, schemas and scopes are the provider's; the OpenAPI packaging is ours.
+not_applicable:
+- id: fhir
+  reason: Not a healthcare API.
+- id: fapi
+  reason: Not a financial-grade API; no PSD2 or open-banking obligations.
+- id: scim
+  reason: No identity-provisioning surface. Property access is managed in the Search Console UI.
+- id: psd2
+  reason: Not a payments API.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

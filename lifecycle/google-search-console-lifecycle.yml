@@ -1,0 +1,108 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://developers.google.com/webmaster-tools/about,
+  https://developers.google.com/webmaster-tools/v1/api_reference_index,
+  https://developers.google.com/search/apis/indexing-api/,
+  https://status.search.google.com/ (incidents.json + feed.atom probed 200 on 2026-08-13), and the
+  live Google Discovery documents saved in openapi/_original/
+provider: Google Search Console
+providerId: google-search-console
+versioning:
+  scheme: path-segment service versions, plus a dated Discovery revision
+  note: >-
+    Three independently versioned services sit under one product. The Search Console API is
+    advertised as searchconsole v1 but most of its operations still live on the older
+    /webmasters/v3/ path prefix, a rename that was never a re-versioning — v1 endpoints
+    (urlInspection, urlTestingTools) and v3 endpoints (sites, sitemaps, searchAnalytics) coexist
+    in the same service. The Indexing API is v3. The only fine-grained version signal Google
+    publishes is the `revision` field of each Discovery document.
+  current:
+  - api: Google Search Console API
+    version: v1
+    discovery_revision: '20260812'
+    discovery: https://searchconsole.googleapis.com/$discovery/rest?version=v1
+    path_prefixes:
+    - /webmasters/v3/
+    - /v1/
+  - api: Web Search Indexing API
+    version: v3
+    discovery_revision: '20260805'
+    discovery: https://indexing.googleapis.com/$discovery/rest?version=v3
+    path_prefixes:
+    - /v3/
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    Google publishes no dated deprecation or sunset policy for the Search Console APIs, and the
+    responses carry no Sunset or Deprecation headers (RFC 8594). Retirements are announced on the
+    Search Central blog and, when they land, are reflected as `deprecated: true` inside the
+    Discovery document. That makes the Discovery document the only machine-readable deprecation
+    signal a client can watch.
+  deprecated_operations: []
+  deprecated_fields:
+  - api: Google Search Console API
+    schema: WmxSitemapContent
+    field: indexed
+    marker: 'deprecated: true'
+    provider_text: '*Deprecated; do not use.*'
+    source: https://searchconsole.googleapis.com/$discovery/rest?version=v1
+    affects:
+    - listSitemaps
+    - getSitemap
+  - api: Google Search Console API
+    schema: UrlInspectionResult
+    field: mobileUsabilityResult
+    marker: 'deprecated: true'
+    source: https://searchconsole.googleapis.com/$discovery/rest?version=v1
+    affects:
+    - inspectUrl
+    note: >-
+      Follows the retirement of the Mobile Usability report in Search Console. The field is still
+      returned by the contract but is marked deprecated at the source.
+status_pages:
+- url: https://status.search.google.com/
+  name: Google Search Status Dashboard
+  scope: >-
+    Google Search itself — Crawling, Indexing, Ranking and Serving. The closest thing to an
+    availability signal for this product; it does not explicitly cover the Search Console API
+    endpoints.
+  machine_readable:
+  - url: https://status.search.google.com/incidents.json
+    status: 200
+    format: json
+  - url: https://status.search.google.com/products.json
+    status: 200
+    format: json
+  - url: https://status.search.google.com/feed.atom
+    status: 200
+    format: atom
+- url: https://status.cloud.google.com/
+  name: Google Cloud Service Health
+  scope: >-
+    Google Cloud services. Search Console is not a listed Cloud product, so this dashboard covers
+    the surrounding platform (OAuth, API front end) rather than the Search Console API itself.
+sla:
+  published: false
+  note: >-
+    No SLA, no uptime commitment and no support contract. The API is free and governed by the
+    Google APIs Terms of Service (https://developers.google.com/terms); quotas, not availability
+    targets, are the published constraint.
+support:
+- url: https://support.google.com/webmasters/
+  name: Search Console Help
+- url: https://developers.google.com/search/blog
+  name: Google Search Central Blog — where API and feature retirements are announced
+change_signals:
+- signal: Discovery document `revision` field
+  cadence: irregular, several times a month
+  url: https://searchconsole.googleapis.com/$discovery/rest?version=v1
+  note: The most reliable machine-readable change signal for this API.
+- signal: Search Central "What's new" documentation updates
+  url: https://developers.google.com/search/updates
+  note: Documentation-level, not API-level, but the only dated feed Google publishes here.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

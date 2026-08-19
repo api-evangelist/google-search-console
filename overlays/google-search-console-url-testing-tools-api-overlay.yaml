@@ -1,0 +1,47 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Google Search Console URL Testing Tools API
+  version: 1.0.0
+  x-generated: '2026-08-13'
+  x-method: generated
+  x-source: openapi/google-search-console-url-testing-tools-api-openapi.yml
+extends: openapi/google-search-console-url-testing-tools-api-openapi.yml
+actions:
+- target: $.info
+  description: 'Stamp API Evangelist provenance: which Google Discovery document this contract came from
+    and when it was read.'
+  update:
+    x-apievangelist-provenance:
+      harvested: '2026-08-13'
+      discovery_document: https://searchconsole.googleapis.com/$discovery/rest?version=v1
+      discovery_revision: '20260812'
+      method: derived from the provider-published Google Discovery document
+    x-apievangelist-repo: https://github.com/api-evangelist/google-search-console
+- target: $.info
+  description: Point support and terms at the pages Google actually serves.
+  update:
+    contact:
+      name: Search Console Help
+      url: https://support.google.com/webmasters/
+    termsOfService: https://developers.google.com/terms
+- target: $.components.securitySchemes.OAuth2
+  description: Name the OAuth 2.0 authorization server metadata document probed live at https://accounts.google.com/.well-known/openid-configuration.
+  update:
+    x-authorization-server: https://accounts.google.com
+    x-oauth-metadata: https://accounts.google.com/.well-known/openid-configuration
+    x-oauth-server-metadata: https://accounts.google.com/.well-known/oauth-authorization-server
+- target: $.info
+  description: Attach the published quota profile. The Search Console APIs are free; quotas, not price,
+    are the constraint.
+  update:
+    x-rate-limits: rate-limits/google-search-console-rate-limits.yml
+    x-plans: plans/google-search-console-plans-pricing.yml
+    x-errors: errors/google-search-console-problem-types.yml
+    x-conventions: conventions/google-search-console-conventions.yml
+    x-limits-docs: https://developers.google.com/webmaster-tools/limits
+- target: $.paths[*][*]
+  description: Record that every operation returns the standard Google API JSON error envelope (not RFC
+    9457), documented at https://developers.google.com/webmaster-tools/v1/errors.
+  update:
+    x-error-envelope: google-json-error
+    x-error-catalog: errors/google-search-console-problem-types.yml

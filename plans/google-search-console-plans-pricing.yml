@@ -4,7 +4,20 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Google Search Console
 providerId: google-search-console
 created: '2026-05-04'
-modified: '2026-05-05'
+# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
+# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
+# 2026-08-13: re-read against the provider's own limits and quota-pricing pages; every quota
+# figure matched and the "no charge" claim was confirmed, so this is upgraded to searched.
+method: searched
+modified: '2026-08-13'
+verified: '2026-08-13'
+plan_count: 1
+verification: >-
+  https://developers.google.com/webmaster-tools/limits and
+  https://developers.google.com/search/apis/indexing-api/v3/quota-pricing both fetched 2026-08-13
+  (HTTP 200). Google publishes no paid tier, no price list and no billing surface for these APIs;
+  the only published constraint is quota. The page previously referenced as the pricing source,
+  https://developers.google.com/webmaster-tools/v1/limits, returns HTTP 404.
 reconciled: true
 tags:
   - Analytics

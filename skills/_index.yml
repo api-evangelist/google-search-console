@@ -1,0 +1,80 @@
+generated: '2026-08-13'
+method: generated
+source: >-
+  Authored by API Evangelist from the OpenAPI definitions in openapi/ (converted from Google's own
+  Discovery documents), plus conventions/, errors/ and rate-limits/ in this repo. Google publishes
+  no AGENTS.md and no packaged agent skills for the Search Console APIs; a probe of
+  developers.google.com/llms.txt returned 404 on 2026-08-13.
+provider: Google Search Console
+providerId: google-search-console
+summary:
+  skills: 4
+  apis_covered: 4
+  operations_covered: 12
+  operations_total: 13
+  note: >-
+    Every operationId referenced in these skills is grepped from the OpenAPI files in this repo.
+    The only operation not exercised by a skill is deleteSite, which is a one-line destructive
+    call with no flow around it.
+skills:
+- name: audit-search-performance
+  file: google-search-console-audit-search-performance.md
+  api: Google Search Console Search Analytics API
+  openapi: openapi/google-search-console-search-analytics-api-openapi.yml
+  operations:
+  - listSites
+  - querySearchAnalytics
+  scopes:
+  - https://www.googleapis.com/auth/webmasters.readonly
+  mutating: false
+  description: >-
+    Pull search traffic for a property and break it down by query, page, country, device or date,
+    paging past the 25,000-row ceiling with startRow/rowLimit.
+- name: diagnose-url-indexing
+  file: google-search-console-diagnose-url-indexing.md
+  api: Google Search Console URL Inspection API
+  openapi: openapi/google-search-console-url-inspection-api-openapi.yml
+  operations:
+  - listSites
+  - inspectUrl
+  - listSitemaps
+  - searchconsole_urlTestingTools_mobileFriendlyTest_run
+  scopes:
+  - https://www.googleapis.com/auth/webmasters.readonly
+  mutating: false
+  description: >-
+    Work out why a page is or is not indexed — robots verdict, indexing state, fetch state,
+    canonical mismatch, rich-results issues — and which sitemap references it.
+- name: manage-sitemaps
+  file: google-search-console-manage-sitemaps.md
+  api: Google Search Console Sitemaps API
+  openapi: openapi/google-search-console-sitemaps-api-openapi.yml
+  operations:
+  - listSites
+  - listSitemaps
+  - getSitemap
+  - submitSitemap
+  - deleteSitemap
+  scopes:
+  - https://www.googleapis.com/auth/webmasters
+  - https://www.googleapis.com/auth/webmasters.readonly
+  mutating: true
+  description: >-
+    List, submit, inspect and delete sitemaps, with the percent-encoding rules for siteUrl and
+    feedpath that cause most of this API's 404s.
+- name: notify-google-of-url-changes
+  file: google-search-console-notify-google-of-url-changes.md
+  api: Web Search Indexing API
+  openapi: openapi/google-search-console-indexing-api-openapi.yml
+  operations:
+  - indexing_urlNotifications_publish
+  - indexing_urlNotifications_getMetadata
+  scopes:
+  - https://www.googleapis.com/auth/indexing
+  mutating: true
+  description: >-
+    Announce that a page was published, updated or removed, and confirm the notification landed
+    before retrying — the one non-idempotent write on the whole surface.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

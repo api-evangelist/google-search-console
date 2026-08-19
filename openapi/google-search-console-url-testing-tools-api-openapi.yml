@@ -1,0 +1,232 @@
+openapi: 3.1.0
+info:
+  title: Google Search Console URL Testing Tools API
+  description: The Search Console API provides access to both Search Console data (verified users only) and to public information on an URL basis (anyone)
+  version: v1
+  contact:
+    name: Google Search Central Help
+    url: https://support.google.com/webmasters/
+  termsOfService: https://developers.google.com/terms
+  license:
+    name: Creative Commons Attribution 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+  x-discovery-revision: '20260812'
+  x-documentation: https://developers.google.com/webmaster-tools/about
+servers:
+- url: https://searchconsole.googleapis.com
+  description: Google Search Console API
+paths:
+  /v1/urlTestingTools/mobileFriendlyTest:run:
+    post:
+      operationId: searchconsole_urlTestingTools_mobileFriendlyTest_run
+      summary: Runs Mobile-Friendly Test for a given URL
+      description: Runs Mobile-Friendly Test for a given URL.
+      tags:
+      - urlTestingTools
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunMobileFriendlyTestRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunMobileFriendlyTestResponse'
+        '400':
+          description: Bad request — invalid or improperly formed request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+        '401':
+          description: Unauthorized — missing or invalid OAuth 2.0 credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+        '403':
+          description: Forbidden — insufficient permissions or quota/rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+        '404':
+          description: Not found — the requested resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+        '429':
+          description: Too many requests — rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+        '500':
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+        '503':
+          description: Backend error / service unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+      security: []
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: 'Google OAuth 2.0. Authorization server metadata: https://accounts.google.com/.well-known/openid-configuration'
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/webmasters: View and manage Search Console data for your verified sites
+            https://www.googleapis.com/auth/webmasters.readonly: View Search Console data for your verified sites
+  schemas:
+    BlockedResource:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of the blocked resource.
+      description: Blocked resource.
+    GoogleApiError:
+      type: object
+      description: Standard Google API JSON error envelope. See https://developers.google.com/webmaster-tools/v1/errors
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: HTTP status code.
+            message:
+              type: string
+              description: Human readable error message.
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  domain:
+                    type: string
+                  reason:
+                    type: string
+                  message:
+                    type: string
+                  locationType:
+                    type: string
+                  location:
+                    type: string
+    Image:
+      type: object
+      properties:
+        mimeType:
+          type: string
+          description: The mime-type of the image data.
+        data:
+          type: string
+          format: byte
+          description: Image data in format determined by the mime type. Currently, the format will always be "image/png", but this might change in the future.
+      description: Describe image data.
+    MobileFriendlyIssue:
+      type: object
+      properties:
+        rule:
+          type: string
+          enum:
+          - MOBILE_FRIENDLY_RULE_UNSPECIFIED
+          - USES_INCOMPATIBLE_PLUGINS
+          - CONFIGURE_VIEWPORT
+          - FIXED_WIDTH_VIEWPORT
+          - SIZE_CONTENT_TO_VIEWPORT
+          - USE_LEGIBLE_FONT_SIZES
+          - TAP_TARGETS_TOO_CLOSE
+          description: Rule violated.
+          x-enum-descriptions:
+            MOBILE_FRIENDLY_RULE_UNSPECIFIED: Unknown rule. Sorry, we don't have any description for the rule that was broken.
+            USES_INCOMPATIBLE_PLUGINS: Plugins incompatible with mobile devices are being used. [Learn more] (https://support.google.com/webmasters/answer/6352293#flash_usage).
+            CONFIGURE_VIEWPORT: Viewport is not specified using the meta viewport tag. [Learn more] (https://support.google.com/webmasters/answer/6352293#viewport_not_configured).
+            FIXED_WIDTH_VIEWPORT: Viewport defined to a fixed width. [Learn more] (https://support.google.com/webmasters/answer/6352293#fixed-width_viewport).
+            SIZE_CONTENT_TO_VIEWPORT: Content not sized to viewport. [Learn more] (https://support.google.com/webmasters/answer/6352293#content_not_sized_to_viewport).
+            USE_LEGIBLE_FONT_SIZES: Font size is too small for easy reading on a small screen. [Learn More] (https://support.google.com/webmasters/answer/6352293#small_font_size).
+            TAP_TARGETS_TOO_CLOSE: Touch elements are too close to each other. [Learn more] (https://support.google.com/webmasters/answer/6352293#touch_elements_too_close).
+      description: Mobile-friendly issue.
+    ResourceIssue:
+      type: object
+      properties:
+        blockedResource:
+          $ref: '#/components/schemas/BlockedResource'
+      description: Information about a resource with issue.
+    RunMobileFriendlyTestRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL for inspection.
+        requestScreenshot:
+          type: boolean
+          description: Whether or not screenshot is requested. Default is false.
+      description: Mobile-friendly test request.
+    RunMobileFriendlyTestResponse:
+      type: object
+      properties:
+        testStatus:
+          $ref: '#/components/schemas/TestStatus'
+        screenshot:
+          $ref: '#/components/schemas/Image'
+        mobileFriendliness:
+          type: string
+          enum:
+          - MOBILE_FRIENDLY_TEST_RESULT_UNSPECIFIED
+          - MOBILE_FRIENDLY
+          - NOT_MOBILE_FRIENDLY
+          description: Test verdict, whether the page is mobile friendly or not.
+          x-enum-descriptions:
+            MOBILE_FRIENDLY_TEST_RESULT_UNSPECIFIED: Internal error when running this test. Please try running the test again.
+            MOBILE_FRIENDLY: The page is mobile friendly.
+            NOT_MOBILE_FRIENDLY: The page is not mobile friendly.
+        mobileFriendlyIssues:
+          type: array
+          items:
+            $ref: '#/components/schemas/MobileFriendlyIssue'
+          description: List of mobile-usability issues.
+        resourceIssues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceIssue'
+          description: Information about embedded resources issues.
+      description: Mobile-friendly test response, including mobile-friendly issues and resource issues.
+    TestStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - TEST_STATUS_UNSPECIFIED
+          - COMPLETE
+          - INTERNAL_ERROR
+          - PAGE_UNREACHABLE
+          description: Status of the test.
+          x-enum-descriptions:
+            TEST_STATUS_UNSPECIFIED: Internal error when running this test. Please try running the test again.
+            COMPLETE: Inspection has completed without errors.
+            INTERNAL_ERROR: Inspection terminated in an error state. This indicates a problem in Google's infrastructure, not a user error. Please try again later.
+            PAGE_UNREACHABLE: Google can not access the URL because of a user error such as a robots.txt blockage, a 403 or 500 code etc. Please make sure that the URL provided is accessible by Googlebot and is not password protected.
+        details:
+          type: string
+          description: Error details if applicable.
+      description: Final state of the test, including error details if necessary.
+security:
+- OAuth2:
+  - https://www.googleapis.com/auth/webmasters
+  - https://www.googleapis.com/auth/webmasters.readonly

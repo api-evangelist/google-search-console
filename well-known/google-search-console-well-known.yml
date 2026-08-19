@@ -1,0 +1,142 @@
+generated: '2026-08-13'
+method: probed
+source: live HTTP probes of every apis.yml baseURL host, every OpenAPI servers[] host, the
+  developer docs host, the Search Console product host, and the OAuth authorization server
+  named by the OpenAPI securitySchemes (accounts.google.com).
+provider: Google Search Console
+providerId: google-search-console
+summary:
+  hosts_probed: 6
+  paths_probed_per_host: 5
+  hits: 3
+  note: >-
+    The Search Console and Indexing API hosts (searchconsole.googleapis.com,
+    indexing.googleapis.com) serve nothing under /.well-known/ — every path returns Google's
+    standard 404 HTML page. The real well-known surface for this API lives on two other Google
+    hosts: security.txt on the google.com web properties, and the OAuth 2.0 / OpenID Connect
+    authorization-server metadata on accounts.google.com, which is the authorization server the
+    OpenAPI securitySchemes point at.
+probes:
+- host: searchconsole.googleapis.com
+  role: API base host (Search Console API)
+  results:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: indexing.googleapis.com
+  role: API base host (Web Search Indexing API)
+  results:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: developers.google.com
+  role: developer documentation host
+  results:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: search.google.com
+  role: Search Console product host (apis.yml url)
+  results:
+  - path: /.well-known/security.txt
+    status: 200
+    content_type: text/plain
+    file: google-search-console-security.txt
+    note: Identical document to the one served on www.google.com.
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: www.google.com
+  role: corporate web property
+  results:
+  - path: /.well-known/security.txt
+    status: 200
+    content_type: text/plain
+    file: google-search-console-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: accounts.google.com
+  role: >-
+    OAuth 2.0 authorization server declared by the OpenAPI securitySchemes
+    (authorizationUrl https://accounts.google.com/o/oauth2/v2/auth)
+  results:
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: google-search-console-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    file: google-search-console-oauth-authorization-server.json
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+documents:
+- file: google-search-console-security.txt
+  url: https://www.google.com/.well-known/security.txt
+  type: SecurityTxt
+  fields:
+    contact:
+    - https://g.co/vulnz
+    - mailto:security@google.com
+    policy: https://g.co/vrp
+    acknowledgments: https://bughunters.google.com/
+    encryption: https://services.google.com/corporate/publickey.txt
+    expires: '2030-04-01T00:00:00z'
+- file: google-search-console-openid-configuration.json
+  url: https://accounts.google.com/.well-known/openid-configuration
+  type: OpenIDConfiguration
+  fields:
+    issuer: https://accounts.google.com
+    authorization_endpoint: https://accounts.google.com/o/oauth2/v2/auth
+    token_endpoint: https://oauth2.googleapis.com/token
+    grant_types_supported:
+    - authorization_code
+    - refresh_token
+    - urn:ietf:params:oauth:grant-type:device_code
+    - urn:ietf:params:oauth:grant-type:jwt-bearer
+- file: google-search-console-oauth-authorization-server.json
+  url: https://accounts.google.com/.well-known/oauth-authorization-server
+  type: OAuthAuthorizationServerMetadata
+  fields:
+    issuer: https://accounts.google.com
+    authorization_endpoint: https://accounts.google.com/o/oauth2/v2/auth
+    token_endpoint: https://oauth2.googleapis.com/token
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

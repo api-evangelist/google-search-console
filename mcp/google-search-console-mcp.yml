@@ -1,0 +1,157 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  Derived from the OpenAPI definitions in this repo, which were themselves harvested from Google's
+  own Discovery documents (https://searchconsole.googleapis.com/$discovery/rest?version=v1 and
+  https://indexing.googleapis.com/$discovery/rest?version=v3). No first-party MCP server exists
+  for this API: a repository search across the googleapis and GoogleCloudPlatform GitHub
+  organizations on 2026-08-13 returned MCP servers for databases (googleapis/mcp-toolbox), the
+  gcloud CLI (googleapis/gcloud-mcp), Cloud Run, GKE, BigQuery and Gemini Cloud Assist, and zero
+  matches for Search Console or the Indexing API.
+provider: Google Search Console
+providerId: google-search-console
+status: candidate
+deployment:
+  mode: none
+  auth: oauth
+  verified: derived
+  note: >-
+    Nobody ships an MCP server for Google Search Console. Google publishes no hosted endpoint and
+    no first-party stdio package, so there is no URL an agent can POST to and no install command
+    that is the provider's. The tools below are a CANDIDATE surface derived from real
+    operationIds in this repo's OpenAPI files — they describe what an MCP server for this API
+    would expose, not something a client can call today.
+transport:
+  candidate: streamable-http or stdio
+  note: Not applicable until a server exists.
+authentication:
+  type: oauth2
+  flow: authorizationCode
+  authorization_server: https://accounts.google.com
+  metadata: https://accounts.google.com/.well-known/openid-configuration
+  scopes:
+  - https://www.googleapis.com/auth/webmasters
+  - https://www.googleapis.com/auth/webmasters.readonly
+  - https://www.googleapis.com/auth/indexing
+  note: >-
+    Every candidate tool inherits the OAuth 2.0 scope of its backing REST operation. Read-only
+    tools need only webmasters.readonly; write tools need webmasters. The Indexing tools need the
+    separate indexing scope and a service account that has been added as an Owner of the
+    Search Console property.
+tools:
+- name: search_analytics_query
+  description: >-
+    Query search traffic for a verified site — clicks, impressions, CTR and average position,
+    grouped by query, page, country, device, searchAppearance and date.
+  rest:
+  - querySearchAnalytics
+  openapi: openapi/google-search-console-search-analytics-api-openapi.yml
+  method: POST /webmasters/v3/sites/{siteUrl}/searchAnalytics/query
+  scope: https://www.googleapis.com/auth/webmasters.readonly
+  mutating: false
+- name: list_sites
+  description: List every Search Console property the authenticated user can access.
+  rest:
+  - listSites
+  openapi: openapi/google-search-console-sites-api-openapi.yml
+  method: GET /webmasters/v3/sites
+  scope: https://www.googleapis.com/auth/webmasters.readonly
+  mutating: false
+- name: get_site
+  description: Retrieve one Search Console property and the caller's permission level on it.
+  rest:
+  - getSite
+  openapi: openapi/google-search-console-sites-api-openapi.yml
+  method: GET /webmasters/v3/sites/{siteUrl}
+  scope: https://www.googleapis.com/auth/webmasters.readonly
+  mutating: false
+- name: add_site
+  description: Add a site to the authenticated user's Search Console account.
+  rest:
+  - addSite
+  openapi: openapi/google-search-console-sites-api-openapi.yml
+  method: PUT /webmasters/v3/sites/{siteUrl}
+  scope: https://www.googleapis.com/auth/webmasters
+  mutating: true
+- name: delete_site
+  description: Remove a site from the authenticated user's Search Console account.
+  rest:
+  - deleteSite
+  openapi: openapi/google-search-console-sites-api-openapi.yml
+  method: DELETE /webmasters/v3/sites/{siteUrl}
+  scope: https://www.googleapis.com/auth/webmasters
+  mutating: true
+- name: list_sitemaps
+  description: List sitemaps submitted for a site, with processing status and error counts.
+  rest:
+  - listSitemaps
+  openapi: openapi/google-search-console-sitemaps-api-openapi.yml
+  method: GET /webmasters/v3/sites/{siteUrl}/sitemaps
+  scope: https://www.googleapis.com/auth/webmasters.readonly
+  mutating: false
+- name: get_sitemap
+  description: Retrieve one submitted sitemap by feed path.
+  rest:
+  - getSitemap
+  openapi: openapi/google-search-console-sitemaps-api-openapi.yml
+  method: GET /webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}
+  scope: https://www.googleapis.com/auth/webmasters.readonly
+  mutating: false
+- name: submit_sitemap
+  description: Submit a sitemap for a site.
+  rest:
+  - submitSitemap
+  openapi: openapi/google-search-console-sitemaps-api-openapi.yml
+  method: PUT /webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}
+  scope: https://www.googleapis.com/auth/webmasters
+  mutating: true
+- name: delete_sitemap
+  description: Delete a previously submitted sitemap.
+  rest:
+  - deleteSitemap
+  openapi: openapi/google-search-console-sitemaps-api-openapi.yml
+  method: DELETE /webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}
+  scope: https://www.googleapis.com/auth/webmasters
+  mutating: true
+- name: inspect_url
+  description: >-
+    Inspect a single URL and return its index status, canonical, crawl details, mobile usability,
+    AMP status and rich-results eligibility.
+  rest:
+  - inspectUrl
+  openapi: openapi/google-search-console-url-inspection-api-openapi.yml
+  method: POST /v1/urlInspection/index:inspect
+  scope: https://www.googleapis.com/auth/webmasters.readonly
+  mutating: false
+- name: run_mobile_friendly_test
+  description: Run a mobile-friendly test against a public URL and return issues and blocked resources.
+  rest:
+  - searchconsole_urlTestingTools_mobileFriendlyTest_run
+  openapi: openapi/google-search-console-url-testing-tools-api-openapi.yml
+  method: POST /v1/urlTestingTools/mobileFriendlyTest:run
+  scope: null
+  mutating: false
+  note: The only operation in the whole surface that declares no OAuth scope in the discovery document.
+- name: publish_url_notification
+  description: Notify Google that a URL was updated or deleted so it can be recrawled.
+  rest:
+  - indexing_urlNotifications_publish
+  openapi: openapi/google-search-console-indexing-api-openapi.yml
+  method: POST /v3/urlNotifications:publish
+  scope: https://www.googleapis.com/auth/indexing
+  mutating: true
+- name: get_url_notification_metadata
+  description: Retrieve the last publish/delete notification Google received for a URL.
+  rest:
+  - indexing_urlNotifications_getMetadata
+  openapi: openapi/google-search-console-indexing-api-openapi.yml
+  method: GET /v3/urlNotifications/metadata
+  scope: https://www.googleapis.com/auth/indexing
+  mutating: false
+coverage:
+  rest_operations: 13
+  tools: 13
+  unmapped_operations: 0
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

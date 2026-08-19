@@ -1,6 +1,13 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/google-search-console-api-openapi.yml
+generated: '2026-08-13'
+method: searched
+docs: https://developers.google.com/webmaster-tools/v1/how-tos/authorizing
+source: >-
+  Confirmed against the provider's authorization how-to and against the OAuth 2.0 authorization
+  server metadata probed live on 2026-08-13 at
+  https://accounts.google.com/.well-known/openid-configuration (HTTP 200). Baseline derived from
+  openapi/google-search-console-indexing-api-openapi.yml, openapi/google-search-console-search-analytics-api-openapi.yml,
+  openapi/google-search-console-sitemaps-api-openapi.yml, openapi/google-search-console-sites-api-openapi.yml,
+  openapi/google-search-console-url-inspection-api-openapi.yml, openapi/google-search-console-url-testing-tools-api-openapi.yml
 summary:
   types:
   - oauth2
@@ -13,8 +20,49 @@ schemes:
   - flow: authorizationCode
     authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
     tokenUrl: https://oauth2.googleapis.com/token
-    scopes: 2
-  description: OAuth 2.0 authentication for accessing Google Search Console data. Requires the
-    webmasters or webmasters.readonly scope depending on the operation.
+    scopes: 1
+  description: 'Google OAuth 2.0. Authorization server metadata: https://accounts.google.com/.well-known/openid-configuration'
   sources:
-  - openapi/google-search-console-api-openapi.yml
+  - openapi/google-search-console-indexing-api-openapi.yml
+  - openapi/google-search-console-search-analytics-api-openapi.yml
+  - openapi/google-search-console-sitemaps-api-openapi.yml
+  - openapi/google-search-console-sites-api-openapi.yml
+  - openapi/google-search-console-url-inspection-api-openapi.yml
+  - openapi/google-search-console-url-testing-tools-api-openapi.yml
+authorization_server:
+  issuer: https://accounts.google.com
+  metadata: https://accounts.google.com/.well-known/openid-configuration
+  server_metadata: https://accounts.google.com/.well-known/oauth-authorization-server
+  saved:
+  - well-known/google-search-console-openid-configuration.json
+  - well-known/google-search-console-oauth-authorization-server.json
+  grant_types_supported:
+  - authorization_code
+  - refresh_token
+  - urn:ietf:params:oauth:grant-type:device_code
+  - urn:ietf:params:oauth:grant-type:jwt-bearer
+scopes:
+- https://www.googleapis.com/auth/webmasters
+- https://www.googleapis.com/auth/webmasters.readonly
+- https://www.googleapis.com/auth/indexing
+identities:
+- type: user
+  note: Authorization code flow with offline access for a refresh token.
+- type: service account
+  note: >-
+    JWT bearer grant. The standard pattern for server-side integrations and the required one for
+    the Indexing API, where the service account must additionally be added as an Owner of the
+    Search Console property.
+api_key:
+  supported: partial
+  note: >-
+    The Google API front end accepts a `key` query parameter for project identification, but no
+    Search Console operation that reads or writes site data is authorized by an API key alone.
+notes:
+- >-
+  Authorization is per verified property, not per Cloud project. A valid token with the right scope
+  still returns 403 insufficientPermissions if the account does not own the property or the siteUrl
+  string does not match it exactly.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

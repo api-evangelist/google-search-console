@@ -1,0 +1,182 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://developers.google.com/webmaster-tools/v1/how-tos/authorizing,
+  https://developers.google.com/webmaster-tools/v1/errors,
+  https://developers.google.com/webmaster-tools/limits, and the Google Discovery documents in
+  openapi/_original/ (searchconsole v1 revision 20260812, indexing v3 revision 20260805)
+provider: Google Search Console
+providerId: google-search-console
+scope:
+- Google Search Console API
+- Google Search Console URL Testing Tools API
+- Web Search Indexing API
+authentication:
+  style: OAuth 2.0 bearer token
+  header: 'Authorization: Bearer <access_token>'
+  flows:
+  - authorizationCode
+  - refresh_token
+  - urn:ietf:params:oauth:grant-type:jwt-bearer (service accounts)
+  - urn:ietf:params:oauth:grant-type:device_code
+  authorization_server: https://accounts.google.com
+  scopes:
+  - https://www.googleapis.com/auth/webmasters
+  - https://www.googleapis.com/auth/webmasters.readonly
+  - https://www.googleapis.com/auth/indexing
+  api_key: >-
+    A `key` query parameter is accepted by the Google API front end for project identification, but
+    every Search Console operation that touches site data still requires a user or service-account
+    OAuth token. An API key alone is not sufficient. The one exception is
+    urlTestingTools.mobileFriendlyTest.run, which declares no scope in the Discovery document.
+  gotcha: >-
+    Access is per verified property, not per project. The siteUrl must match the verified property
+    string exactly — `https://example.com/` with the trailing slash for a URL-prefix property, or
+    `sc-domain:example.com` for a domain property. For the Indexing API the service account must be
+    added as an Owner of the property inside Search Console; a Cloud IAM role does not grant it.
+  docs: https://developers.google.com/webmaster-tools/v1/how-tos/authorizing
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    No Idempotency-Key mechanism exists on this surface, and none is documented. Replay safety is
+    inherited from HTTP method semantics only: addSite (PUT), submitSitemap (PUT), deleteSite
+    (DELETE) and deleteSitemap (DELETE) are naturally idempotent, so retrying them after a timeout
+    is safe. The four POST custom verbs are not key-protected — :query, :inspect and :run are
+    read-only and therefore safe to retry, while :publish on the Indexing API is the one operation
+    where a blind retry has a real cost: it is harmless to Google's index but consumes a slot
+    against the publish quota each time.
+  idempotent_operations:
+  - addSite
+  - submitSitemap
+  - deleteSite
+  - deleteSitemap
+  non_idempotent_operations:
+  - indexing_urlNotifications_publish
+pagination:
+  style: offset (row-based), request-body only
+  applies_to:
+  - querySearchAnalytics
+  params:
+  - name: startRow
+    location: request body
+    default: 0
+    description: Zero-based index of the first row in the response. Must be non-negative.
+  - name: rowLimit
+    location: request body
+    default: 1000
+    max: 25000
+    description: Maximum rows to return, 1 to 25,000 inclusive.
+  termination: >-
+    There is no nextPageToken and no total count. A client pages by incrementing startRow by
+    rowLimit and stops when a response returns fewer rows than rowLimit — or an empty `rows` array,
+    which is what a fully consumed result set looks like.
+  unpaginated:
+  - listSites
+  - listSitemaps
+  - inspectUrl
+  - indexing_urlNotifications_getMetadata
+filtering:
+  style: dimension filter groups in the request body
+  applies_to:
+  - querySearchAnalytics
+  note: >-
+    dimensionFilterGroups[] carries filters[] of {dimension, operator, expression}; a dimension can
+    be filtered without being grouped by. Operators include contains, notContains, equals,
+    notEquals, includingRegex and excludingRegex.
+field_selection:
+  supported: true
+  param: fields
+  location: query
+  note: >-
+    Google's standard partial-response parameter, accepted on every operation. `fields=rows(keys,
+    clicks)` trims the response server-side. Worth using on searchAnalytics, where a 25,000-row
+    page is large.
+system_parameters:
+  note: >-
+    Every operation accepts the Google API front-end system parameters declared at the top level of
+    the Discovery document. These are cross-cutting and are not repeated per operation.
+  params:
+  - name: fields
+    description: Partial-response selector.
+  - name: alt
+    default: json
+    enum:
+    - json
+    - media
+    - proto
+    description: Response format.
+  - name: prettyPrint
+    description: Pretty-print the JSON response.
+  - name: quotaUser
+    description: >-
+      Arbitrary string of up to 40 characters that attributes a server-side call to an end user for
+      quota accounting. The correct way to keep one noisy tenant from exhausting a shared
+      per-user quota.
+  - name: $.xgafv
+    enum:
+    - '1'
+    - '2'
+    description: Selects the v1 or v2 error-format envelope.
+  - name: key
+    description: API key identifying the calling project.
+  - name: access_token
+    description: OAuth token as a query parameter. Prefer the Authorization header.
+metadata:
+  supported: false
+  note: No user-defined metadata or custom-field storage on any resource.
+request_tracing:
+  request_id_header: null
+  note: >-
+    No request-id or correlation-id header is documented, and none is echoed in the error envelope.
+    When escalating, the identifying detail available is the Cloud project number plus the
+    timestamp — there is no per-call handle to quote.
+versioning:
+  style: path-segment service version
+  note: >-
+    Mixed. Search Console is advertised as v1 but sites, sitemaps and searchAnalytics still live
+    under /webmasters/v3/, while urlInspection and urlTestingTools are under /v1/. The Indexing API
+    is /v3/. See lifecycle/google-search-console-lifecycle.yml.
+error_envelope:
+  format: google-json-error
+  content_type: application/json
+  rfc9457: false
+  machine_readable_code: error.errors[].reason
+  note: >-
+    Branch on error.errors[].reason, never on error.message. See
+    errors/google-search-console-problem-types.yml.
+rate_limit_signaling:
+  headers_published: false
+  headers:
+  - name: Retry-After
+    published: false
+    note: Not documented; honour it when present but do not depend on it.
+  status_codes:
+  - code: 403
+    reasons:
+    - rateLimitExceeded
+    - userRateLimitExceeded
+    - dailyLimitExceeded
+    - quotaExceeded
+  - code: 429
+    reasons:
+    - rateLimitExceeded
+  note: >-
+    Google publishes no X-RateLimit-* or RateLimit-* response headers for this API. There is no
+    runtime signal of remaining quota at all — a client cannot see how close it is to a ceiling
+    from the response, only from the quota tab of the Cloud project. That makes the 403/429 the
+    first and only warning, and makes exponential backoff mandatory rather than advisory.
+    Search Analytics load is additionally measured in 10-minute and 1-day windows, so throttling
+    can begin before the documented per-minute figure is reached.
+  see_also: rate-limits/google-search-console-rate-limits.yml
+date_and_time:
+  note: >-
+    Search Analytics dates are YYYY-MM-DD in PT (UTC-7:00/8:00), not UTC — a subtle source of
+    off-by-one-day reconciliation errors against any UTC warehouse. The HOUR dimension returns
+    ISO-8601 extended offset date-times, also in PT, and requires dataState HOURLY_ALL.
+  freshness: >-
+    Search Analytics data is delayed by roughly two to three days; dataState `all` includes partial
+    (fresh) data, `full` includes only finalized data.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
