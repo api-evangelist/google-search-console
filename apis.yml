@@ -34,6 +34,16 @@ tags:
   - Search
   - Search Analytics
   - SEO
+  - Sitemap
+  - URL Inspection
+  - Webmaster Tools
+tags_raw:
+  - Analytics
+  - Google
+  - Indexing
+  - Search
+  - Search Analytics
+  - SEO
   - Sitemaps
   - URL Inspection
   - Webmaster Tools
@@ -184,6 +194,8 @@ apis:
   humanURL: https://developers.google.com/webmaster-tools
   baseURL: https://searchconsole.googleapis.com
   tags:
+  - Sitemap
+  tags_raw:
   - Sitemaps
   properties:
   - type: OpenAPI
