@@ -48,83 +48,6 @@ tags_raw:
   - URL Inspection
   - Webmaster Tools
 apis:
-- aid: google-search-console:google-search-console-url-testing-tools-api
-  name: Google Search Console URL Testing Tools API
-  description: >-
-    Provides tools for running validation tests against single URLs, including mobile-friendly testing
-    and rich results validation for structured data.
-  image: https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png
-  humanURL: https://developers.google.com/webmaster-tools/search-console-api
-  baseURL: https://searchconsole.googleapis.com
-  tags:
-  - Mobile Friendly
-  - Rich Results
-  - Structured Data
-  - Testing
-  - Validation
-  properties:
-  - type: OpenAPI
-    url: openapi/google-search-console-url-testing-tools-api-openapi.yml
-  - type: Overlay
-    url: overlays/google-search-console-url-testing-tools-api-overlay.yaml
-  - type: APIReference
-    url: https://developers.google.com/webmaster-tools/search-console-api/v1/reference/urlTestingTools/mobileFriendlyTest/run
-    title: mobileFriendlyTest.run
-  - type: Documentation
-    url: https://searchconsole.googleapis.com/$discovery/rest?version=v1
-    title: Google Discovery Document
-  - type: Documentation
-    url: https://developers.google.com/webmaster-tools/search-console-api/v1/
-  - type: Documentation
-    url: https://developers.google.com/webmaster-tools/search-console-api/about
-    title: About
-  - type: Documentation
-    url: https://search.google.com/test/rich-results
-    title: Rich Results Test
-- aid: google-search-console:google-indexing-api
-  name: Google Indexing API
-  description: >-
-    The Indexing API allows any site owner to directly notify Google when pages are added or removed,
-    enabling faster crawling and indexing of content such as job postings and livestream videos.
-  image: https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png
-  humanURL: https://developers.google.com/search/apis/indexing-api/v3/quickstart
-  baseURL: https://indexing.googleapis.com
-  tags:
-  - Crawling
-  - Indexing
-  - SEO
-  - URL Submission
-  properties:
-  - type: OpenAPI
-    url: openapi/google-search-console-indexing-api-openapi.yml
-  - type: Overlay
-    url: overlays/google-search-console-indexing-api-overlay.yaml
-  - type: Documentation
-    url: https://indexing.googleapis.com/$discovery/rest?version=v3
-    title: Google Discovery Document
-  - type: Documentation
-    url: https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rest
-  - type: GettingStarted
-    url: https://developers.google.com/search/apis/indexing-api/v3/quickstart
-  - type: Tutorials
-    url: https://developers.google.com/search/apis/indexing-api/v3/using-api
-    title: How-To Guide
-  - type: Documentation
-    url: https://developers.google.com/search/apis/indexing-api/v3/prereqs
-    title: Prerequisites
-  - type: Pricing
-    url: https://developers.google.com/search/apis/indexing-api/v3/quota-pricing
-    title: Quota and Pricing
-  - type: SDKs
-    url: https://developers.google.com/search/apis/indexing-api/v3/libraries
-    title: Client Libraries
-  - type: APIReference
-    url: https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rpc
-    title: RPC Reference
-  - type: APIReference
-    url: >-
-      https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rest/v3/urlNotifications/publish
-    title: Publish Method
 - aid: google-search-console:google-search-console-search-analytics-api
   name: Google Search Console Search Analytics API
   description: >-
@@ -371,10 +294,95 @@ apis:
     url: json-schema/google-search-console-query-schema.json
   - type: JSONLD
     url: json-ld/google-search-console-context.jsonld
+- aid: google-search-console:google-search-console-urlnotifications-api
+  name: Google Search Console URL Notifications API
+  description: >-
+    The urlNotifications API from Google Search Console — 2 operation(s) for urlnotifications.
+  humanURL: https://developers.google.com/webmaster-tools/search-console-api
+  baseURL: https://searchconsole.googleapis.com
+  tags:
+  - urlNotifications
+  properties:
+  - type: OpenAPI
+    url: openapi/google-search-console-urlnotifications-api-openapi.yml
+  - type: APIReference
+    url: >-
+      https://developers.google.com/webmaster-tools/search-console-api/v1/reference/urlTestingTools/mobileFriendlyTest/run
+  - type: Documentation
+    url: https://searchconsole.googleapis.com/$discovery/rest?version=v1
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/search-console-api/v1/
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/search-console-api/about
+  - type: Documentation
+    url: https://search.google.com/test/rich-results
+  - type: Documentation
+    url: https://indexing.googleapis.com/$discovery/rest?version=v3
+  - type: Documentation
+    url: https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rest
+  - type: GettingStarted
+    url: https://developers.google.com/search/apis/indexing-api/v3/quickstart
+  - type: Tutorials
+    url: https://developers.google.com/search/apis/indexing-api/v3/using-api
+  - type: Documentation
+    url: https://developers.google.com/search/apis/indexing-api/v3/prereqs
+  - type: Pricing
+    url: https://developers.google.com/search/apis/indexing-api/v3/quota-pricing
+  - type: SDKs
+    url: https://developers.google.com/search/apis/indexing-api/v3/libraries
+  - type: APIReference
+    url: https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rpc
+  - type: APIReference
+    url: >-
+      https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rest/v3/urlNotifications/publish
+- aid: google-search-console:google-search-console-urltestingtools-api
+  name: Google Search Console URL Testing Tools API
+  description: The urlTestingTools API from Google Search Console — 1 operation(s) for urltestingtools.
+  humanURL: https://developers.google.com/webmaster-tools/search-console-api
+  baseURL: https://searchconsole.googleapis.com
+  tags:
+  - urlTestingTools
+  properties:
+  - type: OpenAPI
+    url: openapi/google-search-console-urltestingtools-api-openapi.yml
+  - type: APIReference
+    url: >-
+      https://developers.google.com/webmaster-tools/search-console-api/v1/reference/urlTestingTools/mobileFriendlyTest/run
+  - type: Documentation
+    url: https://searchconsole.googleapis.com/$discovery/rest?version=v1
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/search-console-api/v1/
+  - type: Documentation
+    url: https://developers.google.com/webmaster-tools/search-console-api/about
+  - type: Documentation
+    url: https://search.google.com/test/rich-results
+  - type: Documentation
+    url: https://indexing.googleapis.com/$discovery/rest?version=v3
+  - type: Documentation
+    url: https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rest
+  - type: GettingStarted
+    url: https://developers.google.com/search/apis/indexing-api/v3/quickstart
+  - type: Tutorials
+    url: https://developers.google.com/search/apis/indexing-api/v3/using-api
+  - type: Documentation
+    url: https://developers.google.com/search/apis/indexing-api/v3/prereqs
+  - type: Pricing
+    url: https://developers.google.com/search/apis/indexing-api/v3/quota-pricing
+  - type: SDKs
+    url: https://developers.google.com/search/apis/indexing-api/v3/libraries
+  - type: APIReference
+    url: https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rpc
+  - type: APIReference
+    url: >-
+      https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rest/v3/urlNotifications/publish
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
 common:
+  - type: Overlay
+    url: overlays/google-search-console-url-testing-tools-api-overlay.yaml
+  - type: Overlay
+    url: overlays/google-search-console-indexing-api-overlay.yaml
   - type: Packages
     url: packages/google-search-console-packages.yml
   - type: SDKs
