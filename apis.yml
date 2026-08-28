@@ -8,6 +8,18 @@ description: >-
   free of charge, authenticate with Google OAuth 2.0 against accounts.google.com, are authorized per verified
   property rather than per Cloud project, and are described by Google Discovery documents rather than a
   published OpenAPI.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: free
   onboarding: self-serve
@@ -379,6 +391,9 @@ maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
 common:
+  - type: CapabilityMap
+    url: capabilities/google-search-console-capability-edges.yml
+    name: Google Search Console Business Capability Map
   - type: Overlay
     url: overlays/google-search-console-url-testing-tools-api-overlay.yaml
   - type: Overlay

@@ -1,0 +1,37 @@
+slug: google-search-console
+provider: Google Search Console
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Search Analytics
+  spec_file: google-search-console-search-analytics-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.72
+  evidence: Query search analytics to understand how your site appears in Google Search results
+  reason: Operations return impressions/clicks/position style search performance rows for a website, which
+    is the core measurement surface of SEO practice — Digital Marketing Management explicitly covers 'Web,
+    SEO'. Confidence tempered because the data could also be consumed as pure web analytics.
+- tag: urlNotifications
+  spec_file: google-search-console-urlnotifications-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: Notifies Google Web Search when your web pages change. - POST /v3/urlNotifications:publish
+    'Notifies that a URL has been updated or deleted'
+  reason: Submitting URLs to Google's search index is a search-engine-optimisation / web presence activity,
+    which falls under Digital Marketing Management (web, SEO). Moderate confidence since it is a narrow
+    technical indexing notification surface.
