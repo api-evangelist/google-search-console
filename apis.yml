@@ -46,7 +46,7 @@ tags:
   - Search
   - Search Analytics
   - SEO
-  - Sitemap
+  - Sitemaps
   - URL Inspection
   - Webmaster Tools
 tags_raw:
@@ -129,7 +129,7 @@ apis:
   humanURL: https://developers.google.com/webmaster-tools
   baseURL: https://searchconsole.googleapis.com
   tags:
-  - Sitemap
+  - Sitemaps
   tags_raw:
   - Sitemaps
   properties:
@@ -312,7 +312,8 @@ apis:
     The urlNotifications API from Google Search Console — 2 operation(s) for urlnotifications.
   humanURL: https://developers.google.com/webmaster-tools/search-console-api
   baseURL: https://searchconsole.googleapis.com
-  tags:
+  tags: []
+  tags_raw:
   - urlNotifications
   properties:
   - type: OpenAPI
@@ -352,7 +353,8 @@ apis:
   description: The urlTestingTools API from Google Search Console — 1 operation(s) for urltestingtools.
   humanURL: https://developers.google.com/webmaster-tools/search-console-api
   baseURL: https://searchconsole.googleapis.com
-  tags:
+  tags: []
+  tags_raw:
   - urlTestingTools
   properties:
   - type: OpenAPI
