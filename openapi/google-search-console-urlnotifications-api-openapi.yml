@@ -1,0 +1,232 @@
+openapi: 3.2.0
+info:
+  title: Google Web Search Indexing URL Notifications API
+  description: Notifies Google Web Search when your web pages change.
+  version: v3
+  contact:
+    name: Google Search Central Help
+    url: https://support.google.com/webmasters/
+  termsOfService: https://developers.google.com/terms
+  license:
+    name: Creative Commons Attribution 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+  x-discovery-revision: '20260805'
+  x-documentation: https://developers.google.com/search/apis/indexing-api/
+servers:
+- url: https://indexing.googleapis.com
+  description: Web Search Indexing API
+security:
+- OAuth2:
+  - https://www.googleapis.com/auth/indexing
+tags:
+- name: urlNotifications
+paths:
+  /v3/urlNotifications:publish:
+    post:
+      operationId: indexing_urlNotifications_publish
+      summary: Notifies that a URL has been updated or deleted
+      description: Notifies that a URL has been updated or deleted.
+      tags:
+      - urlNotifications
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UrlNotification'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublishUrlNotificationResponse'
+        '400':
+          description: Bad request — invalid or improperly formed request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+        '401':
+          description: Unauthorized — missing or invalid OAuth 2.0 credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+        '403':
+          description: Forbidden — insufficient permissions or quota/rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+        '404':
+          description: Not found — the requested resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+        '429':
+          description: Too many requests — rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+        '500':
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+        '503':
+          description: Backend error / service unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+      security:
+      - OAuth2:
+        - https://www.googleapis.com/auth/indexing
+  /v3/urlNotifications/metadata:
+    get:
+      operationId: indexing_urlNotifications_getMetadata
+      summary: Gets metadata about a Web Document
+      description: Gets metadata about a Web Document. This method can _only_ be used to query URLs that were previously seen in successful Indexing API notifications. Includes the latest `UrlNotification` received via this API.
+      tags:
+      - urlNotifications
+      parameters:
+      - name: url
+        in: query
+        required: false
+        schema:
+          type: string
+        description: URL that is being queried.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UrlNotificationMetadata'
+        '400':
+          description: Bad request — invalid or improperly formed request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+        '401':
+          description: Unauthorized — missing or invalid OAuth 2.0 credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+        '403':
+          description: Forbidden — insufficient permissions or quota/rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+        '404':
+          description: Not found — the requested resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+        '429':
+          description: Too many requests — rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+        '500':
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+        '503':
+          description: Backend error / service unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleApiError'
+      security:
+      - OAuth2:
+        - https://www.googleapis.com/auth/indexing
+components:
+  schemas:
+    PublishUrlNotificationResponse:
+      type: object
+      properties:
+        urlNotificationMetadata:
+          $ref: '#/components/schemas/UrlNotificationMetadata'
+      description: Output for PublishUrlNotification
+    GoogleApiError:
+      type: object
+      description: Standard Google API JSON error envelope. See https://developers.google.com/webmaster-tools/v1/errors
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: HTTP status code.
+            message:
+              type: string
+              description: Human readable error message.
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  domain:
+                    type: string
+                  reason:
+                    type: string
+                  message:
+                    type: string
+                  locationType:
+                    type: string
+                  location:
+                    type: string
+    UrlNotification:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - URL_NOTIFICATION_TYPE_UNSPECIFIED
+          - URL_UPDATED
+          - URL_DELETED
+          description: The URL life cycle event that Google is being notified about.
+          x-enum-descriptions:
+            URL_NOTIFICATION_TYPE_UNSPECIFIED: Unspecified.
+            URL_UPDATED: The given URL (Web document) has been updated.
+            URL_DELETED: The given URL (Web document) has been deleted.
+        url:
+          type: string
+          description: The object of this notification. The URL must be owned by the publisher of this notification and, in case of `URL_UPDATED` notifications, it _must_ be crawlable by Google.
+        notifyTime:
+          type: string
+          description: Creation timestamp for this notification. Users should _not_ specify it, the field is ignored at the request time.
+      description: '`UrlNotification` is the resource used in all Indexing API calls. It describes one event in the life cycle of a Web Document.'
+    UrlNotificationMetadata:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL to which this metadata refers.
+        latestRemove:
+          $ref: '#/components/schemas/UrlNotification'
+        latestUpdate:
+          $ref: '#/components/schemas/UrlNotification'
+      description: Summary of the most recent Indexing API notifications successfully received, for a given URL.
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: 'Google OAuth 2.0. Authorization server metadata: https://accounts.google.com/.well-known/openid-configuration'
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/indexing: Submit data to Google for indexing
