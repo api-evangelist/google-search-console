@@ -46,7 +46,7 @@ tags:
   - Search
   - Search Analytics
   - SEO
-  - Sitemaps
+  - Sitemap
   - URL Inspection
   - Webmaster Tools
 tags_raw:
@@ -129,7 +129,7 @@ apis:
   humanURL: https://developers.google.com/webmaster-tools
   baseURL: https://searchconsole.googleapis.com
   tags:
-  - Sitemaps
+  - Sitemap
   tags_raw:
   - Sitemaps
   properties:
