@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Google Search Console Search Analytics API
   description: The Google Search Console API provides programmatic access to Search Console data. Query search analytics to understand how your site appears in Google Search results, manage sitemaps for efficient crawling, inspect individual URLs to check indexing status and crawl details, and manage site-level verification and permissions.
@@ -93,39 +93,69 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    DimensionFilter:
+    DimensionFilterGroup:
       type: object
-      description: A filter on a specific dimension.
-      required:
-      - dimension
-      - expression
+      description: A group of dimension filters applied to the query.
       properties:
-        dimension:
+        groupType:
           type: string
-          description: The dimension to filter on.
+          description: How filters within this group are combined.
           enum:
-          - query
-          - page
-          - country
-          - device
-          - searchAppearance
-          example: query
-        operator:
+          - and
+          default: and
+          example: and
+        filters:
+          type: array
+          description: Filters within this group.
+          items:
+            $ref: '#/components/schemas/DimensionFilter'
+          example: []
+    SearchAnalyticsQueryResponse:
+      type: object
+      description: Response for a search analytics query.
+      properties:
+        rows:
+          type: array
+          description: A list of rows grouped by the requested dimensions. Rows are ordered by click count descending. If no data is available for the specified date range and filters, this field is omitted.
+          items:
+            $ref: '#/components/schemas/SearchAnalyticsRow'
+          example: []
+        responseAggregationType:
           type: string
-          description: How to filter. The contains operator performs a case-insensitive substring match. The equals operator performs a case-sensitive exact match. The notContains and notEquals operators are the negations of contains and equals respectively. The includingRegex and excludingRegex operators use RE2 syntax.
+          description: How the results were aggregated.
           enum:
-          - contains
-          - equals
-          - notContains
-          - notEquals
-          - includingRegex
-          - excludingRegex
-          default: equals
-          example: contains
-        expression:
-          type: string
-          description: The value to filter on. For country, use the 3-letter country code (ISO 3166-1 alpha-3). For device, use DESKTOP, MOBILE, or TABLET.
-          example: example_value
+          - auto
+          - byPage
+          - byProperty
+          example: auto
+    SearchAnalyticsRow:
+      type: object
+      description: A single row of search analytics data. Contains dimension keys and their associated metric values.
+      properties:
+        keys:
+          type: array
+          description: A list of dimension values for this row, in the same order as the dimensions specified in the request. For country, the value is a 3-letter country code. For device, the value is DESKTOP, MOBILE, or TABLET.
+          items:
+            type: string
+          example: []
+        clicks:
+          type: number
+          description: The number of clicks from Google Search results that landed on the property.
+          example: 42.5
+        impressions:
+          type: number
+          description: The number of times a link to the property appeared in search results and was seen by a user (not necessarily scrolled into view).
+          example: 42.5
+        ctr:
+          type: number
+          format: double
+          description: 'Click-through rate: the ratio of clicks to impressions, expressed as a decimal between 0 and 1.'
+          example: 42.5
+        position:
+          type: number
+          format: double
+          description: The average position of the property in search results, where 1 is the topmost position. The value is averaged across all queries and pages.
+          example: 42.5
     SearchAnalyticsQueryRequest:
       type: object
       description: Request body for querying search analytics data. Defines the date range, dimensions, filters, and aggregation type for the query.
@@ -204,69 +234,6 @@ components:
           - all
           default: final
           example: final
-    SearchAnalyticsQueryResponse:
-      type: object
-      description: Response for a search analytics query.
-      properties:
-        rows:
-          type: array
-          description: A list of rows grouped by the requested dimensions. Rows are ordered by click count descending. If no data is available for the specified date range and filters, this field is omitted.
-          items:
-            $ref: '#/components/schemas/SearchAnalyticsRow'
-          example: []
-        responseAggregationType:
-          type: string
-          description: How the results were aggregated.
-          enum:
-          - auto
-          - byPage
-          - byProperty
-          example: auto
-    SearchAnalyticsRow:
-      type: object
-      description: A single row of search analytics data. Contains dimension keys and their associated metric values.
-      properties:
-        keys:
-          type: array
-          description: A list of dimension values for this row, in the same order as the dimensions specified in the request. For country, the value is a 3-letter country code. For device, the value is DESKTOP, MOBILE, or TABLET.
-          items:
-            type: string
-          example: []
-        clicks:
-          type: number
-          description: The number of clicks from Google Search results that landed on the property.
-          example: 42.5
-        impressions:
-          type: number
-          description: The number of times a link to the property appeared in search results and was seen by a user (not necessarily scrolled into view).
-          example: 42.5
-        ctr:
-          type: number
-          format: double
-          description: 'Click-through rate: the ratio of clicks to impressions, expressed as a decimal between 0 and 1.'
-          example: 42.5
-        position:
-          type: number
-          format: double
-          description: The average position of the property in search results, where 1 is the topmost position. The value is averaged across all queries and pages.
-          example: 42.5
-    DimensionFilterGroup:
-      type: object
-      description: A group of dimension filters applied to the query.
-      properties:
-        groupType:
-          type: string
-          description: How filters within this group are combined.
-          enum:
-          - and
-          default: and
-          example: and
-        filters:
-          type: array
-          description: Filters within this group.
-          items:
-            $ref: '#/components/schemas/DimensionFilter'
-          example: []
     Error:
       type: object
       description: Standard Google API error response.
@@ -294,6 +261,39 @@ components:
                     type: string
                   reason:
                     type: string
+          example: example_value
+    DimensionFilter:
+      type: object
+      description: A filter on a specific dimension.
+      required:
+      - dimension
+      - expression
+      properties:
+        dimension:
+          type: string
+          description: The dimension to filter on.
+          enum:
+          - query
+          - page
+          - country
+          - device
+          - searchAppearance
+          example: query
+        operator:
+          type: string
+          description: How to filter. The contains operator performs a case-insensitive substring match. The equals operator performs a case-sensitive exact match. The notContains and notEquals operators are the negations of contains and equals respectively. The includingRegex and excludingRegex operators use RE2 syntax.
+          enum:
+          - contains
+          - equals
+          - notContains
+          - notEquals
+          - includingRegex
+          - excludingRegex
+          default: equals
+          example: contains
+        expression:
+          type: string
+          description: The value to filter on. For country, use the 3-letter country code (ISO 3166-1 alpha-3). For device, use DESKTOP, MOBILE, or TABLET.
           example: example_value
   parameters:
     SiteUrl:

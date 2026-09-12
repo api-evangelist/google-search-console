@@ -393,6 +393,8 @@ maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
 common:
+  - type: Website
+    url: https://www.google.com/
   - type: CapabilityMap
     url: capabilities/google-search-console-capability-edges.yml
     name: Google Search Console Business Capability Map
@@ -553,3 +555,5 @@ x-enrichment:
   status: enriched
   artifacts_added: 28
   pass: local-v1
+x-parent: google
+x-relationship: product

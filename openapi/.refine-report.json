@@ -1,20 +1,37 @@
 {
   "provider": "google-search-console",
   "sources": [
+    "google-search-console-indexing-api-openapi.yml",
     "google-search-console-search-analytics-api-openapi.yml",
     "google-search-console-sitemaps-api-openapi.yml",
     "google-search-console-sites-api-openapi.yml",
-    "google-search-console-url-inspection-api-openapi.yml"
+    "google-search-console-url-inspection-api-openapi.yml",
+    "google-search-console-url-testing-tools-api-openapi.yml"
   ],
   "outputs": [
+    "google-search-console-urlnotifications-api-openapi.yml",
     "google-search-console-search-analytics-api-openapi.yml",
     "google-search-console-sitemaps-api-openapi.yml",
     "google-search-console-sites-api-openapi.yml",
-    "google-search-console-url-inspection-api-openapi.yml"
+    "google-search-console-url-inspection-api-openapi.yml",
+    "google-search-console-urltestingtools-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "archived openapi/google-search-console-indexing-api-openapi.yml",
+    "archived openapi/google-search-console-url-testing-tools-api-openapi.yml"
+  ],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "google-search-console-indexing-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "google-search-console-indexing-api-openapi.yml: declared missing tag: urlNotifications",
+    "google-search-console-search-analytics-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "google-search-console-sitemaps-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "google-search-console-sites-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "google-search-console-url-inspection-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "google-search-console-url-testing-tools-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "google-search-console-url-testing-tools-api-openapi.yml: declared missing tag: urlTestingTools",
+    "apis.yml register: written (+2 apis, 6 total)"
+  ],
   "skipped": []
 }
