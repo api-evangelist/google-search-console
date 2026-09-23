@@ -87,48 +87,6 @@ paths:
       security: []
 components:
   schemas:
-    RunMobileFriendlyTestResponse:
-      type: object
-      properties:
-        testStatus:
-          $ref: '#/components/schemas/TestStatus'
-        screenshot:
-          $ref: '#/components/schemas/Image'
-        mobileFriendliness:
-          type: string
-          enum:
-          - MOBILE_FRIENDLY_TEST_RESULT_UNSPECIFIED
-          - MOBILE_FRIENDLY
-          - NOT_MOBILE_FRIENDLY
-          description: Test verdict, whether the page is mobile friendly or not.
-          x-enum-descriptions:
-            MOBILE_FRIENDLY_TEST_RESULT_UNSPECIFIED: Internal error when running this test. Please try running the test again.
-            MOBILE_FRIENDLY: The page is mobile friendly.
-            NOT_MOBILE_FRIENDLY: The page is not mobile friendly.
-        mobileFriendlyIssues:
-          type: array
-          items:
-            $ref: '#/components/schemas/MobileFriendlyIssue'
-          description: List of mobile-usability issues.
-        resourceIssues:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceIssue'
-          description: Information about embedded resources issues.
-      description: Mobile-friendly test response, including mobile-friendly issues and resource issues.
-    BlockedResource:
-      type: object
-      properties:
-        url:
-          type: string
-          description: URL of the blocked resource.
-      description: Blocked resource.
-    ResourceIssue:
-      type: object
-      properties:
-        blockedResource:
-          $ref: '#/components/schemas/BlockedResource'
-      description: Information about a resource with issue.
     GoogleApiError:
       type: object
       description: Standard Google API JSON error envelope. See https://developers.google.com/webmaster-tools/v1/errors
@@ -168,6 +126,71 @@ components:
           format: byte
           description: Image data in format determined by the mime type. Currently, the format will always be "image/png", but this might change in the future.
       description: Describe image data.
+    RunMobileFriendlyTestRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL for inspection.
+        requestScreenshot:
+          type: boolean
+          description: Whether or not screenshot is requested. Default is false.
+      description: Mobile-friendly test request.
+    TestStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - TEST_STATUS_UNSPECIFIED
+          - COMPLETE
+          - INTERNAL_ERROR
+          - PAGE_UNREACHABLE
+          description: Status of the test.
+          x-enum-descriptions:
+            TEST_STATUS_UNSPECIFIED: Internal error when running this test. Please try running the test again.
+            COMPLETE: Inspection has completed without errors.
+            INTERNAL_ERROR: Inspection terminated in an error state. This indicates a problem in Google's infrastructure, not a user error. Please try again later.
+            PAGE_UNREACHABLE: Google can not access the URL because of a user error such as a robots.txt blockage, a 403 or 500 code etc. Please make sure that the URL provided is accessible by Googlebot and is not password protected.
+        details:
+          type: string
+          description: Error details if applicable.
+      description: Final state of the test, including error details if necessary.
+    ResourceIssue:
+      type: object
+      properties:
+        blockedResource:
+          $ref: '#/components/schemas/BlockedResource'
+      description: Information about a resource with issue.
+    RunMobileFriendlyTestResponse:
+      type: object
+      properties:
+        testStatus:
+          $ref: '#/components/schemas/TestStatus'
+        screenshot:
+          $ref: '#/components/schemas/Image'
+        mobileFriendliness:
+          type: string
+          enum:
+          - MOBILE_FRIENDLY_TEST_RESULT_UNSPECIFIED
+          - MOBILE_FRIENDLY
+          - NOT_MOBILE_FRIENDLY
+          description: Test verdict, whether the page is mobile friendly or not.
+          x-enum-descriptions:
+            MOBILE_FRIENDLY_TEST_RESULT_UNSPECIFIED: Internal error when running this test. Please try running the test again.
+            MOBILE_FRIENDLY: The page is mobile friendly.
+            NOT_MOBILE_FRIENDLY: The page is not mobile friendly.
+        mobileFriendlyIssues:
+          type: array
+          items:
+            $ref: '#/components/schemas/MobileFriendlyIssue'
+          description: List of mobile-usability issues.
+        resourceIssues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceIssue'
+          description: Information about embedded resources issues.
+      description: Mobile-friendly test response, including mobile-friendly issues and resource issues.
     MobileFriendlyIssue:
       type: object
       properties:
@@ -191,36 +214,13 @@ components:
             USE_LEGIBLE_FONT_SIZES: Font size is too small for easy reading on a small screen. [Learn More] (https://support.google.com/webmasters/answer/6352293#small_font_size).
             TAP_TARGETS_TOO_CLOSE: Touch elements are too close to each other. [Learn more] (https://support.google.com/webmasters/answer/6352293#touch_elements_too_close).
       description: Mobile-friendly issue.
-    TestStatus:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - TEST_STATUS_UNSPECIFIED
-          - COMPLETE
-          - INTERNAL_ERROR
-          - PAGE_UNREACHABLE
-          description: Status of the test.
-          x-enum-descriptions:
-            TEST_STATUS_UNSPECIFIED: Internal error when running this test. Please try running the test again.
-            COMPLETE: Inspection has completed without errors.
-            INTERNAL_ERROR: Inspection terminated in an error state. This indicates a problem in Google's infrastructure, not a user error. Please try again later.
-            PAGE_UNREACHABLE: Google can not access the URL because of a user error such as a robots.txt blockage, a 403 or 500 code etc. Please make sure that the URL provided is accessible by Googlebot and is not password protected.
-        details:
-          type: string
-          description: Error details if applicable.
-      description: Final state of the test, including error details if necessary.
-    RunMobileFriendlyTestRequest:
+    BlockedResource:
       type: object
       properties:
         url:
           type: string
-          description: URL for inspection.
-        requestScreenshot:
-          type: boolean
-          description: Whether or not screenshot is requested. Default is false.
-      description: Mobile-friendly test request.
+          description: URL of the blocked resource.
+      description: Blocked resource.
   securitySchemes:
     OAuth2:
       type: oauth2

@@ -154,12 +154,6 @@ paths:
         - https://www.googleapis.com/auth/indexing
 components:
   schemas:
-    PublishUrlNotificationResponse:
-      type: object
-      properties:
-        urlNotificationMetadata:
-          $ref: '#/components/schemas/UrlNotificationMetadata'
-      description: Output for PublishUrlNotification
     GoogleApiError:
       type: object
       description: Standard Google API JSON error envelope. See https://developers.google.com/webmaster-tools/v1/errors
@@ -220,6 +214,12 @@ components:
         latestUpdate:
           $ref: '#/components/schemas/UrlNotification'
       description: Summary of the most recent Indexing API notifications successfully received, for a given URL.
+    PublishUrlNotificationResponse:
+      type: object
+      properties:
+        urlNotificationMetadata:
+          $ref: '#/components/schemas/UrlNotificationMetadata'
+      description: Output for PublishUrlNotification
   securitySchemes:
     OAuth2:
       type: oauth2

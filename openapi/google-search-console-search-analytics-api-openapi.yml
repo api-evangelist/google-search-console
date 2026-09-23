@@ -74,8 +74,8 @@ paths:
         dispatcher: FALLBACK
 components:
   responses:
-    Forbidden:
-      description: Insufficient permissions for the requested operation.
+    BadRequest:
+      description: The request was invalid or cannot be served.
       content:
         application/json:
           schema:
@@ -86,76 +86,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was invalid or cannot be served.
+    Forbidden:
+      description: Insufficient permissions for the requested operation.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    DimensionFilterGroup:
-      type: object
-      description: A group of dimension filters applied to the query.
-      properties:
-        groupType:
-          type: string
-          description: How filters within this group are combined.
-          enum:
-          - and
-          default: and
-          example: and
-        filters:
-          type: array
-          description: Filters within this group.
-          items:
-            $ref: '#/components/schemas/DimensionFilter'
-          example: []
-    SearchAnalyticsQueryResponse:
-      type: object
-      description: Response for a search analytics query.
-      properties:
-        rows:
-          type: array
-          description: A list of rows grouped by the requested dimensions. Rows are ordered by click count descending. If no data is available for the specified date range and filters, this field is omitted.
-          items:
-            $ref: '#/components/schemas/SearchAnalyticsRow'
-          example: []
-        responseAggregationType:
-          type: string
-          description: How the results were aggregated.
-          enum:
-          - auto
-          - byPage
-          - byProperty
-          example: auto
-    SearchAnalyticsRow:
-      type: object
-      description: A single row of search analytics data. Contains dimension keys and their associated metric values.
-      properties:
-        keys:
-          type: array
-          description: A list of dimension values for this row, in the same order as the dimensions specified in the request. For country, the value is a 3-letter country code. For device, the value is DESKTOP, MOBILE, or TABLET.
-          items:
-            type: string
-          example: []
-        clicks:
-          type: number
-          description: The number of clicks from Google Search results that landed on the property.
-          example: 42.5
-        impressions:
-          type: number
-          description: The number of times a link to the property appeared in search results and was seen by a user (not necessarily scrolled into view).
-          example: 42.5
-        ctr:
-          type: number
-          format: double
-          description: 'Click-through rate: the ratio of clicks to impressions, expressed as a decimal between 0 and 1.'
-          example: 42.5
-        position:
-          type: number
-          format: double
-          description: The average position of the property in search results, where 1 is the topmost position. The value is averaged across all queries and pages.
-          example: 42.5
     SearchAnalyticsQueryRequest:
       type: object
       description: Request body for querying search analytics data. Defines the date range, dimensions, filters, and aggregation type for the query.
@@ -234,34 +171,52 @@ components:
           - all
           default: final
           example: final
-    Error:
+    SearchAnalyticsQueryResponse:
       type: object
-      description: Standard Google API error response.
+      description: Response for a search analytics query.
       properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              description: HTTP status code.
-            message:
-              type: string
-              description: A human-readable error message.
-            status:
-              type: string
-              description: The status code string (e.g., INVALID_ARGUMENT).
-            errors:
-              type: array
-              items:
-                type: object
-                properties:
-                  message:
-                    type: string
-                  domain:
-                    type: string
-                  reason:
-                    type: string
-          example: example_value
+        rows:
+          type: array
+          description: A list of rows grouped by the requested dimensions. Rows are ordered by click count descending. If no data is available for the specified date range and filters, this field is omitted.
+          items:
+            $ref: '#/components/schemas/SearchAnalyticsRow'
+          example: []
+        responseAggregationType:
+          type: string
+          description: How the results were aggregated.
+          enum:
+          - auto
+          - byPage
+          - byProperty
+          example: auto
+    SearchAnalyticsRow:
+      type: object
+      description: A single row of search analytics data. Contains dimension keys and their associated metric values.
+      properties:
+        keys:
+          type: array
+          description: A list of dimension values for this row, in the same order as the dimensions specified in the request. For country, the value is a 3-letter country code. For device, the value is DESKTOP, MOBILE, or TABLET.
+          items:
+            type: string
+          example: []
+        clicks:
+          type: number
+          description: The number of clicks from Google Search results that landed on the property.
+          example: 42.5
+        impressions:
+          type: number
+          description: The number of times a link to the property appeared in search results and was seen by a user (not necessarily scrolled into view).
+          example: 42.5
+        ctr:
+          type: number
+          format: double
+          description: 'Click-through rate: the ratio of clicks to impressions, expressed as a decimal between 0 and 1.'
+          example: 42.5
+        position:
+          type: number
+          format: double
+          description: The average position of the property in search results, where 1 is the topmost position. The value is averaged across all queries and pages.
+          example: 42.5
     DimensionFilter:
       type: object
       description: A filter on a specific dimension.
@@ -295,6 +250,51 @@ components:
           type: string
           description: The value to filter on. For country, use the 3-letter country code (ISO 3166-1 alpha-3). For device, use DESKTOP, MOBILE, or TABLET.
           example: example_value
+    Error:
+      type: object
+      description: Standard Google API error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: HTTP status code.
+            message:
+              type: string
+              description: A human-readable error message.
+            status:
+              type: string
+              description: The status code string (e.g., INVALID_ARGUMENT).
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  domain:
+                    type: string
+                  reason:
+                    type: string
+          example: example_value
+    DimensionFilterGroup:
+      type: object
+      description: A group of dimension filters applied to the query.
+      properties:
+        groupType:
+          type: string
+          description: How filters within this group are combined.
+          enum:
+          - and
+          default: and
+          example: and
+        filters:
+          type: array
+          description: Filters within this group.
+          items:
+            $ref: '#/components/schemas/DimensionFilter'
+          example: []
   parameters:
     SiteUrl:
       name: siteUrl

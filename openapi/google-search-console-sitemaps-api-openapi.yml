@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Google Search Console Search Analytics Sitemaps API
+  title: Google Search Console Sitemaps API
   description: The Google Search Console API provides programmatic access to Search Console data. Query search analytics to understand how your site appears in Google Search results, manage sitemaps for efficient crawling, inspect individual URLs to check indexing status and crawl details, and manage site-level verification and permissions.
   version: v1
   contact:
@@ -158,6 +158,31 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    BadRequest:
+      description: The request was invalid or cannot be served.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required or invalid credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Insufficient permissions for the requested operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     SitemapsListResponse:
       type: object
@@ -169,34 +194,6 @@ components:
           items:
             $ref: '#/components/schemas/WmxSitemap'
           example: []
-    WmxSitemapContent:
-      type: object
-      description: Content type information within a sitemap.
-      properties:
-        type:
-          type: string
-          description: The type of content in this sitemap segment.
-          enum:
-          - web
-          - image
-          - video
-          - news
-          - mobile
-          - androidApp
-          - pattern
-          - iosApp
-          - dataFeedElement
-          example: web
-        submitted:
-          type: integer
-          format: int64
-          description: The number of URLs of this type submitted in the sitemap.
-          example: 10
-        indexed:
-          type: integer
-          format: int64
-          description: The number of URLs of this type that have been indexed by Google.
-          example: 10
     WmxSitemap:
       type: object
       description: Information about a sitemap submitted to Search Console. Includes processing status, error counts, and content details.
@@ -249,6 +246,34 @@ components:
           items:
             $ref: '#/components/schemas/WmxSitemapContent'
           example: []
+    WmxSitemapContent:
+      type: object
+      description: Content type information within a sitemap.
+      properties:
+        type:
+          type: string
+          description: The type of content in this sitemap segment.
+          enum:
+          - web
+          - image
+          - video
+          - news
+          - mobile
+          - androidApp
+          - pattern
+          - iosApp
+          - dataFeedElement
+          example: web
+        submitted:
+          type: integer
+          format: int64
+          description: The number of URLs of this type submitted in the sitemap.
+          example: 10
+        indexed:
+          type: integer
+          format: int64
+          description: The number of URLs of this type that have been indexed by Google.
+          example: 10
     Error:
       type: object
       description: Standard Google API error response.
@@ -277,32 +302,15 @@ components:
                   reason:
                     type: string
           example: example_value
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Insufficient permissions for the requested operation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required or invalid credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was invalid or cannot be served.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
+    SiteUrl:
+      name: siteUrl
+      in: path
+      required: true
+      description: The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded.
+      schema:
+        type: string
+      example: https://example.com/
     Feedpath:
       name: feedpath
       in: path
@@ -312,14 +320,6 @@ components:
         type: string
         format: uri
       example: https://example.com/sitemap.xml
-    SiteUrl:
-      name: siteUrl
-      in: path
-      required: true
-      description: The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded.
-      schema:
-        type: string
-      example: https://example.com/
   securitySchemes:
     OAuth2:
       type: oauth2

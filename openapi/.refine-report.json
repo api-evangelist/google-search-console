@@ -1,37 +1,36 @@
 {
   "provider": "google-search-console",
   "sources": [
-    "google-search-console-indexing-api-openapi.yml",
-    "google-search-console-search-analytics-api-openapi.yml",
-    "google-search-console-sitemaps-api-openapi.yml",
-    "google-search-console-sites-api-openapi.yml",
-    "google-search-console-url-inspection-api-openapi.yml",
-    "google-search-console-url-testing-tools-api-openapi.yml"
+    "_original/google-search-console-api-openapi.yml",
+    "_original/google-search-console-indexing-api-openapi.yml",
+    "_original/google-search-console-url-testing-tools-api-openapi.yml"
   ],
   "outputs": [
-    "google-search-console-urlnotifications-api-openapi.yml",
     "google-search-console-search-analytics-api-openapi.yml",
     "google-search-console-sitemaps-api-openapi.yml",
     "google-search-console-sites-api-openapi.yml",
     "google-search-console-url-inspection-api-openapi.yml",
+    "google-search-console-urlnotifications-api-openapi.yml",
     "google-search-console-urltestingtools-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/google-search-console-indexing-api-openapi.yml",
-    "archived openapi/google-search-console-url-testing-tools-api-openapi.yml"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (3 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "google-search-console-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "google-search-console-indexing-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "google-search-console-indexing-api-openapi.yml: declared missing tag: urlNotifications",
-    "google-search-console-search-analytics-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "google-search-console-sitemaps-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "google-search-console-sites-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "google-search-console-url-inspection-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "google-search-console-url-testing-tools-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "google-search-console-url-testing-tools-api-openapi.yml: declared missing tag: urlTestingTools",
-    "apis.yml register: written (+2 apis, 6 total)"
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "google-search-console-search-analytics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "google-search-console-sitemaps-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "google-search-console-sites-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "google-search-console-url-inspection-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "google-search-console-urlnotifications-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "google-search-console-urltestingtools-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
