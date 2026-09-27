@@ -154,6 +154,44 @@ paths:
         - https://www.googleapis.com/auth/indexing
 components:
   schemas:
+    UrlNotificationMetadata:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL to which this metadata refers.
+        latestRemove:
+          $ref: '#/components/schemas/UrlNotification'
+        latestUpdate:
+          $ref: '#/components/schemas/UrlNotification'
+      description: Summary of the most recent Indexing API notifications successfully received, for a given URL.
+    PublishUrlNotificationResponse:
+      type: object
+      properties:
+        urlNotificationMetadata:
+          $ref: '#/components/schemas/UrlNotificationMetadata'
+      description: Output for PublishUrlNotification
+    UrlNotification:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - URL_NOTIFICATION_TYPE_UNSPECIFIED
+          - URL_UPDATED
+          - URL_DELETED
+          description: The URL life cycle event that Google is being notified about.
+          x-enum-descriptions:
+            URL_NOTIFICATION_TYPE_UNSPECIFIED: Unspecified.
+            URL_UPDATED: The given URL (Web document) has been updated.
+            URL_DELETED: The given URL (Web document) has been deleted.
+        url:
+          type: string
+          description: The object of this notification. The URL must be owned by the publisher of this notification and, in case of `URL_UPDATED` notifications, it _must_ be crawlable by Google.
+        notifyTime:
+          type: string
+          description: Creation timestamp for this notification. Users should _not_ specify it, the field is ignored at the request time.
+      description: '`UrlNotification` is the resource used in all Indexing API calls. It describes one event in the life cycle of a Web Document.'
     GoogleApiError:
       type: object
       description: Standard Google API JSON error envelope. See https://developers.google.com/webmaster-tools/v1/errors
@@ -182,44 +220,6 @@ components:
                     type: string
                   location:
                     type: string
-    UrlNotification:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - URL_NOTIFICATION_TYPE_UNSPECIFIED
-          - URL_UPDATED
-          - URL_DELETED
-          description: The URL life cycle event that Google is being notified about.
-          x-enum-descriptions:
-            URL_NOTIFICATION_TYPE_UNSPECIFIED: Unspecified.
-            URL_UPDATED: The given URL (Web document) has been updated.
-            URL_DELETED: The given URL (Web document) has been deleted.
-        url:
-          type: string
-          description: The object of this notification. The URL must be owned by the publisher of this notification and, in case of `URL_UPDATED` notifications, it _must_ be crawlable by Google.
-        notifyTime:
-          type: string
-          description: Creation timestamp for this notification. Users should _not_ specify it, the field is ignored at the request time.
-      description: '`UrlNotification` is the resource used in all Indexing API calls. It describes one event in the life cycle of a Web Document.'
-    UrlNotificationMetadata:
-      type: object
-      properties:
-        url:
-          type: string
-          description: URL to which this metadata refers.
-        latestRemove:
-          $ref: '#/components/schemas/UrlNotification'
-        latestUpdate:
-          $ref: '#/components/schemas/UrlNotification'
-      description: Summary of the most recent Indexing API notifications successfully received, for a given URL.
-    PublishUrlNotificationResponse:
-      type: object
-      properties:
-        urlNotificationMetadata:
-          $ref: '#/components/schemas/UrlNotificationMetadata'
-      description: Output for PublishUrlNotification
   securitySchemes:
     OAuth2:
       type: oauth2

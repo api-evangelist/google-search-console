@@ -73,25 +73,6 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  responses:
-    BadRequest:
-      description: The request was invalid or cannot be served.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required or invalid credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Insufficient permissions for the requested operation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     SearchAnalyticsQueryRequest:
       type: object
@@ -189,6 +170,51 @@ components:
           - byPage
           - byProperty
           example: auto
+    DimensionFilterGroup:
+      type: object
+      description: A group of dimension filters applied to the query.
+      properties:
+        groupType:
+          type: string
+          description: How filters within this group are combined.
+          enum:
+          - and
+          default: and
+          example: and
+        filters:
+          type: array
+          description: Filters within this group.
+          items:
+            $ref: '#/components/schemas/DimensionFilter'
+          example: []
+    Error:
+      type: object
+      description: Standard Google API error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: HTTP status code.
+            message:
+              type: string
+              description: A human-readable error message.
+            status:
+              type: string
+              description: The status code string (e.g., INVALID_ARGUMENT).
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  domain:
+                    type: string
+                  reason:
+                    type: string
+          example: example_value
     SearchAnalyticsRow:
       type: object
       description: A single row of search analytics data. Contains dimension keys and their associated metric values.
@@ -250,51 +276,25 @@ components:
           type: string
           description: The value to filter on. For country, use the 3-letter country code (ISO 3166-1 alpha-3). For device, use DESKTOP, MOBILE, or TABLET.
           example: example_value
-    Error:
-      type: object
-      description: Standard Google API error response.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              description: HTTP status code.
-            message:
-              type: string
-              description: A human-readable error message.
-            status:
-              type: string
-              description: The status code string (e.g., INVALID_ARGUMENT).
-            errors:
-              type: array
-              items:
-                type: object
-                properties:
-                  message:
-                    type: string
-                  domain:
-                    type: string
-                  reason:
-                    type: string
-          example: example_value
-    DimensionFilterGroup:
-      type: object
-      description: A group of dimension filters applied to the query.
-      properties:
-        groupType:
-          type: string
-          description: How filters within this group are combined.
-          enum:
-          - and
-          default: and
-          example: and
-        filters:
-          type: array
-          description: Filters within this group.
-          items:
-            $ref: '#/components/schemas/DimensionFilter'
-          example: []
+  responses:
+    Unauthorized:
+      description: Authentication required or invalid credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Insufficient permissions for the requested operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was invalid or cannot be served.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     SiteUrl:
       name: siteUrl
