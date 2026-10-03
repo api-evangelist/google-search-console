@@ -64,60 +64,20 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    MobileUsabilityInspectionResult:
+    Item:
       type: object
-      description: Mobile usability inspection results for a URL.
+      description: A single detected rich result item.
       properties:
-        verdict:
+        name:
           type: string
-          description: The overall mobile usability verdict.
-          enum:
-          - VERDICT_UNSPECIFIED
-          - PASS
-          - PARTIAL
-          - FAIL
-          - NEUTRAL
-          example: VERDICT_UNSPECIFIED
+          description: The name or identifier of the rich result item.
+          example: Example Title
         issues:
           type: array
-          description: A list of mobile usability issues found.
+          description: Issues found with this rich result item.
           items:
-            $ref: '#/components/schemas/MobileUsabilityIssue'
+            $ref: '#/components/schemas/RichResultsIssue'
           example: []
-    MobileUsabilityIssue:
-      type: object
-      description: A specific mobile usability issue.
-      properties:
-        issueType:
-          type: string
-          description: The type of mobile usability issue.
-          enum:
-          - MOBILE_USABILITY_ISSUE_TYPE_UNSPECIFIED
-          - USES_INCOMPATIBLE_PLUGINS
-          - CONFIGURE_VIEWPORT
-          - FIXED_WIDTH_VIEWPORT
-          - SIZE_CONTENT_TO_VIEWPORT
-          - USE_LEGIBLE_FONT_SIZES
-          - TAP_TARGETS_TOO_CLOSE
-          example: MOBILE_USABILITY_ISSUE_TYPE_UNSPECIFIED
-        severity:
-          type: string
-          description: The severity of the issue.
-          enum:
-          - SEVERITY_UNSPECIFIED
-          - WARNING
-          - ERROR
-          example: SEVERITY_UNSPECIFIED
-        message:
-          type: string
-          description: A human-readable description of the issue.
-          example: example_value
-    InspectUrlIndexResponse:
-      type: object
-      description: Response from the URL Inspection API.
-      properties:
-        inspectionResult:
-          $ref: '#/components/schemas/UrlInspectionResult'
     UrlInspectionResult:
       type: object
       description: The aggregated inspection result for a URL, including index status, crawl information, mobile usability, and rich results.
@@ -133,6 +93,32 @@ components:
           $ref: '#/components/schemas/MobileUsabilityInspectionResult'
         richResultsResult:
           $ref: '#/components/schemas/RichResultsInspectionResult'
+    InspectUrlIndexResponse:
+      type: object
+      description: Response from the URL Inspection API.
+      properties:
+        inspectionResult:
+          $ref: '#/components/schemas/UrlInspectionResult'
+    RichResultsIssue:
+      type: object
+      description: A specific issue with a rich result item.
+      properties:
+        issueType:
+          type: string
+          description: The type identifier for this issue.
+          example: example_value
+        severity:
+          type: string
+          description: The severity of the issue.
+          enum:
+          - SEVERITY_UNSPECIFIED
+          - WARNING
+          - ERROR
+          example: SEVERITY_UNSPECIFIED
+        issueMessage:
+          type: string
+          description: A human-readable description of the issue.
+          example: example_value
     InspectUrlIndexRequest:
       type: object
       description: Request body for the URL Inspection API.
@@ -153,25 +139,19 @@ components:
           type: string
           description: Optional BCP-47 language code for the response. If not specified, the response will be in English.
           example: en-US
-    RichResultsInspectionResult:
+    DetectedItems:
       type: object
-      description: Rich results inspection results for a URL.
+      description: A group of detected rich result items of a single type.
       properties:
-        verdict:
+        richResultType:
           type: string
-          description: The overall rich results verdict.
-          enum:
-          - VERDICT_UNSPECIFIED
-          - PASS
-          - PARTIAL
-          - FAIL
-          - NEUTRAL
-          example: VERDICT_UNSPECIFIED
-        detectedItems:
+          description: The rich result type detected (e.g., Product, Recipe, FAQ, BreadcrumbList, Article).
+          example: example_value
+        items:
           type: array
-          description: A list of detected rich result item types and their status.
+          description: The individual detected items of this type.
           items:
-            $ref: '#/components/schemas/DetectedItems'
+            $ref: '#/components/schemas/Item'
           example: []
     Error:
       type: object
@@ -201,53 +181,25 @@ components:
                   reason:
                     type: string
           example: example_value
-    RichResultsIssue:
+    MobileUsabilityInspectionResult:
       type: object
-      description: A specific issue with a rich result item.
+      description: Mobile usability inspection results for a URL.
       properties:
-        issueType:
+        verdict:
           type: string
-          description: The type identifier for this issue.
-          example: example_value
-        severity:
-          type: string
-          description: The severity of the issue.
+          description: The overall mobile usability verdict.
           enum:
-          - SEVERITY_UNSPECIFIED
-          - WARNING
-          - ERROR
-          example: SEVERITY_UNSPECIFIED
-        issueMessage:
-          type: string
-          description: A human-readable description of the issue.
-          example: example_value
-    Item:
-      type: object
-      description: A single detected rich result item.
-      properties:
-        name:
-          type: string
-          description: The name or identifier of the rich result item.
-          example: Example Title
+          - VERDICT_UNSPECIFIED
+          - PASS
+          - PARTIAL
+          - FAIL
+          - NEUTRAL
+          example: VERDICT_UNSPECIFIED
         issues:
           type: array
-          description: Issues found with this rich result item.
+          description: A list of mobile usability issues found.
           items:
-            $ref: '#/components/schemas/RichResultsIssue'
-          example: []
-    DetectedItems:
-      type: object
-      description: A group of detected rich result items of a single type.
-      properties:
-        richResultType:
-          type: string
-          description: The rich result type detected (e.g., Product, Recipe, FAQ, BreadcrumbList, Article).
-          example: example_value
-        items:
-          type: array
-          description: The individual detected items of this type.
-          items:
-            $ref: '#/components/schemas/Item'
+            $ref: '#/components/schemas/MobileUsabilityIssue'
           example: []
     IndexStatusInspectionResult:
       type: object
@@ -339,15 +291,63 @@ components:
           - DESKTOP
           - MOBILE
           example: CRAWLING_USER_AGENT_UNSPECIFIED
+    RichResultsInspectionResult:
+      type: object
+      description: Rich results inspection results for a URL.
+      properties:
+        verdict:
+          type: string
+          description: The overall rich results verdict.
+          enum:
+          - VERDICT_UNSPECIFIED
+          - PASS
+          - PARTIAL
+          - FAIL
+          - NEUTRAL
+          example: VERDICT_UNSPECIFIED
+        detectedItems:
+          type: array
+          description: A list of detected rich result item types and their status.
+          items:
+            $ref: '#/components/schemas/DetectedItems'
+          example: []
+    MobileUsabilityIssue:
+      type: object
+      description: A specific mobile usability issue.
+      properties:
+        issueType:
+          type: string
+          description: The type of mobile usability issue.
+          enum:
+          - MOBILE_USABILITY_ISSUE_TYPE_UNSPECIFIED
+          - USES_INCOMPATIBLE_PLUGINS
+          - CONFIGURE_VIEWPORT
+          - FIXED_WIDTH_VIEWPORT
+          - SIZE_CONTENT_TO_VIEWPORT
+          - USE_LEGIBLE_FONT_SIZES
+          - TAP_TARGETS_TOO_CLOSE
+          example: MOBILE_USABILITY_ISSUE_TYPE_UNSPECIFIED
+        severity:
+          type: string
+          description: The severity of the issue.
+          enum:
+          - SEVERITY_UNSPECIFIED
+          - WARNING
+          - ERROR
+          example: SEVERITY_UNSPECIFIED
+        message:
+          type: string
+          description: A human-readable description of the issue.
+          example: example_value
   responses:
-    TooManyRequests:
-      description: Rate limit exceeded. Retry after the specified delay.
+    Unauthorized:
+      description: Authentication required or invalid credentials.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required or invalid credentials.
+    BadRequest:
+      description: The request was invalid or cannot be served.
       content:
         application/json:
           schema:
@@ -358,8 +358,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was invalid or cannot be served.
+    TooManyRequests:
+      description: Rate limit exceeded. Retry after the specified delay.
       content:
         application/json:
           schema:

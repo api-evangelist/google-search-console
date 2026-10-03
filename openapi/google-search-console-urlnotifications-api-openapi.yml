@@ -165,12 +165,6 @@ components:
         latestUpdate:
           $ref: '#/components/schemas/UrlNotification'
       description: Summary of the most recent Indexing API notifications successfully received, for a given URL.
-    PublishUrlNotificationResponse:
-      type: object
-      properties:
-        urlNotificationMetadata:
-          $ref: '#/components/schemas/UrlNotificationMetadata'
-      description: Output for PublishUrlNotification
     UrlNotification:
       type: object
       properties:
@@ -192,6 +186,12 @@ components:
           type: string
           description: Creation timestamp for this notification. Users should _not_ specify it, the field is ignored at the request time.
       description: '`UrlNotification` is the resource used in all Indexing API calls. It describes one event in the life cycle of a Web Document.'
+    PublishUrlNotificationResponse:
+      type: object
+      properties:
+        urlNotificationMetadata:
+          $ref: '#/components/schemas/UrlNotificationMetadata'
+      description: Output for PublishUrlNotification
     GoogleApiError:
       type: object
       description: Standard Google API JSON error envelope. See https://developers.google.com/webmaster-tools/v1/errors
