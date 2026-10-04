@@ -73,6 +73,25 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    Forbidden:
+      description: Insufficient permissions for the requested operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was invalid or cannot be served.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required or invalid credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     DimensionFilterGroup:
       type: object
@@ -91,67 +110,6 @@ components:
           items:
             $ref: '#/components/schemas/DimensionFilter'
           example: []
-    SearchAnalyticsRow:
-      type: object
-      description: A single row of search analytics data. Contains dimension keys and their associated metric values.
-      properties:
-        keys:
-          type: array
-          description: A list of dimension values for this row, in the same order as the dimensions specified in the request. For country, the value is a 3-letter country code. For device, the value is DESKTOP, MOBILE, or TABLET.
-          items:
-            type: string
-          example: []
-        clicks:
-          type: number
-          description: The number of clicks from Google Search results that landed on the property.
-          example: 42.5
-        impressions:
-          type: number
-          description: The number of times a link to the property appeared in search results and was seen by a user (not necessarily scrolled into view).
-          example: 42.5
-        ctr:
-          type: number
-          format: double
-          description: 'Click-through rate: the ratio of clicks to impressions, expressed as a decimal between 0 and 1.'
-          example: 42.5
-        position:
-          type: number
-          format: double
-          description: The average position of the property in search results, where 1 is the topmost position. The value is averaged across all queries and pages.
-          example: 42.5
-    DimensionFilter:
-      type: object
-      description: A filter on a specific dimension.
-      required:
-      - dimension
-      - expression
-      properties:
-        dimension:
-          type: string
-          description: The dimension to filter on.
-          enum:
-          - query
-          - page
-          - country
-          - device
-          - searchAppearance
-          example: query
-        operator:
-          type: string
-          description: How to filter. The contains operator performs a case-insensitive substring match. The equals operator performs a case-sensitive exact match. The notContains and notEquals operators are the negations of contains and equals respectively. The includingRegex and excludingRegex operators use RE2 syntax.
-          enum:
-          - contains
-          - equals
-          - notContains
-          - notEquals
-          - includingRegex
-          - excludingRegex
-          default: equals
-          example: contains
-        expression:
-          type: string
-          description: The value to filter on. For country, use the 3-letter country code (ISO 3166-1 alpha-3). For device, use DESKTOP, MOBILE, or TABLET.
-          example: example_value
     Error:
       type: object
       description: Standard Google API error response.
@@ -180,6 +138,24 @@ components:
                   reason:
                     type: string
           example: example_value
+    SearchAnalyticsQueryResponse:
+      type: object
+      description: Response for a search analytics query.
+      properties:
+        rows:
+          type: array
+          description: A list of rows grouped by the requested dimensions. Rows are ordered by click count descending. If no data is available for the specified date range and filters, this field is omitted.
+          items:
+            $ref: '#/components/schemas/SearchAnalyticsRow'
+          example: []
+        responseAggregationType:
+          type: string
+          description: How the results were aggregated.
+          enum:
+          - auto
+          - byPage
+          - byProperty
+          example: auto
     SearchAnalyticsQueryRequest:
       type: object
       description: Request body for querying search analytics data. Defines the date range, dimensions, filters, and aggregation type for the query.
@@ -258,24 +234,67 @@ components:
           - all
           default: final
           example: final
-    SearchAnalyticsQueryResponse:
+    DimensionFilter:
       type: object
-      description: Response for a search analytics query.
+      description: A filter on a specific dimension.
+      required:
+      - dimension
+      - expression
       properties:
-        rows:
-          type: array
-          description: A list of rows grouped by the requested dimensions. Rows are ordered by click count descending. If no data is available for the specified date range and filters, this field is omitted.
-          items:
-            $ref: '#/components/schemas/SearchAnalyticsRow'
-          example: []
-        responseAggregationType:
+        dimension:
           type: string
-          description: How the results were aggregated.
+          description: The dimension to filter on.
           enum:
-          - auto
-          - byPage
-          - byProperty
-          example: auto
+          - query
+          - page
+          - country
+          - device
+          - searchAppearance
+          example: query
+        operator:
+          type: string
+          description: How to filter. The contains operator performs a case-insensitive substring match. The equals operator performs a case-sensitive exact match. The notContains and notEquals operators are the negations of contains and equals respectively. The includingRegex and excludingRegex operators use RE2 syntax.
+          enum:
+          - contains
+          - equals
+          - notContains
+          - notEquals
+          - includingRegex
+          - excludingRegex
+          default: equals
+          example: contains
+        expression:
+          type: string
+          description: The value to filter on. For country, use the 3-letter country code (ISO 3166-1 alpha-3). For device, use DESKTOP, MOBILE, or TABLET.
+          example: example_value
+    SearchAnalyticsRow:
+      type: object
+      description: A single row of search analytics data. Contains dimension keys and their associated metric values.
+      properties:
+        keys:
+          type: array
+          description: A list of dimension values for this row, in the same order as the dimensions specified in the request. For country, the value is a 3-letter country code. For device, the value is DESKTOP, MOBILE, or TABLET.
+          items:
+            type: string
+          example: []
+        clicks:
+          type: number
+          description: The number of clicks from Google Search results that landed on the property.
+          example: 42.5
+        impressions:
+          type: number
+          description: The number of times a link to the property appeared in search results and was seen by a user (not necessarily scrolled into view).
+          example: 42.5
+        ctr:
+          type: number
+          format: double
+          description: 'Click-through rate: the ratio of clicks to impressions, expressed as a decimal between 0 and 1.'
+          example: 42.5
+        position:
+          type: number
+          format: double
+          description: The average position of the property in search results, where 1 is the topmost position. The value is averaged across all queries and pages.
+          example: 42.5
   parameters:
     SiteUrl:
       name: siteUrl
@@ -285,25 +304,6 @@ components:
       schema:
         type: string
       example: https://example.com/
-  responses:
-    Unauthorized:
-      description: Authentication required or invalid credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was invalid or cannot be served.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Insufficient permissions for the requested operation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     OAuth2:
       type: oauth2

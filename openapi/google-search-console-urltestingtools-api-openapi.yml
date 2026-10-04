@@ -87,6 +87,16 @@ paths:
       security: []
 components:
   schemas:
+    RunMobileFriendlyTestRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL for inspection.
+        requestScreenshot:
+          type: boolean
+          description: Whether or not screenshot is requested. Default is false.
+      description: Mobile-friendly test request.
     BlockedResource:
       type: object
       properties:
@@ -94,37 +104,6 @@ components:
           type: string
           description: URL of the blocked resource.
       description: Blocked resource.
-    TestStatus:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - TEST_STATUS_UNSPECIFIED
-          - COMPLETE
-          - INTERNAL_ERROR
-          - PAGE_UNREACHABLE
-          description: Status of the test.
-          x-enum-descriptions:
-            TEST_STATUS_UNSPECIFIED: Internal error when running this test. Please try running the test again.
-            COMPLETE: Inspection has completed without errors.
-            INTERNAL_ERROR: Inspection terminated in an error state. This indicates a problem in Google's infrastructure, not a user error. Please try again later.
-            PAGE_UNREACHABLE: Google can not access the URL because of a user error such as a robots.txt blockage, a 403 or 500 code etc. Please make sure that the URL provided is accessible by Googlebot and is not password protected.
-        details:
-          type: string
-          description: Error details if applicable.
-      description: Final state of the test, including error details if necessary.
-    Image:
-      type: object
-      properties:
-        mimeType:
-          type: string
-          description: The mime-type of the image data.
-        data:
-          type: string
-          format: byte
-          description: Image data in format determined by the mime type. Currently, the format will always be "image/png", but this might change in the future.
-      description: Describe image data.
     MobileFriendlyIssue:
       type: object
       properties:
@@ -148,6 +127,17 @@ components:
             USE_LEGIBLE_FONT_SIZES: Font size is too small for easy reading on a small screen. [Learn More] (https://support.google.com/webmasters/answer/6352293#small_font_size).
             TAP_TARGETS_TOO_CLOSE: Touch elements are too close to each other. [Learn more] (https://support.google.com/webmasters/answer/6352293#touch_elements_too_close).
       description: Mobile-friendly issue.
+    Image:
+      type: object
+      properties:
+        mimeType:
+          type: string
+          description: The mime-type of the image data.
+        data:
+          type: string
+          format: byte
+          description: Image data in format determined by the mime type. Currently, the format will always be "image/png", but this might change in the future.
+      description: Describe image data.
     GoogleApiError:
       type: object
       description: Standard Google API JSON error envelope. See https://developers.google.com/webmaster-tools/v1/errors
@@ -176,22 +166,32 @@ components:
                     type: string
                   location:
                     type: string
-    RunMobileFriendlyTestRequest:
-      type: object
-      properties:
-        url:
-          type: string
-          description: URL for inspection.
-        requestScreenshot:
-          type: boolean
-          description: Whether or not screenshot is requested. Default is false.
-      description: Mobile-friendly test request.
     ResourceIssue:
       type: object
       properties:
         blockedResource:
           $ref: '#/components/schemas/BlockedResource'
       description: Information about a resource with issue.
+    TestStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - TEST_STATUS_UNSPECIFIED
+          - COMPLETE
+          - INTERNAL_ERROR
+          - PAGE_UNREACHABLE
+          description: Status of the test.
+          x-enum-descriptions:
+            TEST_STATUS_UNSPECIFIED: Internal error when running this test. Please try running the test again.
+            COMPLETE: Inspection has completed without errors.
+            INTERNAL_ERROR: Inspection terminated in an error state. This indicates a problem in Google's infrastructure, not a user error. Please try again later.
+            PAGE_UNREACHABLE: Google can not access the URL because of a user error such as a robots.txt blockage, a 403 or 500 code etc. Please make sure that the URL provided is accessible by Googlebot and is not password protected.
+        details:
+          type: string
+          description: Error details if applicable.
+      description: Final state of the test, including error details if necessary.
     RunMobileFriendlyTestResponse:
       type: object
       properties:

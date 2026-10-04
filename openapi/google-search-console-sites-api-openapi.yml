@@ -126,16 +126,34 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  parameters:
-    SiteUrl:
-      name: siteUrl
-      in: path
-      required: true
-      description: The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded.
-      schema:
-        type: string
-      example: https://example.com/
   schemas:
+    WmxSite:
+      type: object
+      description: A Search Console site resource representing a verified property. Properties can be URL-prefix properties or domain properties.
+      properties:
+        siteUrl:
+          type: string
+          description: 'The URL of the site. For URL-prefix properties, this is the full URL including protocol. For domain properties, this uses the sc-domain: prefix (e.g., sc-domain:example.com).'
+          example: https://www.example.com
+        permissionLevel:
+          type: string
+          description: The user's permission level for this site in Search Console.
+          enum:
+          - siteOwner
+          - siteFullUser
+          - siteRestrictedUser
+          - siteUnverifiedUser
+          example: siteOwner
+    SitesListResponse:
+      type: object
+      description: Response for listing Search Console sites.
+      properties:
+        siteEntry:
+          type: array
+          description: List of verified sites.
+          items:
+            $ref: '#/components/schemas/WmxSite'
+          example: []
     Error:
       type: object
       description: Standard Google API error response.
@@ -164,40 +182,7 @@ components:
                   reason:
                     type: string
           example: example_value
-    WmxSite:
-      type: object
-      description: A Search Console site resource representing a verified property. Properties can be URL-prefix properties or domain properties.
-      properties:
-        siteUrl:
-          type: string
-          description: 'The URL of the site. For URL-prefix properties, this is the full URL including protocol. For domain properties, this uses the sc-domain: prefix (e.g., sc-domain:example.com).'
-          example: https://www.example.com
-        permissionLevel:
-          type: string
-          description: The user's permission level for this site in Search Console.
-          enum:
-          - siteOwner
-          - siteFullUser
-          - siteRestrictedUser
-          - siteUnverifiedUser
-          example: siteOwner
-    SitesListResponse:
-      type: object
-      description: Response for listing Search Console sites.
-      properties:
-        siteEntry:
-          type: array
-          description: List of verified sites.
-          items:
-            $ref: '#/components/schemas/WmxSite'
-          example: []
   responses:
-    Unauthorized:
-      description: Authentication required or invalid credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Forbidden:
       description: Insufficient permissions for the requested operation.
       content:
@@ -210,6 +195,21 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required or invalid credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    SiteUrl:
+      name: siteUrl
+      in: path
+      required: true
+      description: The site's URL, including protocol. For domain properties, use the format sc-domain:example.com. For URL-prefix properties, use the full URL (e.g., https://example.com/). The URL must be encoded.
+      schema:
+        type: string
+      example: https://example.com/
   securitySchemes:
     OAuth2:
       type: oauth2

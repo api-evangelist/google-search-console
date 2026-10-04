@@ -186,12 +186,6 @@ components:
           type: string
           description: Creation timestamp for this notification. Users should _not_ specify it, the field is ignored at the request time.
       description: '`UrlNotification` is the resource used in all Indexing API calls. It describes one event in the life cycle of a Web Document.'
-    PublishUrlNotificationResponse:
-      type: object
-      properties:
-        urlNotificationMetadata:
-          $ref: '#/components/schemas/UrlNotificationMetadata'
-      description: Output for PublishUrlNotification
     GoogleApiError:
       type: object
       description: Standard Google API JSON error envelope. See https://developers.google.com/webmaster-tools/v1/errors
@@ -220,6 +214,12 @@ components:
                     type: string
                   location:
                     type: string
+    PublishUrlNotificationResponse:
+      type: object
+      properties:
+        urlNotificationMetadata:
+          $ref: '#/components/schemas/UrlNotificationMetadata'
+      description: Output for PublishUrlNotification
   securitySchemes:
     OAuth2:
       type: oauth2
