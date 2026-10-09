@@ -1,95 +1,31 @@
-generated: '2026-07-15'
+generated: '2026-09-23'
 method: generated
-source: openapi/google-search-console-api-openapi.yml
+source: openapi/google-search-console-search-analytics-api-openapi.yml, openapi/google-search-console-sitemaps-api-openapi.yml,
+  openapi/google-search-console-sites-api-openapi.yml, openapi/google-search-console-url-inspection-api-openapi.yml,
+  openapi/google-search-console-urlnotifications-api-openapi.yml, openapi/google-search-console-urltestingtools-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 10
+  operations: 13
   by_action_class:
-    connected: 4
-    acting: 6
+    connected: 6
+    acting: 7
   by_consequence:
-    read: 4
-    write: 6
+    read: 6
+    write: 7
   human_in_the_loop_required: 0
 operations:
-- path: /webmasters/v3/sites
-  method: get
-  operationId: listSites
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    scope:
-    - https://www.googleapis.com/auth/webmasters.readonly
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /webmasters/v3/sites/{siteUrl}
-  method: get
-  operationId: getSite
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    scope:
-    - https://www.googleapis.com/auth/webmasters.readonly
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /webmasters/v3/sites/{siteUrl}
-  method: put
-  operationId: addSite
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-    scope:
-    - https://www.googleapis.com/auth/webmasters
-- path: /webmasters/v3/sites/{siteUrl}
-  method: delete
-  operationId: deleteSite
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-    scope:
-    - https://www.googleapis.com/auth/webmasters
 - path: /webmasters/v3/sites/{siteUrl}/searchAnalytics/query
   method: post
   operationId: querySearchAnalytics
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
     scope:
     - https://www.googleapis.com/auth/webmasters
 - path: /webmasters/v3/sites/{siteUrl}/sitemaps
@@ -152,6 +88,66 @@ operations:
     audit: required
     scope:
     - https://www.googleapis.com/auth/webmasters
+- path: /webmasters/v3/sites
+  method: get
+  operationId: listSites
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - https://www.googleapis.com/auth/webmasters.readonly
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /webmasters/v3/sites/{siteUrl}
+  method: get
+  operationId: getSite
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - https://www.googleapis.com/auth/webmasters.readonly
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /webmasters/v3/sites/{siteUrl}
+  method: put
+  operationId: addSite
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://www.googleapis.com/auth/webmasters
+- path: /webmasters/v3/sites/{siteUrl}
+  method: delete
+  operationId: deleteSite
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://www.googleapis.com/auth/webmasters
 - path: /v1/urlInspection/index:inspect
   method: post
   operationId: inspectUrl
@@ -170,3 +166,52 @@ operations:
     audit: required
     scope:
     - https://www.googleapis.com/auth/webmasters
+- path: /v3/urlNotifications:publish
+  method: post
+  operationId: indexing_urlNotifications_publish
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - https://www.googleapis.com/auth/indexing
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v3/urlNotifications/metadata
+  method: get
+  operationId: indexing_urlNotifications_getMetadata
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - https://www.googleapis.com/auth/indexing
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/urlTestingTools/mobileFriendlyTest:run
+  method: post
+  operationId: searchconsole_urlTestingTools_mobileFriendlyTest_run
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://www.googleapis.com/auth/webmasters
+    - https://www.googleapis.com/auth/webmasters.readonly
