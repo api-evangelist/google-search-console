@@ -87,16 +87,17 @@ paths:
       security: []
 components:
   schemas:
-    RunMobileFriendlyTestRequest:
+    Image:
       type: object
       properties:
-        url:
+        mimeType:
           type: string
-          description: URL for inspection.
-        requestScreenshot:
-          type: boolean
-          description: Whether or not screenshot is requested. Default is false.
-      description: Mobile-friendly test request.
+          description: The mime-type of the image data.
+        data:
+          type: string
+          format: byte
+          description: Image data in format determined by the mime type. Currently, the format will always be "image/png", but this might change in the future.
+      description: Describe image data.
     BlockedResource:
       type: object
       properties:
@@ -127,17 +128,6 @@ components:
             USE_LEGIBLE_FONT_SIZES: Font size is too small for easy reading on a small screen. [Learn More] (https://support.google.com/webmasters/answer/6352293#small_font_size).
             TAP_TARGETS_TOO_CLOSE: Touch elements are too close to each other. [Learn more] (https://support.google.com/webmasters/answer/6352293#touch_elements_too_close).
       description: Mobile-friendly issue.
-    Image:
-      type: object
-      properties:
-        mimeType:
-          type: string
-          description: The mime-type of the image data.
-        data:
-          type: string
-          format: byte
-          description: Image data in format determined by the mime type. Currently, the format will always be "image/png", but this might change in the future.
-      description: Describe image data.
     GoogleApiError:
       type: object
       description: Standard Google API JSON error envelope. See https://developers.google.com/webmaster-tools/v1/errors
@@ -166,12 +156,16 @@ components:
                     type: string
                   location:
                     type: string
-    ResourceIssue:
+    RunMobileFriendlyTestRequest:
       type: object
       properties:
-        blockedResource:
-          $ref: '#/components/schemas/BlockedResource'
-      description: Information about a resource with issue.
+        url:
+          type: string
+          description: URL for inspection.
+        requestScreenshot:
+          type: boolean
+          description: Whether or not screenshot is requested. Default is false.
+      description: Mobile-friendly test request.
     TestStatus:
       type: object
       properties:
@@ -192,6 +186,12 @@ components:
           type: string
           description: Error details if applicable.
       description: Final state of the test, including error details if necessary.
+    ResourceIssue:
+      type: object
+      properties:
+        blockedResource:
+          $ref: '#/components/schemas/BlockedResource'
+      description: Information about a resource with issue.
     RunMobileFriendlyTestResponse:
       type: object
       properties:

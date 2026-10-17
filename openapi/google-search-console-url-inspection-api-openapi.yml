@@ -64,6 +64,74 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    InspectUrlIndexResponse:
+      type: object
+      description: Response from the URL Inspection API.
+      properties:
+        inspectionResult:
+          $ref: '#/components/schemas/UrlInspectionResult'
+    MobileUsabilityInspectionResult:
+      type: object
+      description: Mobile usability inspection results for a URL.
+      properties:
+        verdict:
+          type: string
+          description: The overall mobile usability verdict.
+          enum:
+          - VERDICT_UNSPECIFIED
+          - PASS
+          - PARTIAL
+          - FAIL
+          - NEUTRAL
+          example: VERDICT_UNSPECIFIED
+        issues:
+          type: array
+          description: A list of mobile usability issues found.
+          items:
+            $ref: '#/components/schemas/MobileUsabilityIssue'
+          example: []
+    Error:
+      type: object
+      description: Standard Google API error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: HTTP status code.
+            message:
+              type: string
+              description: A human-readable error message.
+            status:
+              type: string
+              description: The status code string (e.g., INVALID_ARGUMENT).
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  domain:
+                    type: string
+                  reason:
+                    type: string
+          example: example_value
+    Item:
+      type: object
+      description: A single detected rich result item.
+      properties:
+        name:
+          type: string
+          description: The name or identifier of the rich result item.
+          example: Example Title
+        issues:
+          type: array
+          description: Issues found with this rich result item.
+          items:
+            $ref: '#/components/schemas/RichResultsIssue'
+          example: []
     MobileUsabilityIssue:
       type: object
       description: A specific mobile usability issue.
@@ -112,6 +180,26 @@ components:
           type: string
           description: A human-readable description of the issue.
           example: example_value
+    InspectUrlIndexRequest:
+      type: object
+      description: Request body for the URL Inspection API.
+      required:
+      - inspectionUrl
+      - siteUrl
+      properties:
+        inspectionUrl:
+          type: string
+          format: uri
+          description: The fully qualified URL to inspect. Must be under the specified site property.
+          example: https://www.example.com
+        siteUrl:
+          type: string
+          description: The URL of the site property in Search Console. Can be a URL-prefix property (e.g., https://example.com/) or a domain property (e.g., sc-domain:example.com).
+          example: https://www.example.com
+        languageCode:
+          type: string
+          description: Optional BCP-47 language code for the response. If not specified, the response will be in English.
+          example: en-US
     UrlInspectionResult:
       type: object
       description: The aggregated inspection result for a URL, including index status, crawl information, mobile usability, and rich results.
@@ -127,12 +215,20 @@ components:
           $ref: '#/components/schemas/MobileUsabilityInspectionResult'
         richResultsResult:
           $ref: '#/components/schemas/RichResultsInspectionResult'
-    InspectUrlIndexResponse:
+    DetectedItems:
       type: object
-      description: Response from the URL Inspection API.
+      description: A group of detected rich result items of a single type.
       properties:
-        inspectionResult:
-          $ref: '#/components/schemas/UrlInspectionResult'
+        richResultType:
+          type: string
+          description: The rich result type detected (e.g., Product, Recipe, FAQ, BreadcrumbList, Article).
+          example: example_value
+        items:
+          type: array
+          description: The individual detected items of this type.
+          items:
+            $ref: '#/components/schemas/Item'
+          example: []
     IndexStatusInspectionResult:
       type: object
       description: Index status inspection results for a URL.
@@ -223,102 +319,6 @@ components:
           - DESKTOP
           - MOBILE
           example: CRAWLING_USER_AGENT_UNSPECIFIED
-    Error:
-      type: object
-      description: Standard Google API error response.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              description: HTTP status code.
-            message:
-              type: string
-              description: A human-readable error message.
-            status:
-              type: string
-              description: The status code string (e.g., INVALID_ARGUMENT).
-            errors:
-              type: array
-              items:
-                type: object
-                properties:
-                  message:
-                    type: string
-                  domain:
-                    type: string
-                  reason:
-                    type: string
-          example: example_value
-    MobileUsabilityInspectionResult:
-      type: object
-      description: Mobile usability inspection results for a URL.
-      properties:
-        verdict:
-          type: string
-          description: The overall mobile usability verdict.
-          enum:
-          - VERDICT_UNSPECIFIED
-          - PASS
-          - PARTIAL
-          - FAIL
-          - NEUTRAL
-          example: VERDICT_UNSPECIFIED
-        issues:
-          type: array
-          description: A list of mobile usability issues found.
-          items:
-            $ref: '#/components/schemas/MobileUsabilityIssue'
-          example: []
-    Item:
-      type: object
-      description: A single detected rich result item.
-      properties:
-        name:
-          type: string
-          description: The name or identifier of the rich result item.
-          example: Example Title
-        issues:
-          type: array
-          description: Issues found with this rich result item.
-          items:
-            $ref: '#/components/schemas/RichResultsIssue'
-          example: []
-    DetectedItems:
-      type: object
-      description: A group of detected rich result items of a single type.
-      properties:
-        richResultType:
-          type: string
-          description: The rich result type detected (e.g., Product, Recipe, FAQ, BreadcrumbList, Article).
-          example: example_value
-        items:
-          type: array
-          description: The individual detected items of this type.
-          items:
-            $ref: '#/components/schemas/Item'
-          example: []
-    InspectUrlIndexRequest:
-      type: object
-      description: Request body for the URL Inspection API.
-      required:
-      - inspectionUrl
-      - siteUrl
-      properties:
-        inspectionUrl:
-          type: string
-          format: uri
-          description: The fully qualified URL to inspect. Must be under the specified site property.
-          example: https://www.example.com
-        siteUrl:
-          type: string
-          description: The URL of the site property in Search Console. Can be a URL-prefix property (e.g., https://example.com/) or a domain property (e.g., sc-domain:example.com).
-          example: https://www.example.com
-        languageCode:
-          type: string
-          description: Optional BCP-47 language code for the response. If not specified, the response will be in English.
-          example: en-US
     RichResultsInspectionResult:
       type: object
       description: Rich results inspection results for a URL.
@@ -340,26 +340,26 @@ components:
             $ref: '#/components/schemas/DetectedItems'
           example: []
   responses:
-    Forbidden:
-      description: Insufficient permissions for the requested operation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     TooManyRequests:
       description: Rate limit exceeded. Retry after the specified delay.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was invalid or cannot be served.
+    Forbidden:
+      description: Insufficient permissions for the requested operation.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Authentication required or invalid credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was invalid or cannot be served.
       content:
         application/json:
           schema:

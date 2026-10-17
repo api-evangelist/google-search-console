@@ -127,33 +127,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    WmxSite:
-      type: object
-      description: A Search Console site resource representing a verified property. Properties can be URL-prefix properties or domain properties.
-      properties:
-        siteUrl:
-          type: string
-          description: 'The URL of the site. For URL-prefix properties, this is the full URL including protocol. For domain properties, this uses the sc-domain: prefix (e.g., sc-domain:example.com).'
-          example: https://www.example.com
-        permissionLevel:
-          type: string
-          description: The user's permission level for this site in Search Console.
-          enum:
-          - siteOwner
-          - siteFullUser
-          - siteRestrictedUser
-          - siteUnverifiedUser
-          example: siteOwner
-    SitesListResponse:
-      type: object
-      description: Response for listing Search Console sites.
-      properties:
-        siteEntry:
-          type: array
-          description: List of verified sites.
-          items:
-            $ref: '#/components/schemas/WmxSite'
-          example: []
     Error:
       type: object
       description: Standard Google API error response.
@@ -182,6 +155,33 @@ components:
                   reason:
                     type: string
           example: example_value
+    WmxSite:
+      type: object
+      description: A Search Console site resource representing a verified property. Properties can be URL-prefix properties or domain properties.
+      properties:
+        siteUrl:
+          type: string
+          description: 'The URL of the site. For URL-prefix properties, this is the full URL including protocol. For domain properties, this uses the sc-domain: prefix (e.g., sc-domain:example.com).'
+          example: https://www.example.com
+        permissionLevel:
+          type: string
+          description: The user's permission level for this site in Search Console.
+          enum:
+          - siteOwner
+          - siteFullUser
+          - siteRestrictedUser
+          - siteUnverifiedUser
+          example: siteOwner
+    SitesListResponse:
+      type: object
+      description: Response for listing Search Console sites.
+      properties:
+        siteEntry:
+          type: array
+          description: List of verified sites.
+          items:
+            $ref: '#/components/schemas/WmxSite'
+          example: []
   responses:
     Forbidden:
       description: Insufficient permissions for the requested operation.
@@ -189,14 +189,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Authentication required or invalid credentials.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required or invalid credentials.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
