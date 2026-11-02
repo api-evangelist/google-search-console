@@ -1,0 +1,139 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Google Search Console
+providerId: google-search-console
+created: '2026-05-04'
+# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
+# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
+# 2026-08-13: re-read against the provider's own limits and quota-pricing pages; every quota
+# figure matched and the "no charge" claim was confirmed, so this is upgraded to searched.
+method: searched
+modified: '2026-08-13'
+verified: '2026-08-13'
+plan_count: 1
+verification: >-
+  https://developers.google.com/webmaster-tools/limits and
+  https://developers.google.com/search/apis/indexing-api/v3/quota-pricing both fetched 2026-08-13
+  (HTTP 200). Google publishes no paid tier, no price list and no billing surface for these APIs;
+  the only published constraint is quota. The page previously referenced as the pricing source,
+  https://developers.google.com/webmaster-tools/v1/limits, returns HTTP 404.
+reconciled: true
+tags:
+  - Analytics
+  - Google
+  - Search
+  - SEO
+  - Webmaster Tools
+description: The Google Search Console API (including Search Analytics, URL Inspection, and the Indexing
+  API) is offered free of charge by Google as a webmaster tool. There are no paid tiers or per-call charges;
+  usage is governed by per-site, per-user, and per-project quotas published in the Google Search Console
+  API limits documentation.
+sources:
+  - https://developers.google.com/webmaster-tools/limits
+  - https://developers.google.com/webmaster-tools/v1/searchanalytics/query
+plans:
+  - id: google-search-console-free
+    name: Free
+    type: freemium
+    description: The Google Search Console API is fully free for verified site owners. All endpoints —
+      Search Analytics, Sitemaps, URL Inspection, and Indexing API — are subject to documented usage
+      quotas with no monetary charge.
+    entries:
+      - label: Search Analytics — per-site queries per minute
+        name: search_analytics_qpm_per_site
+        type: quota
+        metric: requests_per_minute
+        limit: 1200
+        timeFrame: minute
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Search Analytics — per-user queries per minute
+        name: search_analytics_qpm_per_user
+        type: quota
+        metric: requests_per_minute
+        limit: 1200
+        timeFrame: minute
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: true
+      - label: Search Analytics — per-project queries per day
+        name: search_analytics_qpd_per_project
+        type: quota
+        metric: requests_per_day
+        limit: 30000000
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: URL Inspection — per-site queries per day
+        name: url_inspection_qpd_per_site
+        type: quota
+        metric: requests_per_day
+        limit: 2000
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: URL Inspection — per-site queries per minute
+        name: url_inspection_qpm_per_site
+        type: quota
+        metric: requests_per_minute
+        limit: 600
+        timeFrame: minute
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: All other resources — per-user QPS
+        name: other_qps_per_user
+        type: quota
+        metric: requests_per_second
+        limit: 20
+        timeFrame: second
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: true
+      - label: All other resources — per-project QPD
+        name: other_qpd_per_project
+        type: quota
+        metric: requests_per_day
+        limit: 100000000
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Google Search Console API
+      - name: Google Search Console URL Testing Tools API
+      - name: Google Indexing API
+      - name: No charge for API usage
+      - name: Quotas raised case-by-case via Google support
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - free
+  units:
+  - rate
+  plans:
+  - name: Free
+    access: freemium
+    model: free
+    model_how: derived
+    units:
+    - rate
+    periods:
+    - day
+    - minute
+    - second
