@@ -137,6 +137,9 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  hosts/google-search-console-hosts.yml:
+    method: derived
+    evidence: declared in the artifact
   integrations/_index.yml:
     method: generated
     evidence: carries an API Evangelist house phrase
@@ -176,6 +179,9 @@ artifacts:
   json-schema/google-search-console-mobile-usability-issue-schema.json:
     method: unknown
     evidence: no authorship recorded
+  json-schema/google-search-console-publish-url-notification-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
   json-schema/google-search-console-query-schema.json:
     method: unknown
     evidence: no authorship recorded
@@ -183,6 +189,12 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   json-schema/google-search-console-rich-results-issue-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/google-search-console-run-mobile-friendly-test-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/google-search-console-run-mobile-friendly-test-response-schema.json:
     method: unknown
     evidence: no authorship recorded
   json-schema/google-search-console-search-analytics-query-request-schema.json:
@@ -201,6 +213,12 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   json-schema/google-search-console-url-inspection-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/google-search-console-url-notification-metadata-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/google-search-console-url-notification-schema.json:
     method: unknown
     evidence: no authorship recorded
   json-schema/google-search-console-wmx-site-schema.json:
@@ -347,10 +365,19 @@ artifacts:
   lifecycle/google-search-console-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
+  llms/google-search-console-llms-provenance.yml:
+    method: generated
+    evidence: 'derive-llms-provenance.py: generated'
   llms/google-search-console-llms.txt:
     method: generated
     evidence: carries an API Evangelist house phrase
+  mcp/google-search-console-mcp-tools-list.json:
+    method: unknown
+    evidence: no authorship recorded
   mcp/google-search-console-mcp.yml:
+    method: unknown
+    evidence: no authorship recorded
+  mcp/google-search-console-tool-crosswalk.yml:
     method: derived
     evidence: declared in the artifact
   openapi/_original/google-search-console-api-openapi.yml:
@@ -430,6 +457,9 @@ artifacts:
   packages/google-search-console-packages.yml:
     method: searched
     evidence: declared in the artifact
+  patterns/google-search-console-patterns.yml:
+    method: derived
+    evidence: declared in the artifact
   plans/google-search-console-plans-pricing.yml:
     method: searched
     evidence: declared in the artifact
@@ -449,6 +479,9 @@ artifacts:
     method: searched
     evidence: declared in the artifact
   rules/google-search-console-jsonschema-spectral-rules.yml:
+    method: generated
+    evidence: declared in the artifact
+  rules/google-search-console-rules.yml:
     method: generated
     evidence: declared in the artifact
   rules/google-search-console-spectral-rules.yml:
@@ -481,9 +514,15 @@ artifacts:
   sla/google-search-console-sla.yml:
     method: generated
     evidence: declared in the artifact
+  vendors/google-search-console-vendors.yml:
+    method: unknown
+    evidence: no authorship recorded
   vocabulary/google-search-console-vocabulary.yaml:
     method: unknown
     evidence: no authorship recorded
+  vocabulary/google-search-console-vocabulary.yml:
+    method: derived
+    evidence: declared in the artifact
   well-known/google-search-console-oauth-authorization-server.json:
     method: unknown
     evidence: no authorship recorded
